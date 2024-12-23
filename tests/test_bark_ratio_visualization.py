@@ -7,7 +7,7 @@ import pytest
 import numpy as np
 import matplotlib.pyplot as plt
 from pathlib import Path
-from fvs_core.growth import calculate_inside_bark_dbh_ratio, species_data
+from fvs_core.growth_models import calculate_inside_bark_dbh_ratio, species_data
 
 # Ensure plots directory exists
 PLOTS_DIR = Path(__file__).parent / 'plots'
