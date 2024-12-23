@@ -6,6 +6,8 @@ from .site_index import calculate_rsisp, calculate_mgspix, calculate_mgrsi, calc
 data_dir = Path(__file__).parent.parent / 'data'
 species_data = pd.read_csv(data_dir / 'species_data.csv', index_col=0).to_dict('index')
 site_index_groups = pd.read_csv(data_dir / 'site_index_groups.csv', index_col=0).to_dict('index')
+species_crown_ratio_data = pd.read_csv(data_dir / 'species_crown_ratio.csv', index_col='species_code').to_dict('index')
+acr_equation_data = pd.read_csv(data_dir / 'acr_equations.csv', index_col='equation').to_dict('index')
 
 # Convert string representation of lists back to actual lists in site_index_groups
 for group in site_index_groups.values():
