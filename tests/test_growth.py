@@ -4,7 +4,12 @@ Tests for the growth module.
 
 import pytest
 import math
-from fvs_core.growth_models import curtis_arney_height, wykoff_height, species_data
+from fvs_core.growth_models import (
+    curtis_arney_height,
+    wykoff_height,
+    species_data,
+    apply_diameter_growth_bounding
+)
 
 # Test coefficients for a hypothetical species (for basic functionality tests)
 TEST_COEFFICIENTS = {
@@ -128,3 +133,12 @@ def test_small_tree_transition():
     assert abs(height_before - height_after) < 10.0  # Allow some discontinuity but not too much
     assert height_before > 4.51
     assert height_after > 4.51
+
+def test_apply_diameter_growth_bounding():
+    """Test the diameter growth bounding function with various scenarios."""
+    assert apply_diameter_growth_bounding(10, 2, 12, 24) == 2  # No bounding (dbh < lower_limit)
+    assert apply_diameter_growth_bounding(15, 2, 12, 24) == pytest.approx(2 * (1 + 0.9 * ((15 - 12) / (12 - 24))), .001)  # Bounding applied
+    assert apply_diameter_growth_bounding(20, 2, 12, 24) == pytest.approx(2 * (1 + 0.9 * ((20 - 12) / (12 - 24))), .001)  # More bounding
+    assert apply_diameter_growth_bounding(25, 2, 12, 24) == 0.048  # Upper limit reached
+    assert apply_diameter_growth_bounding(40, 2, 12, 24) == 0.048  # Still at upper limit
+    assert apply_diameter_growth_bounding(10, 2, 998, 1000) == 2  # Bounding turned off
