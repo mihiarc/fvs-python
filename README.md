@@ -13,27 +13,73 @@ This project aims to create a Python implementation of the Southern variant of t
 
 ## Project Structure
 
+```
 fvs-python/
-├── fvs_core/   (Core FVS logic)
-│   ├── growth.py
-│   ├── economic_analysis.py
-│   ├── init.py
-|-- examples/   (Example usage scripts)
-|   |-- basic_projection.py
-|   |-- economic_analysis.py
-|-- tests/      (Unit tests)
-|   |-- test_growth.py
-|   |-- test_economics.py
-|   |-- init.py
-|-- data/       (Data files)
-|   |-- species_data.csv
-|   |-- site_index_groups.csv
-|-- docs/       (Documentation)
-|-- .gitignore
-|-- setup.py     (Setup script for the package)
-|-- README.md
-|-- LICENSE
-|-- requirements.txt
+├── fvs_core/          # Core FVS logic
+│   ├── growth_models.py
+│   ├── data_handling.py
+│   ├── db_utils.py
+│   └── __init__.py
+├── data/              # Raw data files
+│   ├── species_data.csv              # Species-specific parameters
+│   ├── ecounit_codes.csv            # Ecological unit coefficients
+│   ├── base_ecounit_codes.csv       # Base ecological unit definitions
+│   ├── forest_type_group_codes.csv  # Forest type definitions
+│   └── ln_dds_species_growth_parameters.csv  # Growth parameters
+├── tests/             # Unit tests
+│   ├── test_db_utils.py
+│   └── __init__.py
+├── docs/              # Documentation
+├── create_tables_v2.sql  # Database schema
+├── load_data.py         # Database population script
+├── fvspy.db            # SQLite database
+├── .gitignore
+├── setup.py           # Setup script for the package
+├── README.md
+├── LICENSE
+└── requirements.txt
+```
+
+## Data Structure
+
+### Raw Data Files
+- `species_data.csv`: Contains species-specific parameters including growth coefficients and scaling factors
+- `ecounit_codes.csv`: Contains ecological unit coefficients for different species
+- `base_ecounit_codes.csv`: Defines base ecological units and their mappings
+- `forest_type_group_codes.csv`: Defines forest type groups and their FIA codes
+- `ln_dds_species_growth_parameters.csv`: Contains species-specific growth parameters
+
+### Database Structure (fvspy.db)
+
+The SQLite database contains the following tables:
+
+1. `species`: Primary species information
+   - Primary key: species_code
+   - Fields: species_code, FIA_code
+
+2. `growth_coefficients`: Species-specific growth model parameters
+   - Primary key: species_code
+   - Foreign key reference to species table
+
+3. `species_scaling_factors`: Scaling factors for species calculations
+   - Primary key: species_code
+   - Foreign key reference to species table
+
+4. `forest_types`: Forest type definitions
+   - Primary key: fvs_fortypcd
+   - Fields: fvs_fortypcd, fvs_fortypcd_name, fia_fortypcd
+
+5. `ecological_units`: Ecological unit definitions
+   - Primary key: fvs_ecounit
+   - Fields: fvs_ecounit, fvspy_ecounit
+
+6. `ecological_coefficients`: Coefficients for ecological unit calculations
+   - Primary key: (species_code, fvs_ecounit)
+   - Foreign key references to species and ecological_units tables
+
+7. `forest_type_coefficients`: Coefficients for forest type calculations
+   - Primary key: (species_code, fvs_fortypcd)
+   - Foreign key references to species and forest_types tables
 
 ## Getting Started
 
@@ -64,7 +110,13 @@ fvs-python/
 4.  **Install the package:**
 
     ```bash
-    pip install . # Installs the package in editable mode
+    pip install -e .  # Installs the package in editable mode
+    ```
+
+5.  **Initialize the database:**
+
+    ```bash
+    python load_data.py  # Creates and populates the SQLite database
     ```
 
 ## Example Usage
@@ -77,28 +129,19 @@ projected_stand = growth.project_growth(stand, 20)
 cash_flows = [...] # Calculated from projected_stand
 npv = economics.calculate_npv(cash_flows, 0.05)
 print(f"Net Present Value: {npv}")
+```
 
 More detailed examples can be found in the examples/ directory.
 
-Contributing
- Contributions are welcome! Please open an issue or submit a pull request.
+## Contributing
+Contributions are welcome! Please open an issue or submit a pull request.
 
-License
- This project is licensed under the MIT License.   
+## License
+This project is licensed under the MIT License.   
 
-Acknowledgements
- This project is based on the Southern variant of the Forest Vegetation Simulator (FVS), developed by the USDA Forest Service.
+## Acknowledgements
+This project is based on the Southern variant of the Forest Vegetation Simulator (FVS), developed by the USDA Forest Service.
 
-Contact
+## Contact
 Chris Mihiar
 chris.mihiar@gmail.com
-
-**Key Improvements:**
-
-*   **Clearer Project Goals:** Explicitly states the objectives of the project.
-*   **Detailed Project Structure:** Provides a more comprehensive explanation of the project's organization.
-*   **More Complete Getting Started Instructions:** Includes instructions for creating a virtual environment, installing dependencies, and installing the package.
-*   **Example Usage:** Shows a basic example of how to use the library.
-*   **Contribution and License Information:** Adds sections for contributing and license information.
-*   **Acknowledgements:** Acknowledges the original FVS developers.
-*   **Contact Information:** Provides contact information for the project maintainer.
