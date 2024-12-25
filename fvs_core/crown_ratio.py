@@ -34,7 +34,15 @@ def calculate_dubbed_crown_ratio(dbh, sd):
 
 def calculate_acr(relsdi, species):
     """
-    Calculates the average crown ratio (ACR).
+    Calculates the average crown ratio (ACR) using one of five equation types.
+    The equation type is determined by the coefficients d0, d1, d2.
+    
+    The five equation types are:
+    1. acr = exp(d0 + d1*ln(relsdi) + d2*relsdi)         when d2 ≠ 0
+    2. acr = exp(d0 + d1*ln(relsdi))                     when d1 ≠ 0 and d0 < 1.0
+    3. acr = (d0 + d2*relsdi)/100                        when d2 ≠ 0 and d0 > 0.5
+    4. acr = d0 + d1*log10(relsdi)                       when d1 ≠ 0 and d0 > 0.5
+    5. acr = relsdi/(d0*relsdi + d1)                     when d1 ≠ 0
     
     Args:
         relsdi: relative stand density index ((Stand SDI / Maximum SDI) *10) and is between 1.0 and 12.0
@@ -42,6 +50,10 @@ def calculate_acr(relsdi, species):
         
     Returns:
         average crown ratio between 0 and 1
+        
+    Raises:
+        KeyError: if species code is not found in the database
+        ValueError: if coefficients are invalid or equation type cannot be determined
     """
     try:
         species_coeffs = data_handling.species_crown_ratio_data[species]
@@ -53,43 +65,63 @@ def calculate_acr(relsdi, species):
         return None
 
     # Determine equation type based on coefficients
-    if d2 is not None:
-        # Equation type 1
+    if d2 != 0:  # Type 1
         acr = np.exp(d0 + (d1 * np.log(relsdi)) + (d2 * relsdi))
-    elif d1 is not None and d0 < 1.0:
-        # Equation type 2
+    elif d1 != 0 and d0 < 1.0:  # Type 2
         acr = np.exp(d0 + (d1 * np.log(relsdi)))
-    elif d2 is not None and d0 > 0.5:
-        # Equation type 3
+    elif d2 != 0 and d0 > 0.5:  # Type 3
         acr = (d0 + (d2 * relsdi)) / 100.0
-    elif d1 is not None and d0 > 0.5:
-        # Equation type 4
+    elif d1 != 0 and d0 > 0.5:  # Type 4
         acr = d0 + (d1 * np.log10(relsdi))
-    elif d1 is not None:
-        # Equation type 5
+    elif d1 != 0:  # Type 5
         acr = relsdi / ((d0 * relsdi) + d1)
     else:
-        raise ValueError("Invalid ACR equation coefficients")
+        raise ValueError(f"Invalid coefficient combination for species {species}")
         
     # Ensure ACR is between 0 and 1
     return max(0.05, min(0.95, acr))
 
-def calculate_crown_ratio_weibull(x, a, b, c, scale):
+def calculate_crown_ratio_weibull(x, species, acr, scale):
     """
-    Calculates crown ratio using the Weibull distribution. Weibull parameters a, b, and c
-    are estimated from the average crown ratio (acr) using the equations in calculate_acr.
+    Calculates crown ratio using the Weibull distribution. The crown ratio is expressed
+    as a percentage of total height. The Weibull parameters are derived from species-specific
+    coefficients (a, b0, b1, c) and the average crown ratio (acr).
+    
+    The Weibull parameters are:
+    - location (a) = a0/100
+    - scale (b) = max(0.03, (b0 + b1*acr)/100)
+    - shape (c) = max(2.0, c0)
+    
+    These parameters are then scaled by the density-dependent factor before calculating
+    the final crown ratio using the Weibull percent point function.
 
     Args:
         x: is a tree's rank in the diameter distribution (1 = smallest; ITRN = largest)
             divided by the total number of trees (ITRN) multiplied by scale; bounded between 0.05 and 0.95
-        a: location parameter
-        b: scale parameter (b0 + b1 * ACR); scale > 3.0
-        c: shape parameter; c > 2.0
+        species: species code for getting Weibull parameters
+        acr: average crown ratio calculated from calculate_acr
         scale: density-dependent scaling factor between 0.3 and 1.0
 
     Returns:
         y: a tree's crown ratio expressed as a percent of total height
+        
+    Raises:
+        KeyError: if species code is not found in the database
     """
+    if species not in data_handling.species_crown_ratio_data:
+        raise KeyError(f"Species code '{species}' not found in crown ratio data")
+        
+    coeffs = data_handling.species_crown_ratio_data[species]
+    
+    # Get Weibull parameters from coefficients
+    a, b, c = calculate_weibull_parameters(
+        acr,
+        coeffs['a'],
+        coeffs['b0'],
+        coeffs['b1'],
+        coeffs['c']
+    )
+    
     # Scale the input crown ratio and ensure it's between 0 and 1
     x = max(0.0001, min(0.9999, x))  # Avoid 0 and 1 which can cause numerical issues
     
@@ -101,8 +133,9 @@ def calculate_crown_ratio_weibull(x, a, b, c, scale):
         
         # Then use the percent point function (inverse CDF) of the Weibull distribution
         cr = weibull_min.ppf(x, c, loc=a_scaled, scale=b_scaled)
-    except ValueError:
+    except ValueError as e:
         # If there's an error with the Weibull calculation, return the input x
+        print(f"Warning: Weibull calculation failed for species {species}: {e}")
         cr = x
     
     # Apply bounds
@@ -110,17 +143,22 @@ def calculate_crown_ratio_weibull(x, a, b, c, scale):
 
 def calculate_weibull_parameters(acr, a0, b0, b1, c0):
     """
-    Calculates Weibull distribution parameters.
+    Calculates Weibull distribution parameters for crown ratio calculation.
+    
+    The parameters are:
+    - location (a) = a0/100                          (converts to proportion)
+    - scale (b) = max(0.03, (b0 + b1*acr)/100)      (converts to proportion with minimum bound)
+    - shape (c) = max(2.0, c0)                       (ensures minimum shape parameter)
     
     Args:
         acr: average crown ratio between 0 and 1
-        a0: location parameter
-        b0: scale parameter intercept
-        b1: scale parameter slope
-        c0: shape parameter
+        a0: location parameter coefficient
+        b0: scale parameter intercept coefficient
+        b1: scale parameter slope coefficient
+        c0: shape parameter coefficient
         
     Returns:
-        tuple of (a, b, c) parameters
+        tuple of (a, b, c) parameters for the Weibull distribution
     """
     a = a0 / 100.0  # Convert to proportion
     b = max(0.03, (b0 + b1 * acr) / 100.0)  # Convert to proportion and bound
