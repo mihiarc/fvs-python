@@ -51,9 +51,9 @@ CREATE TABLE wykoff_functions (
 CREATE TABLE curtis_arney_functions (
     species_code TEXT PRIMARY KEY NOT NULL,
     dbw REAL NOT NULL,
-    curtis_arneyarney_b0 REAL NOT NULL,
-    curtis_arneyarney_b1 REAL NOT NULL,
-    curtis_arneyarney_b2 REAL NOT NULL
+    curtis_arney_b0 REAL NOT NULL,
+    curtis_arney_b1 REAL NOT NULL,
+    curtis_arney_b2 REAL NOT NULL
 );
 
 CREATE TABLE large_tree_growth (

@@ -1,17 +1,81 @@
-import pandas as pd
+"""
+Data handling module for FVS Southern Variant.
+Provides access to species data and coefficients from the SQLite database.
+"""
+
+import sqlite3
 from pathlib import Path
 from .site_index import calculate_rsisp, calculate_mgspix, calculate_mgrsi, calculate_sisp
 
-# Read data from CSV files
-data_dir = Path(__file__).parent.parent / 'data'
-species_data = pd.read_csv(data_dir / 'species_data.csv', index_col=0).to_dict('index')
-site_index_groups = pd.read_csv(data_dir / 'site_index_groups.csv', index_col=0).to_dict('index')
-species_crown_ratio_data = pd.read_csv(data_dir / 'species_crown_ratio.csv', index_col='species_code').to_dict('index')
-acr_equation_data = pd.read_csv(data_dir / 'acr_equations.csv', index_col='equation').to_dict('index')
+# Database connection
+db_path = Path(__file__).parent.parent / 'fvspy.db'
 
-# Convert string representation of lists back to actual lists in site_index_groups
-for group in site_index_groups.values():
-    group['mapped species'] = eval(group['mapped species'])
+def dict_factory(cursor, row):
+    """Convert SQLite row to dictionary."""
+    d = {}
+    for idx, col in enumerate(cursor.description):
+        d[col[0]] = row[idx]
+    return d
+
+def get_connection():
+    """Get a connection to the SQLite database with dictionary row factory."""
+    conn = sqlite3.connect(db_path)
+    conn.row_factory = dict_factory
+    return conn
+
+def get_species_data():
+    """Get species data from the database."""
+    with get_connection() as conn:
+        cursor = conn.cursor()
+        cursor.execute("""
+            SELECT s.species_code,
+                   sir.si_min, sir.si_max, sir.dbw,
+                   ca.curtis_arney_b0, ca.curtis_arney_b1, ca.curtis_arney_b2,
+                   w.wykoffoff_b0, w.wykoffoff_b1,
+                   bt.bark_b0, bt.bark_b1
+            FROM species s
+            LEFT JOIN site_index_range sir ON s.species_code = sir.species_code
+            LEFT JOIN curtis_arney_functions ca ON s.species_code = ca.species_code
+            LEFT JOIN wykoff_functions w ON s.species_code = w.species_code
+            LEFT JOIN bark_thickness bt ON s.species_code = bt.species_code
+        """)
+        return {row['species_code']: row for row in cursor.fetchall()}
+
+def get_site_index_groups():
+    """Get site index groups from the database."""
+    with get_connection() as conn:
+        cursor = conn.cursor()
+        cursor.execute("""
+            SELECT site_index_species, mapped_species, site_type, a, b, c, d
+            FROM site_index_groups
+        """)
+        return {row['site_index_species']: row for row in cursor.fetchall()}
+
+def get_species_crown_ratio_data():
+    """Get crown ratio coefficients from the database."""
+    with get_connection() as conn:
+        cursor = conn.cursor()
+        cursor.execute("""
+            SELECT species_code, a, b0, b1, c, d0, d1, d2
+            FROM species_crown_ratio
+        """)
+        return {row['species_code']: row for row in cursor.fetchall()}
+
+def get_acr_equation_data():
+    """Get ACR equation coefficients from the database."""
+    with get_connection() as conn:
+        cursor = conn.cursor()
+        cursor.execute("""
+            SELECT equation_number, d0, d1, d2
+            FROM acr_equations
+        """)
+        return {row['equation_number']: row for row in cursor.fetchall()}
+
+# Initialize data from database
+species_data = get_species_data()
+site_index_groups = get_site_index_groups()
+species_crown_ratio_data = get_species_crown_ratio_data()
+acr_equation_data = get_acr_equation_data()
 
 def calculate_site_index(site_species, site_index_value, target_species):
     """
@@ -40,10 +104,10 @@ def calculate_site_index(site_species, site_index_value, target_species):
     # Find the site index group that contains both species
     matching_group = None
     for group_id, group_data in site_index_groups.items():
-        if (site_species == group_data["site index species"] or 
-            site_species in group_data["mapped species"]) and \
-           (target_species == group_data["site index species"] or 
-            target_species in group_data["mapped species"]):
+        if (site_species == group_data["site_index_species"] or 
+            site_species in eval(group_data["mapped_species"])) and \
+           (target_species == group_data["site_index_species"] or 
+            target_species in eval(group_data["mapped_species"])):
             matching_group = group_data
             break
     

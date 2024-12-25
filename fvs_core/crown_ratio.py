@@ -45,28 +45,31 @@ def calculate_acr(relsdi, species):
     """
     try:
         species_coeffs = data_handling.species_crown_ratio_data[species]
-        acr_equation = species_coeffs["acr_equation_number"]
-        equation_coeffs = data_handling.acr_equation_data[acr_equation]
-        d0 = equation_coeffs.get("d0")
-        d1 = equation_coeffs.get("d1")
-        d2 = equation_coeffs.get("d2")
+        d0 = species_coeffs.get("d0")
+        d1 = species_coeffs.get("d1")
+        d2 = species_coeffs.get("d2")
     except KeyError:
         print("Error: Data not found")
         return None
 
-    if acr_equation == 1:
-        acr = np.exp(d0 + (d1 * np.log(relsdi)) + (d2 * relsdi)) if d2 is not None else np.exp(d0 + (d1 * np.log(relsdi)))
-    elif acr_equation == 2:
+    # Determine equation type based on coefficients
+    if d2 is not None:
+        # Equation type 1
+        acr = np.exp(d0 + (d1 * np.log(relsdi)) + (d2 * relsdi))
+    elif d1 is not None and d0 < 1.0:
+        # Equation type 2
         acr = np.exp(d0 + (d1 * np.log(relsdi)))
-    elif acr_equation == 3:
-        # Convert to proportion (divide by 100)
+    elif d2 is not None and d0 > 0.5:
+        # Equation type 3
         acr = (d0 + (d2 * relsdi)) / 100.0
-    elif acr_equation == 4:
+    elif d1 is not None and d0 > 0.5:
+        # Equation type 4
         acr = d0 + (d1 * np.log10(relsdi))
-    elif acr_equation == 5:
+    elif d1 is not None:
+        # Equation type 5
         acr = relsdi / ((d0 * relsdi) + d1)
     else:
-        raise ValueError("Invalid ACR equation specified.")
+        raise ValueError("Invalid ACR equation coefficients")
         
     # Ensure ACR is between 0 and 1
     return max(0.05, min(0.95, acr))
@@ -77,7 +80,7 @@ def calculate_crown_ratio_weibull(x, a, b, c, scale):
     are estimated from the average crown ratio (acr) using the equations in calculate_acr.
 
     Args:
-        x: is a tree's rank in the diameter distribution (1 = smalles; ITRN = largest)
+        x: is a tree's rank in the diameter distribution (1 = smallest; ITRN = largest)
             divided by the total number of trees (ITRN) multiplied by scale; bounded between 0.05 and 0.95
         a: location parameter
         b: scale parameter (b0 + b1 * ACR); scale > 3.0
@@ -148,5 +151,4 @@ def calculate_crown_ratio_change(current_cr, new_cr):
     Returns:
         change in crown ratio
     """
-    change_in_cr = new_cr - current_cr
-    return change_in_cr
+    return new_cr - current_cr
