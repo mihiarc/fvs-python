@@ -35,14 +35,14 @@ def calculate_dubbed_crown_ratio(dbh, sd):
 def calculate_acr(relsdi, species):
     """
     Calculates the average crown ratio (ACR) using one of five equation types.
-    The equation type is determined by the coefficients d0, d1, d2.
+    The equation type is determined by acr_equation_number in the database.
     
     The five equation types are:
-    1. acr = exp(d0 + d1*ln(relsdi) + d2*relsdi)         when d2 ≠ 0
-    2. acr = exp(d0 + d1*ln(relsdi))                     when d1 ≠ 0 and d0 < 1.0
-    3. acr = (d0 + d2*relsdi)/100                        when d2 ≠ 0 and d0 > 0.5
-    4. acr = d0 + d1*log10(relsdi)                       when d1 ≠ 0 and d0 > 0.5
-    5. acr = relsdi/(d0*relsdi + d1)                     when d1 ≠ 0
+    1. acr = exp(d0 + d1*ln(relsdi) + d2*relsdi)
+    2. acr = exp(d0 + d1*ln(relsdi))
+    3. acr = (d0 + d2*relsdi)/100
+    4. acr = d0 + d1*log10(relsdi)
+    5. acr = relsdi/(d0*relsdi + d1)
     
     Args:
         relsdi: relative stand density index ((Stand SDI / Maximum SDI) *10) and is between 1.0 and 12.0
@@ -53,30 +53,56 @@ def calculate_acr(relsdi, species):
         
     Raises:
         KeyError: if species code is not found in the database
-        ValueError: if coefficients are invalid or equation type cannot be determined
+        ValueError: if equation type is invalid or required coefficients are missing
     """
-    try:
-        species_coeffs = data_handling.species_crown_ratio_data[species]
-        d0 = species_coeffs.get("d0")
-        d1 = species_coeffs.get("d1")
-        d2 = species_coeffs.get("d2")
-    except KeyError:
-        print("Error: Data not found")
-        return None
-
-    # Determine equation type based on coefficients
-    if d2 != 0:  # Type 1
-        acr = np.exp(d0 + (d1 * np.log(relsdi)) + (d2 * relsdi))
-    elif d1 != 0 and d0 < 1.0:  # Type 2
-        acr = np.exp(d0 + (d1 * np.log(relsdi)))
-    elif d2 != 0 and d0 > 0.5:  # Type 3
-        acr = (d0 + (d2 * relsdi)) / 100.0
-    elif d1 != 0 and d0 > 0.5:  # Type 4
-        acr = d0 + (d1 * np.log10(relsdi))
-    elif d1 != 0:  # Type 5
-        acr = relsdi / ((d0 * relsdi) + d1)
+    if species not in data_handling.species_data:
+        raise KeyError(f"Species code '{species}' not found in crown ratio data")
+        
+    coeffs = data_handling.species_data[species]
+    print(f"Debug: coeffs for {species}:", coeffs)
+    
+    # Get equation number and coefficients
+    equation_number = coeffs.get('equation_number')
+    if equation_number is None:
+        raise ValueError(f"Missing equation number for species {species}")
+    
+    d0 = coeffs.get('d0')
+    d1 = coeffs.get('d1')
+    d2 = coeffs.get('d2')
+    
+    # Calculate ACR based on equation type
+    if equation_number == 1:
+        if any(x is None for x in [d0, d1, d2]):
+            raise ValueError(f"Missing coefficients for equation 1 (species {species})")
+        raw_acr = np.exp(d0 + (d1 * np.log(relsdi)) + (d2 * relsdi)) / 100.0
+        print(f"Debug: Species {species} eq1 - raw_acr before bounds: {raw_acr:.3f}")
+        acr = raw_acr
+    elif equation_number == 2:
+        if any(x is None for x in [d0, d1]):
+            raise ValueError(f"Missing coefficients for equation 2 (species {species})")
+        raw_acr = np.exp(d0 + (d1 * np.log(relsdi))) / 100.0
+        print(f"Debug: Species {species} eq2 - raw_acr before bounds: {raw_acr:.3f}")
+        acr = raw_acr
+    elif equation_number == 3:
+        if any(x is None for x in [d0, d2]):
+            raise ValueError(f"Missing coefficients for equation 3 (species {species})")
+        raw_acr = (d0 + (d2 * relsdi)) / 100.0
+        print(f"Debug: Species {species} eq3 - raw_acr before bounds: {raw_acr:.3f}")
+        acr = raw_acr
+    elif equation_number == 4:
+        if any(x is None for x in [d0, d1]):
+            raise ValueError(f"Missing coefficients for equation 4 (species {species})")
+        raw_acr = (d0 + (d1 * np.log10(relsdi))) / 100.0
+        print(f"Debug: Species {species} eq4 - raw_acr before bounds: {raw_acr:.3f}")
+        acr = raw_acr
+    elif equation_number == 5:
+        if any(x is None for x in [d0, d1]):
+            raise ValueError(f"Missing coefficients for equation 5 (species {species})")
+        raw_acr = relsdi / ((d0 * relsdi) + d1)  # Already a proportion
+        print(f"Debug: Species {species} eq5 - raw_acr before bounds: {raw_acr:.3f}")
+        acr = raw_acr
     else:
-        raise ValueError(f"Invalid coefficient combination for species {species}")
+        raise ValueError(f"Invalid equation number {equation_number} for species {species}")
         
     # Ensure ACR is between 0 and 1
     return max(0.05, min(0.95, acr))
@@ -108,10 +134,10 @@ def calculate_crown_ratio_weibull(x, species, acr, scale):
     Raises:
         KeyError: if species code is not found in the database
     """
-    if species not in data_handling.species_crown_ratio_data:
+    if species not in data_handling.species_data:
         raise KeyError(f"Species code '{species}' not found in crown ratio data")
         
-    coeffs = data_handling.species_crown_ratio_data[species]
+    coeffs = data_handling.species_data[species]
     
     # Get Weibull parameters from coefficients
     a, b, c = calculate_weibull_parameters(
@@ -147,7 +173,7 @@ def calculate_weibull_parameters(acr, a0, b0, b1, c0):
     
     The parameters are:
     - location (a) = a0/100                          (converts to proportion)
-    - scale (b) = max(0.03, (b0 + b1*acr)/100)      (converts to proportion with minimum bound)
+    - scale (b) = max(0.03, (b0 + b1*acr))          (minimum bound)
     - shape (c) = max(2.0, c0)                       (ensures minimum shape parameter)
     
     Args:
@@ -161,7 +187,7 @@ def calculate_weibull_parameters(acr, a0, b0, b1, c0):
         tuple of (a, b, c) parameters for the Weibull distribution
     """
     a = a0 / 100.0  # Convert to proportion
-    b = max(0.03, (b0 + b1 * acr) / 100.0)  # Convert to proportion and bound
+    b = max(0.03, b0 + b1 * acr)  # Apply minimum bound
     c = max(2.0, c0)  # Bound only
     return a, b, c
 

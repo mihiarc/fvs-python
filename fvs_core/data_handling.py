@@ -7,6 +7,7 @@ import sqlite3
 from pathlib import Path
 import ast
 from .site_index import calculate_rsisp, calculate_mgspix, calculate_mgrsi, calculate_sisp
+import os
 
 # Database connection
 db_path = Path(__file__).parent.parent / 'data/sqlite_databases/fvspy.db'
@@ -24,23 +25,54 @@ def get_connection():
     conn.row_factory = dict_factory
     return conn
 
+def get_db_connection():
+    """Get a connection to the SQLite database."""
+    db_path = Path(__file__).parent.parent / 'data' / 'sqlite_databases' / 'fvspy.db'
+    return sqlite3.connect(db_path)
+
 def get_species_data():
-    """Get species data from the database."""
-    with get_connection() as conn:
-        cursor = conn.cursor()
-        cursor.execute("""
-            SELECT s.species_code,
-                   sir.si_min, sir.si_max, sir.dbw,
-                   ca.curtis_arney_b0, ca.curtis_arney_b1, ca.curtis_arney_b2,
-                   w.wykoffoff_b0, w.wykoffoff_b1,
-                   bt.bark_b0, bt.bark_b1
-            FROM species s
-            LEFT JOIN site_index_range sir ON s.species_code = sir.species_code
-            LEFT JOIN curtis_arney_functions ca ON s.species_code = ca.species_code
-            LEFT JOIN wykoff_functions w ON s.species_code = w.species_code
-            LEFT JOIN bark_thickness bt ON s.species_code = bt.species_code
-        """)
-        return {row['species_code']: row for row in cursor.fetchall()}
+    """
+    Gets species data from the SQLite database.
+    
+    Returns:
+        Dictionary mapping species codes to their coefficients.
+    """
+    conn = get_db_connection()
+    cursor = conn.cursor()
+    
+    # Configure cursor to return rows as dictionaries
+    cursor.row_factory = sqlite3.Row
+    
+    # Get all species data in one query
+    cursor.execute("""
+        SELECT 
+            s.species_code,
+            s.acr_equation_number as equation_number,
+            s.a,
+            s.b0,
+            s.b1,
+            s.c,
+            s.d0,
+            s.d1,
+            s.d2,
+            ca.dbw,
+            ca.curtis_arney_b0,
+            ca.curtis_arney_b1,
+            ca.curtis_arney_b2
+        FROM species_crown_ratio s
+        LEFT JOIN curtis_arney_functions ca ON s.species_code = ca.species_code
+    """)
+    
+    # Convert to dictionary
+    species_data = {}
+    for row in cursor.fetchall():
+        row_dict = dict(row)
+        species_code = row_dict['species_code']
+        print(f"Debug: Row dict for {species_code}:", row_dict)
+        species_data[species_code] = row_dict
+    
+    conn.close()
+    return species_data
 
 def get_site_index_groups():
     """Get site index groups from the database."""
