@@ -225,3 +225,47 @@ def calculate_diameter_growth_from_dds(dbh_ib, ln_dds):
     dbh_ib_new = np.sqrt(dbh_ib_new_squared)
     diameter_growth = dbh_ib_new - dbh_ib
     return diameter_growth
+
+def calculate_bark_thickness(dbh: float, a: float, b: float) -> float:
+    """Calculate bark thickness using species-specific coefficients.
+    
+    Args:
+        dbh: Diameter at breast height (inches)
+        a: Species-specific coefficient a
+        b: Species-specific coefficient b
+        
+    Returns:
+        Bark thickness in inches
+    """
+    return a + b * dbh
+
+def calculate_inside_bark_dbh(dbh: float, bark_thickness: float) -> float:
+    """Calculate inside bark diameter from outside bark diameter and bark thickness.
+    
+    Args:
+        dbh: Outside bark diameter at breast height (inches)
+        bark_thickness: Bark thickness (inches)
+        
+    Returns:
+        Inside bark diameter (inches)
+    """
+    return dbh - 2 * bark_thickness
+
+def curtis_arney(dbh: float, b0: float, b1: float, b2: float) -> float:
+    """Calculate tree height using the Curtis-Arney equation.
+    
+    Args:
+        dbh: Diameter at breast height (inches)
+        b0: Species-specific coefficient b0
+        b1: Species-specific coefficient b1
+        b2: Species-specific coefficient b2
+        
+    Returns:
+        Tree height in feet
+    """
+    if dbh < 3.0:
+        # Special calculation for small trees
+        return 4.51 + (b0 * np.exp(-b1 * 3**b2) - 4.51) * (dbh - 0.2) / (3 - 0.2)
+    else:
+        # Standard calculation for larger trees
+        return 4.51 + b0 * np.exp(-b1 * dbh**b2)
