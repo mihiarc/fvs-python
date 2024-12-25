@@ -55,31 +55,52 @@ The SQLite database contains the following tables:
 
 1. `species`: Primary species information
    - Primary key: species_code
-   - Fields: species_code, FIA_code
 
-2. `growth_coefficients`: Species-specific growth model parameters
+2. `site_index_groups`: Site index group definitions
+   - Primary key: site_index_species
+   - Fields: mapped_species, site_type, coefficients (a, b, c, d)
+
+3. `site_index_range`: Site index ranges for species
    - Primary key: species_code
-   - Foreign key reference to species table
+   - Fields: si_min, si_max, dbw
 
-3. `species_scaling_factors`: Scaling factors for species calculations
+4. `bark_thickness`: Bark thickness coefficients
    - Primary key: species_code
-   - Foreign key reference to species table
+   - Fields: bark_b0, bark_b1
 
-4. `forest_types`: Forest type definitions
-   - Primary key: fvs_fortypcd
-   - Fields: fvs_fortypcd, fvs_fortypcd_name, fia_fortypcd
+5. `wykoff_functions`: Wykoff height-diameter coefficients
+   - Primary key: species_code
+   - Fields: wykoffoff_b0, wykoffoff_b1
 
-5. `ecological_units`: Ecological unit definitions
-   - Primary key: fvs_ecounit
-   - Fields: fvs_ecounit, fvspy_ecounit
+6. `curtis_arney_functions`: Curtis-Arney height-diameter coefficients
+   - Primary key: species_code
+   - Fields: dbw, curtis_arneyarney_b0, curtis_arneyarney_b1, curtis_arneyarney_b2
 
-6. `ecological_coefficients`: Coefficients for ecological unit calculations
-   - Primary key: (species_code, fvs_ecounit)
-   - Foreign key references to species and ecological_units tables
+7. `large_tree_growth`: Large tree growth coefficients
+   - Primary key: species_code
+   - Fields: large_tree_b0 through large_tree_b10
 
-7. `forest_type_coefficients`: Coefficients for forest type calculations
-   - Primary key: (species_code, fvs_fortypcd)
-   - Foreign key references to species and forest_types tables
+8. `small_tree_growth`: Small tree growth coefficients
+   - Primary key: species_code
+   - Fields: small_tree_b0 through small_tree_b4
+
+9. `forest_types`: Forest type definitions
+   - Composite key: (fia_fortypcd, fvs_fortypcd)
+   - Fields: fvs_fortypcd_name
+
+10. `ecological_units`: Ecological unit definitions
+    - Primary key: fvs_ecounit
+    - Fields: fvspy_ecounit
+
+11. `ecological_coefficients`: Coefficients for ecological unit calculations
+    - Composite key: (fvs_spcd, fvspy_base_ecounit)
+    - Fields: coefficients for each ecological unit (m221, m222, etc.)
+
+12. `species_crown_ratio`: Crown ratio coefficients
+    - Primary key: species_code
+    - Fields: a, b0, b1, c, d0, d1, d2
+
+The database schema and detailed documentation can be found in `docs/database_schema.md`.
 
 ## Getting Started
 
