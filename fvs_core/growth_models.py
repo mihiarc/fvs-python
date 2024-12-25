@@ -4,14 +4,35 @@ Implements height-diameter relationships and other growth-related functions.
 """
 
 import math
-from pathlib import Path
-import pandas as pd
 import numpy as np
 
-# Read species coefficients from CSV
-data_dir = Path(__file__).parent.parent / 'data'
-df = pd.read_csv(data_dir / 'species_data.csv')
-species_data = df.set_index('species_code').to_dict('index')
+# Test data for southern yellow pines
+species_data = {
+    'SP': {  # Shortleaf Pine
+        'CurtisArney_b0': 444.0921666,
+        'CurtisArney_b1': 4.11876312,
+        'CurtisArney_b2': -0.30617043,
+        'Dbw': 0.5
+    },
+    'SA': {  # Slash Pine
+        'CurtisArney_b0': 1087.101439,
+        'CurtisArney_b1': 5.10450596,
+        'CurtisArney_b2': -0.24284896,
+        'Dbw': 0.5
+    },
+    'LL': {  # Longleaf Pine
+        'CurtisArney_b0': 98.56082813,
+        'CurtisArney_b1': 3.89930709,
+        'CurtisArney_b2': -0.86730393,
+        'Dbw': 0.5
+    },
+    'LP': {  # Loblolly Pine
+        'CurtisArney_b0': 243.860648,
+        'CurtisArney_b1': 4.28460566,
+        'CurtisArney_b2': -0.47130185,
+        'Dbw': 0.5
+    }
+}
 
 def curtis_arney_height(dbh, species, coefficients=None):
     """
@@ -37,7 +58,10 @@ def curtis_arney_height(dbh, species, coefficients=None):
     if dbh < 3.0:
         # Special calculation for small trees
         dbw = coefficients.get('Dbw', 0.2)  # Default to 0.2 if not specified
-        return ((4.51 + b0 * math.exp(-b1 * 3**b2) - 4.51) * (dbh - dbw) / (3 - dbw)) + 4.51
+        # Calculate height at dbh=3.0 for interpolation
+        h3 = 4.51 + b0 * math.exp(-b1 * 3**b2)
+        # Linear interpolation between breast height and h3
+        return 4.51 + (h3 - 4.51) * (dbh - dbw) / (3 - dbw)
     else:
         # Standard calculation for larger trees dbh >= 3 inches
         return 4.51 + b0 * math.exp(-b1 * dbh**b2)
