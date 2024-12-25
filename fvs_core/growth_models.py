@@ -12,25 +12,33 @@ species_data = {
         'CurtisArney_b0': 444.0921666,
         'CurtisArney_b1': 4.11876312,
         'CurtisArney_b2': -0.30617043,
-        'Dbw': 0.5
+        'Dbw': 0.5,
+        'Wykoff_b0': 4.6271,
+        'Wykoff_b1': -6.4095
     },
     'SA': {  # Slash Pine
         'CurtisArney_b0': 1087.101439,
         'CurtisArney_b1': 5.10450596,
         'CurtisArney_b2': -0.24284896,
-        'Dbw': 0.5
+        'Dbw': 0.5,
+        'Wykoff_b0': 4.6561,
+        'Wykoff_b1': -6.2258
     },
     'LL': {  # Longleaf Pine
         'CurtisArney_b0': 98.56082813,
         'CurtisArney_b1': 3.89930709,
         'CurtisArney_b2': -0.86730393,
-        'Dbw': 0.5
+        'Dbw': 0.5,
+        'Wykoff_b0': 4.5991,
+        'Wykoff_b1': -5.9111
     },
     'LP': {  # Loblolly Pine
         'CurtisArney_b0': 243.860648,
         'CurtisArney_b1': 4.28460566,
         'CurtisArney_b2': -0.47130185,
-        'Dbw': 0.5
+        'Dbw': 0.5,
+        'Wykoff_b0': 4.6897,
+        'Wykoff_b1': -6.8801
     }
 }
 
