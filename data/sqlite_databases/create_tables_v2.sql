@@ -111,13 +111,14 @@ CREATE TABLE ecological_coefficients (
 
 CREATE TABLE species_crown_ratio (
     species_code TEXT PRIMARY KEY NOT NULL,
+    acr_equation_number INTEGER NOT NULL,
     a REAL NOT NULL,
     b0 REAL NOT NULL,
     b1 REAL NOT NULL,
     c REAL NOT NULL,
-    d0 REAL NOT NULL,
-    d1 REAL NOT NULL,
-    d2 REAL NOT NULL
+    d0 REAL,
+    d1 REAL,
+    d2 REAL
 );
 
 -- Create indexes for better query performance

@@ -146,16 +146,18 @@ Contains coefficients for ecological unit calculations.
 ```sql
 CREATE TABLE species_crown_ratio (
     species_code TEXT PRIMARY KEY NOT NULL,
+    acr_equation_number INTEGER NOT NULL,
     a REAL NOT NULL,
     b0 REAL NOT NULL,
     b1 REAL NOT NULL,
     c REAL NOT NULL,
     d0 REAL NOT NULL,
     d1 REAL NOT NULL,
-    d2 REAL NOT NULL
+    d2 REAL NOT NULL,
+    crown_width REAL NOT NULL
 );
 ```
-Contains coefficients for calculating Actual Crown Ratio (ACR) for each species.
+Contains coefficients for calculating Actual Crown Ratio (ACR) and crown width for each species. The `acr_equation_number` field specifies which equation variant to use for ACR calculations.
 
 ## Indexes
 
@@ -182,7 +184,7 @@ The database is organized to support the following key aspects of forest growth 
 5. **Forest Classification**:
    - Forest types (FIA and FVS mappings)
    - Ecological units and coefficients
-6. **Crown Modeling**: Crown ratio coefficients
+6. **Crown Modeling**: Crown ratio and width coefficients
 
 ## Usage Notes
 
