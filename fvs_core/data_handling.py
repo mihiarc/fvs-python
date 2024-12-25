@@ -5,10 +5,11 @@ Provides access to species data and coefficients from the SQLite database.
 
 import sqlite3
 from pathlib import Path
+import ast
 from .site_index import calculate_rsisp, calculate_mgspix, calculate_mgrsi, calculate_sisp
 
 # Database connection
-db_path = Path(__file__).parent.parent / 'fvspy.db'
+db_path = Path(__file__).parent.parent / 'data/sqlite_databases/fvspy.db'
 
 def dict_factory(cursor, row):
     """Convert SQLite row to dictionary."""
@@ -49,7 +50,16 @@ def get_site_index_groups():
             SELECT site_index_species, mapped_species, site_type, a, b, c, d
             FROM site_index_groups
         """)
-        return {row['site_index_species']: row for row in cursor.fetchall()}
+        groups = {}
+        for row in cursor.fetchall():
+            # Parse mapped_species from string representation to set of species
+            try:
+                row['mapped_species'] = ast.literal_eval(row['mapped_species'])
+            except (ValueError, SyntaxError):
+                # If parsing fails, treat it as a single species
+                row['mapped_species'] = {row['mapped_species']}
+            groups[row['site_index_species']] = row
+        return groups
 
 def get_species_crown_ratio_data():
     """Get crown ratio coefficients from the database."""
@@ -61,21 +71,10 @@ def get_species_crown_ratio_data():
         """)
         return {row['species_code']: row for row in cursor.fetchall()}
 
-def get_acr_equation_data():
-    """Get ACR equation coefficients from the database."""
-    with get_connection() as conn:
-        cursor = conn.cursor()
-        cursor.execute("""
-            SELECT equation_number, d0, d1, d2
-            FROM acr_equations
-        """)
-        return {row['equation_number']: row for row in cursor.fetchall()}
-
 # Initialize data from database
 species_data = get_species_data()
 site_index_groups = get_site_index_groups()
 species_crown_ratio_data = get_species_crown_ratio_data()
-acr_equation_data = get_acr_equation_data()
 
 def calculate_site_index(site_species, site_index_value, target_species):
     """
@@ -105,9 +104,9 @@ def calculate_site_index(site_species, site_index_value, target_species):
     matching_group = None
     for group_id, group_data in site_index_groups.items():
         if (site_species == group_data["site_index_species"] or 
-            site_species in eval(group_data["mapped_species"])) and \
+            site_species in group_data["mapped_species"]) and \
            (target_species == group_data["site_index_species"] or 
-            target_species in eval(group_data["mapped_species"])):
+            target_species in group_data["mapped_species"]):
             matching_group = group_data
             break
     
