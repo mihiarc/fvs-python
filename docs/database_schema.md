@@ -12,6 +12,40 @@ CREATE TABLE species (
 ```
 Primary table containing species codes.
 
+### Crown Width Forest Grown Table
+```sql
+CREATE TABLE crown_width_forest_grown (
+    species_code TEXT PRIMARY KEY NOT NULL,
+    fia_spcd INTEGER NOT NULL,
+    equation_number INTEGER NOT NULL,
+    a1 REAL NOT NULL,
+    a2 REAL NOT NULL,
+    a3 REAL,
+    a4 REAL,
+    a5 REAL,
+    dbh_bound REAL,
+    fcw_bound REAL
+);
+```
+Contains coefficients and parameters for calculating crown width of forest-grown trees. The coefficients (a1-a5) are used in different equation forms based on the equation_number. The dbh_bound and fcw_bound fields can be NULL and represent diameter and crown width bounds for the equations.
+
+### Crown Width Open Grown Table
+```sql
+CREATE TABLE crown_width_open_grown (
+    species_code TEXT PRIMARY KEY NOT NULL,
+    fia_spcd INTEGER NOT NULL,
+    equation_number INTEGER NOT NULL,
+    a1 REAL NOT NULL,
+    a2 REAL NOT NULL,
+    a3 REAL,
+    a4 REAL,
+    a5 REAL,
+    dbh_bound REAL,
+    ocw_bound REAL
+);
+```
+Contains coefficients and parameters for calculating crown width of open-grown trees. Similar to the forest-grown table, but specifically for trees growing in open conditions.
+
 ### Site Index Groups Table
 ```sql
 CREATE TABLE site_index_groups (
@@ -62,9 +96,9 @@ Contains Wykoff height-diameter relationship coefficients.
 CREATE TABLE curtis_arney_functions (
     species_code TEXT PRIMARY KEY NOT NULL,
     dbw REAL NOT NULL,
-    curtis_arneyarney_b0 REAL NOT NULL,
-    curtis_arneyarney_b1 REAL NOT NULL,
-    curtis_arneyarney_b2 REAL NOT NULL
+    curtis_arney_b0 REAL NOT NULL,
+    curtis_arney_b1 REAL NOT NULL,
+    curtis_arney_b2 REAL NOT NULL
 );
 ```
 Contains Curtis-Arney height-diameter relationship coefficients.
@@ -178,6 +212,7 @@ The database is organized to support the following key aspects of forest growth 
 3. **Tree Measurements**: 
    - Bark thickness coefficients
    - Height-diameter relationships (Wykoff and Curtis-Arney functions)
+   - Crown width relationships (forest-grown and open-grown)
 4. **Growth Models**:
    - Small tree growth coefficients
    - Large tree growth coefficients
@@ -192,4 +227,5 @@ The database is organized to support the following key aspects of forest growth 
 2. Forest types have a composite primary key of FIA and FVS codes
 3. Ecological coefficients use a composite key of species code and base ecological unit
 4. All coefficient tables use REAL data type for precision in calculations
-5. Text fields are used for codes and names to maintain readability 
+5. Text fields are used for codes and names to maintain readability
+6. Crown width tables support NULL values for bound fields (dbh_bound, fcw_bound, ocw_bound) 
