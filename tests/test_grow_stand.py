@@ -3,8 +3,8 @@ import sqlite3
 from unittest.mock import patch, Mock
 import numpy as np
 import pandas as pd
-from fvs_core.grow_stand import grow_stand
-from fvs_core.growth_models import (
+from src.grow_stand import grow_stand
+from src.growth_models import (
     calculate_small_tree_height_growth,
     calculate_large_tree_diameter_growth,
     curtis_arney_height,

@@ -4,7 +4,7 @@ Tests for the growth module.
 
 import pytest
 import math
-from fvs_core.growth_models import (
+from src.growth_models import (
     curtis_arney_height,
     wykoff_height,
     species_data,

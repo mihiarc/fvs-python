@@ -6,8 +6,8 @@ import pytest
 import numpy as np
 import matplotlib.pyplot as plt
 from pathlib import Path
-from fvs_core import data_handling
-from fvs_core.crown_ratio import (
+from src import data_handling
+from src.crown_ratio import (
     calculate_dubbed_crown_ratio,
     calculate_acr,
     calculate_crown_ratio_weibull,

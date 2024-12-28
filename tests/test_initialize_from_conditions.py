@@ -1,6 +1,6 @@
 import unittest
 import numpy as np
-from fvs_core.initialize_stand import initialize_stand, get_empirical_dbh_distribution
+from src.initialize_stand import initialize_stand, get_empirical_dbh_distribution
 
 class TestInitializeFromConditions(unittest.TestCase):
     def test_empirical_distribution(self):

@@ -5,8 +5,8 @@ Tests for crown ratio calculations.
 import unittest
 import numpy as np
 from pathlib import Path
-from fvs_core import data_handling
-from fvs_core import crown_ratio
+from src import data_handling
+from src import crown_ratio
 
 class TestCrownRatio(unittest.TestCase):
     @classmethod

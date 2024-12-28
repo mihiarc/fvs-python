@@ -1,8 +1,8 @@
 """Example script demonstrating how to use FVS and FIA databases together."""
 
 from pathlib import Path
-from fvs_core.db_utils import FVSDatabase
-from fvs_core.fia_utils import FIADatabase
+from src.db_utils import FVSDatabase
+from src.fia_utils import FIADatabase
 
 def analyze_plot(plot_id: int, fia_db_path: Path):
     """Analyze trees in a plot using both FIA and FVS data.

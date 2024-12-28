@@ -1,7 +1,7 @@
 import unittest
 import sqlite3
 import pandas as pd
-from fvs_core.initialize_stand import initialize_from_fia
+from src.initialize_stand import initialize_from_fia
 
 class TestFIAInitialization(unittest.TestCase):
     def setUp(self):

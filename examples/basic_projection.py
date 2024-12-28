@@ -3,10 +3,10 @@ import numpy as np
 import sqlite3
 from pathlib import Path
 from typing import List, Dict, Any, Union, Tuple
-from fvs_core.initialize_stand import initialize_from_fia
-from fvs_core.grow_stand import grow_stand
-from fvs_core.stand_metrics import calculate_stand_metrics
-from fvs_core.visualize_stand_growth import (
+from src.initialize_stand import initialize_from_fia
+from src.grow_stand import grow_stand
+from src.stand_metrics import calculate_stand_metrics
+from src.visualize_stand_growth import (
     visualize_stand_growth,
     visualize_dbh_distribution,
     visualize_height_distribution,

@@ -7,10 +7,10 @@ import pytest
 import numpy as np
 import matplotlib.pyplot as plt
 from pathlib import Path
-from fvs_core.growth_models import curtis_arney_height, wykoff_height, species_data
+from src.growth_models import curtis_arney_height, wykoff_height, species_data
 import sqlite3
 import pandas as pd
-from fvs_core.growth_models import calculate_small_tree_height_growth
+from src.growth_models import calculate_small_tree_height_growth
 
 # Ensure plots directory exists
 PLOTS_DIR = Path(__file__).parent / 'plots'

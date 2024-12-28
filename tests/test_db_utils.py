@@ -3,7 +3,7 @@
 import pytest
 import sqlite3
 from pathlib import Path
-from fvs_core.db_utils import FVSDatabase
+from src.db_utils import FVSDatabase
 
 # Test data constants
 TEST_SPECIES = 'FR'

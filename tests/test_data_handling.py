@@ -1,5 +1,5 @@
 import pytest
-from fvs_core.data_handling import calculate_site_index, species_data
+from src.data_handling import calculate_site_index, species_data
 
 def test_calculate_site_index_valid():
     # Test case 1: Valid site species and target species in group 4 (WP group)
