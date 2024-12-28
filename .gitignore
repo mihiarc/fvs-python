@@ -44,4 +44,5 @@ Thumbs.db
 
 # Project specific
 tests/test_output/
-outputs/
+outputs/data/sqlite_databases/*.db
+*.ipynb
