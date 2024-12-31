@@ -76,3 +76,69 @@ def curtis_arney_height(dbh: float, coeffs: Dict[str, float]) -> float:
     else:
         # Standard calculation for larger trees
         return calculate_height(dbh) 
+
+def wykoff_height(dbh: float, coeffs: Dict[str, float]) -> float:
+    """Calculate total tree height using the Wykoff equation.
+    
+    The Wykoff equation is an alternative height-diameter relationship for southern
+    yellow pines. The equation form is:
+        H = 4.51 + exp(b0 + b1 / (D + 1))
+    where:
+        H = total tree height in feet
+        D = diameter at breast height (DBH) in inches
+        b0, b1 = species-specific coefficients
+    
+    For small trees (DBH < 3.0 inches), a linear interpolation is used between
+    breast height (4.51 feet) and the height predicted at DBH = 3.0 inches.
+    
+    Args:
+        dbh: Diameter at breast height in inches
+        coeffs: Dictionary containing Wykoff coefficients:
+            - 'Wykoff_b0': Intercept parameter
+            - 'Wykoff_b1': Rate parameter
+            - 'Dbw': Diameter breakpoint (optional, defaults to 0.2)
+    
+    Returns:
+        Total tree height in feet
+    
+    Raises:
+        ValueError: If dbh is not positive or if required coefficients are missing
+        
+    Example:
+        >>> coeffs = {
+        ...     'Wykoff_b0': 4.6897,
+        ...     'Wykoff_b1': -6.8801
+        ... }
+        >>> wykoff_height(10.0, coeffs)
+        65.2  # Example output
+    """
+    # Validate inputs
+    if dbh <= 0:
+        raise ValueError(f"DBH must be positive, got {dbh}")
+    
+    required_coeffs = ['Wykoff_b0', 'Wykoff_b1']
+    missing_coeffs = [c for c in required_coeffs if c not in coeffs]
+    if missing_coeffs:
+        raise ValueError(f"Missing required coefficients: {missing_coeffs}")
+    
+    # Extract coefficients
+    b0 = coeffs['Wykoff_b0']
+    b1 = coeffs['Wykoff_b1']
+    dbw = coeffs.get('Dbw', 0.2)  # Default to 0.2 if not specified
+    
+    def calculate_height(d: float) -> float:
+        """Helper function to calculate height for a given diameter."""
+        return 4.51 + math.exp(b0 + b1 / (d + 1))
+    
+    if dbh < 3.0:
+        # Special calculation for small trees
+        if dbh <= dbw:
+            return 4.51  # At or below the diameter breakpoint, height is breast height
+        
+        # Calculate height at dbh=3.0 for interpolation
+        h3 = calculate_height(3.0)
+        # Linear interpolation between breast height and h3
+        return 4.51 + (h3 - 4.51) * (dbh - dbw) / (3.0 - dbw)
+    else:
+        # Standard calculation for larger trees
+        return calculate_height(dbh) 
