@@ -175,6 +175,153 @@ Stand management functions handle:
    - Growth model application
    - Stand updating
 
+## Database Schema
+
+The SQLite database organizes forest modeling data into related tables:
+
+### Core Tables
+1. **species**: Primary species information
+2. **site_index_groups**: Site index definitions and coefficients
+3. **crown_width_forest_grown**: Forest-grown crown coefficients
+4. **crown_width_open_grown**: Open-grown crown coefficients
+5. **large_tree_growth**: Growth coefficients for large trees
+6. **small_tree_growth**: Growth coefficients for small trees
+
+### Supporting Tables
+1. **forest_types**: Forest classification mappings
+2. **ecological_units**: Ecological unit definitions
+3. **ecological_coefficients**: Site-specific coefficients
+4. **species_crown_ratio**: Crown modeling parameters
+
+### Key Relationships
+```mermaid
+erDiagram
+    species ||--o{ site_index_groups : has
+    species ||--o{ crown_width_forest_grown : has
+    species ||--o{ crown_width_open_grown : has
+    species ||--o{ large_tree_growth : has
+    species ||--o{ small_tree_growth : has
+    species ||--o{ species_crown_ratio : has
+    forest_types ||--o{ ecological_coefficients : influences
+    ecological_units ||--o{ ecological_coefficients : defines
+```
+
+## Implementation Details
+
+### Growth Model Implementation
+
+1. **Diameter Growth**
+   ```python
+   def calculate_diameter_growth(tree, stand):
+       if tree.dbh < 3.0:
+           growth = small_tree_growth(tree, stand)
+       elif tree.dbh > 5.0:
+           growth = large_tree_growth(tree, stand)
+       else:
+           # Blend small and large tree growth
+           weight = (tree.dbh - 3.0) / 2.0
+           growth = blend_growth(weight, small_growth, large_growth)
+       return apply_bounds(growth)
+   ```
+
+2. **Height Growth**
+   ```python
+   def calculate_height_growth(tree, stand):
+       if tree.height < 4.5:
+           return seedling_height_growth(tree, stand)
+       
+       potential = potential_height_growth(tree, stand)
+       modifier = competition_modifier(tree, stand)
+       return potential * modifier
+   ```
+
+3. **Crown Development**
+   ```python
+   def update_crown(tree, stand):
+       # Update crown width
+       tree.crown_width = calculate_crown_width(tree, stand)
+       
+       # Update crown ratio
+       tree.crown_ratio = calculate_crown_ratio(tree, stand)
+       
+       # Calculate crown competition
+       tree.crown_competition = crown_competition_factor(tree, stand)
+   ```
+
+### Stand Metrics Implementation
+
+1. **Basal Area Calculation**
+   ```python
+   def calculate_basal_area(trees):
+       return sum(0.005454154 * tree.dbh**2 for tree in trees)
+   ```
+
+2. **Stand Density Index**
+   ```python
+   def calculate_sdi(trees):
+       return sum((tree.dbh/10)**1.605 for tree in trees)
+   ```
+
+3. **Volume Calculation**
+   ```python
+   def calculate_volume(tree):
+       form_factor = species_form_factors[tree.species]
+       return (tree.height * tree.basal_area * form_factor) / 12
+   ```
+
+## Usage Examples
+
+### Basic Stand Growth Projection
+```python
+from fvs_core import Stand, Tree, GrowthSimulator
+
+# Initialize stand
+stand = Stand()
+stand.add_tree(Tree(species="LP", dbh=10, height=60))
+stand.add_tree(Tree(species="SP", dbh=12, height=65))
+
+# Configure simulator
+sim = GrowthSimulator(years=10, timestep=5)
+
+# Run simulation
+results = sim.run(stand)
+```
+
+### Economic Analysis
+```python
+from fvs_core import economics
+
+# Calculate NPV
+cash_flows = [
+    (-1000, 0),   # Initial cost
+    (500, 5),     # Thinning revenue
+    (2000, 10)    # Final harvest
+]
+npv = economics.calculate_npv(cash_flows, rate=0.05)
+```
+
+## Development Guidelines
+
+### Code Style
+- Follow PEP 8 guidelines
+- Use type hints for function parameters
+- Document all functions using Google-style docstrings
+
+### Testing
+- Unit tests required for all new features
+- Integration tests for major components
+- Validation tests against FVS benchmarks
+
+### Version Control
+- Feature branches for new development
+- Pull request reviews required
+- Semantic versioning for releases
+
+### Documentation
+- Update documentation with code changes
+- Include examples for new features
+- Maintain changelog 
+
 ## Species-Specific Parameters
 
 ### Growth Coefficients
@@ -365,213 +512,4 @@ for species in species_list:
 # Export results
 for species, table in yield_tables.items():
     table.to_csv(f'{species}_yield_table.csv', index=False)
-```
-
-## Development Guidelines
-
-### Code Style
-- Follow PEP 8 guidelines
-- Use type hints for function parameters
-- Document all functions using Google-style docstrings
-
-### Testing
-- Unit tests required for all new features
-- Integration tests for major components
-- Validation tests against FVS benchmarks
-
-### Version Control
-- Feature branches for new development
-- Pull request reviews required
-- Semantic versioning for releases
-
-### Documentation
-- Update documentation with code changes
-- Include examples for new features
-- Maintain changelog
-
-## Codebase Organization
-
-The codebase is organized into three main components:
-
-```mermaid
-graph TD
-    %% Styling
-    classDef core fill:#e1f5fe,stroke:#01579b,stroke-width:2px
-    classDef data fill:#f3e5f5,stroke:#4a148c,stroke-width:2px
-    classDef viz fill:#e8f5e9,stroke:#1b5e20,stroke-width:2px
-    classDef main fill:#fff3e0,stroke:#e65100,stroke-width:2px
-
-    %% Main initialization
-    init[("initialize_stand.py
-(Stand Setup)")]:::main
-    
-    %% Core components
-    grow[("grow_stand.py
-(Growth Controller)")]:::core
-    growth[("growth_models.py
-(Growth Equations)")]:::core
-    crown_w[("crown_width.py
-(Crown Calculations)")]:::core
-    crown_r[("crown_ratio.py
-(Crown Ratios)")]:::core
-    vol[("volume.py
-(Volume Calc)")]:::core
-    site[("site_index.py
-(Site Quality)")]:::core
-    
-    %% Data management
-    db[("db_utils.py
-(Database Operations)")]:::data
-    fia[("fia_utils.py
-(FIA Data)")]:::data
-    metrics[("stand_metrics.py
-(Stand Statistics)")]:::data
-    crown_calc[("crown_width_calculator.py
-(Crown Processing)")]:::data
-    
-    %% Visualization
-    viz[("visualize_stand_growth.py
-(Growth Visualization)")]:::viz
-    
-    %% Relationships
-    init --> grow
-    grow --> growth
-    grow --> crown_w
-    grow --> crown_r
-    grow --> vol
-    grow --> site
-    
-    db --> init
-    db --> crown_w
-    fia --> init
-    growth --> metrics
-    crown_w --> crown_calc
-    viz --> grow
-    
-    subgraph Core_Growth_Engine["Core Growth Engine"]
-        growth
-        grow
-        crown_w
-        crown_r
-        vol
-        site
-    end
-    
-    subgraph Data_Management["Data Management"]
-        db
-        fia
-        metrics
-        crown_calc
-    end
-    
-    subgraph Visualization["Visualization"]
-        viz
-    end
-```
-
-### Core Growth Engine
-- `grow_stand.py`: Central controller for growth simulation
-- `growth_models.py`: Implementation of growth equations
-- `crown_width.py` & `crown_ratio.py`: Crown modeling
-- `volume.py`: Volume calculations
-- `site_index.py`: Site quality calculations
-
-### Data Management
-- `db_utils.py`: SQLite database operations
-- `fia_utils.py`: Forest Inventory Analysis data processing
-- `stand_metrics.py`: Stand-level statistics
-- `crown_width_calculator.py`: Crown data processing
-
-### Visualization
-- `visualize_stand_growth.py`: Growth visualization tools
-
-## Database Structure
-
-The SQLite database (`fvspy.db`) is organized into three main categories:
-
-### 1. Species Data Tables
-```mermaid
-erDiagram
-    species ||--o{ crown_width_forest_grown : has
-    species ||--o{ crown_width_open_grown : has
-    species ||--o{ species_crown_ratio : has
-    species {
-        text species_code PK
-        text common_name
-        text scientific_name
-        integer fia_code
-    }
-    crown_width_forest_grown {
-        text species_code PK
-        real a1
-        real a2
-        real a3
-        real dbh_bound
-    }
-    crown_width_open_grown {
-        text species_code PK
-        real a1
-        real a2
-        real a3
-        real dbh_bound
-    }
-    species_crown_ratio {
-        text species_code PK
-        real a
-        real b0
-        real b1
-        real c
-    }
-```
-
-### 2. Growth Model Tables
-```mermaid
-erDiagram
-    species ||--o{ large_tree_growth : has
-    species ||--o{ small_tree_growth : has
-    species ||--o{ height_diameter : has
-    large_tree_growth {
-        text species_code PK
-        real b0
-        real b1
-        real b2
-        real b3
-    }
-    small_tree_growth {
-        text species_code PK
-        real c1
-        real c2
-        real c3
-        real c4
-    }
-    height_diameter {
-        text species_code PK
-        real wykoff_b0
-        real wykoff_b1
-        real curtis_b0
-        real curtis_b1
-    }
-```
-
-### 3. Site and Stand Tables
-```mermaid
-erDiagram
-    ecological_units ||--o{ ecological_coefficients : defines
-    forest_types ||--o{ ecological_coefficients : influences
-    site_index_groups ||--o{ site_index_range : has
-    ecological_units {
-        text ecounit_code PK
-        text region
-        text description
-    }
-    forest_types {
-        integer type_code PK
-        text description
-        text region
-    }
-    site_index_groups {
-        text group_code PK
-        real min_index
-        real max_index
-    }
-```
+``` 
