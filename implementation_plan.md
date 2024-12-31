@@ -209,7 +209,7 @@ class SpeciesConfig:
 
 ### Phase 2: Basic Growth and Crown Models
 - [ ] Implement height-diameter relationships:
-  - [ ] Curtis-Arney equation
+  - [x] Curtis-Arney equation
   - [ ] Wykoff equation
 - [ ] Add Chapman-Richards height growth
 - [ ] Create diameter growth calculations
