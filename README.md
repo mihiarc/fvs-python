@@ -9,171 +9,151 @@ This project focuses on simulating the growth and yield of four southern yellow 
 
 The simulator generates yield tables for planted stands from age 0 to 50 years, using average stand characteristics.
 
-```mermaid
-graph TD
-    A[Species Selection] --> B[Stand Initialization]
-    B --> C[Growth Simulation]
-    C --> D[Yield Tables]
-    
-    subgraph Stand Initialization
-        E[Planting Density]
-        F[Site Index]
-        G[Initial Conditions]
-    end
-    
-    subgraph Growth Simulation
-        H[Height Growth]
-        I[Diameter Growth]
-        J[Mortality]
-        K[Competition]
-    end
-    
-    subgraph Yield Tables
-        L[Volume/acre]
-        M[Basal Area]
-        N[Trees/acre]
-        O[Mean DBH]
-    end
-```
-
 ## Table of Contents
 1. [Overview](#overview)
-2. [Project Goals](#project-goals)
-3. [System Architecture](#system-architecture)
-4. [Installation & Setup](#installation--setup)
-5. [Core Components](#core-components)
-6. [Database Schema](#database-schema)
-7. [Implementation Details](#implementation-details)
-8. [Usage Examples](#usage-examples)
-9. [Development Guidelines](#development-guidelines)
+2. [Development Guidelines](#development-guidelines)
+3. [Core Components](#core-components)
+4. [Species-Specific Parameters](#species-specific-parameters)
+5. [Stand Simulation Process](#stand-simulation-process)
+6. [Usage Example: Generate Yield Tables](#usage-example-generate-yield-tables)
 
 ## Overview
 
-FVS-Python is a Python implementation of the Southern variant of the Forest Vegetation Simulator (FVS). It provides a modular and maintainable library for forest growth modeling and economic analysis.
+FVS-Python is a Python implementation of the Southern variant of the Forest Vegetation Simulator (FVS). It provides a modular and maintainable library for forest growth modeling and economic analysis. Test with species-specific coefficients from README.md
 
-```mermaid
-graph TD
-    A[Input Data] --> B[Stand Initialization]
-    B --> C[Growth Simulation]
-    C --> D[Stand Metrics]
-    D --> E[Economic Analysis]
-    D --> F[Visualization]
-    
-    subgraph Growth Simulation
-        G[Small Tree Growth] --> J[Growth Blending]
-        H[Large Tree Growth] --> J
-        I[Crown Models] --> J
-    end
-    
-    subgraph Stand Metrics
-        K[Volume Calculation]
-        L[Density Metrics]
-        M[Site Indices]
-    end
-```
+## Development Guidelines
 
-## Project Goals
+- Break down tasks into distreet steps
+- Explain your approach and logic in detail
+- Ask me for any needed clarifications
 
-- Reimplement key growth and yield algorithms from the Southern FVS variant in Python
-- Provide functions for economic analysis (NPV, IRR, LEV calculations)
-- Create a well-documented and testable Python library
-- Support future web API integration
+### First Principles
 
-## System Architecture
+1. Version Control is a Must.
+2. Keep it Simple, Stupid (KISS).
+3. Separation of Concerns.
+4. Separate Configuration from Code.
+5. You Aren’t Gonna Need It (YAGNI).
+6. Premature Optimization is the Root of All Evil.
+7. Don’t Repeat Yourself (DRY).
+8. Composability.
+9. Test the Critical Bits.
+10. Fail Fast and Loudly.
 
-The project follows a modular architecture with clear separation of concerns:
+### Data Management
+- Track Data Lineage: Use a directed acyclic graph (DAG) to track the dependencies.
+- Keep Raw Data Immutable.
+- Document Data Acquisition.
+- Manage and visualize the data pipeline.
 
-```mermaid
-graph LR
-    A[Data Layer] --> B[Core Models]
-    B --> C[Analysis Layer]
-    C --> D[Output Layer]
-    
-    subgraph Data Layer
-        E[SQLite Database]
-        F[Data Import]
-        G[Data Validation]
-    end
-    
-    subgraph Core Models
-        H[Growth Models]
-        I[Crown Models]
-        J[Site Models]
-    end
-    
-    subgraph Analysis Layer
-        K[Stand Metrics]
-        L[Economic Analysis]
-        M[Validation]
-    end
-    
-    subgraph Output Layer
-        N[Visualization]
-        O[Reports]
-        P[Export]
-    end
-```
+### Configuration
+- Use Configuration Files.
+- Use environment variables.
+- Clearly document all parameters.
+
+### Testing
+- Write Unit Tests for individual functions and components to verify their behavior in isolation.
+- Implement sanity checks and smoke tests to validate data and basic functionality.
+- Verify testing data is representative of production data.
+- Clearly document what each test is verifying, explain the logic and assumptions, and how to fix it if it fails.
+
+### Error Handling
+- Validate Assumptions: Implement checks to validate assumptions and ensure that results meet expected conditions.
+- Add assertions to enforce assumptions about data and code behavior.
+- Log Errors in detail.
+- Use exceptions to handle unexpected conditions.
+- Design the system to detect and respond to errors immediately, halting further execution if necessary.
+
+### Version Control (VCS)
+- Use Git for Code: Regularly commit code changes to the Git repository. 
+- Use branches to manage different features or stages of development.
+- Maintain a changelog to document significant changes and updates in the project.
+
+### End-to-End Pipeline
+- Define the Minimal Pipeline: Identify the essential steps needed to process raw data to a final output and implement them.
+- Iterative Development: Start with the most straightforward implementation and iteratively add features, optimizations, and complexity.
+- Validate Early: Ensure that each stage of the pipeline works correctly before moving on to the next.
+- Simple Tools First: Use simple, well-understood tools and methods initially, and only introduce more advanced techniques when necessary.
+- Document the Process: Keep documentation up-to-date with each iteration to ensure the evolving pipeline remains understandable.
 
 ## Core Components
 
-### Growth Models (`growth_models.py`)
+### Individual Tree Growth Models
 
 The growth modeling system implements several key equations:
 
 1. **Height-Diameter Relationships**
    - Curtis-Arney equation (primary method)
-   - Wykoff equation (alternative method)
+   - The SN variant will use the Curtis-Arney functional form as shown here:
    ```python
-   height = 4.51 + b0 * exp(-b1 * dbh**b2)  # Curtis-Arney
-   height = 4.51 + exp(b0 + b1 / (dbh + 1))  # Wykoff
+   height = 4.5 + p2 * exp(-p3 * DBH**p4)  # Curtis-Arney for DBH >= 3.0 inches
+   height = (4.5 + p2 * exp(-p3 * 3**p4) - 4.51) * (DBH - Dbw) / (3 - Dbw)) + 4.51 # Curtis-Arney for DBH < 3.0 inches
    ```
 
-2. **Small Tree Growth**
-   - Uses Chapman-Richards function
-   - Incorporates site index and age
-   - Includes random variation and calibration
+2. **Bark Ratio Relationships**
+   - Bark ratio estimates are used to convert between diameter outside bark and diameter inside
+bark
+   - bark_ratio is bounded between 0.8 and 0.99
+   - diameter measured at breast height
+   - The bark ratio is calculated using the following functional form:
    ```python
-   potht = c1 * si**c2 * (1.0 - exp(c3 * aget))**(c4 * (si**c5))
+   diameter_inside_bark = bark_ratio_b1 + bark_ratio_b2 * diameter_outside_bark
+   bark_ratio = diameter_inside_bark / diameter_outside_bark
    ```
 
-3. **Large Tree Growth**
-   - Based on multiple stand and tree factors
-   - Includes competition and site effects
+3. **Crown Ratio Relationships**
+   - Crown ratio equations are used to estimate initial crown ratios for regenerating trees established during a simulation.
+   - Crown ratios for newly established trees during regeneration are estimated using the following equation below.
+   - Crown ratio is bounded between 0.2 and 0.9
+   - A random component is added to the equation to ensure that not all newly established trees are assigned exactly the same crown ratio.
    ```python
-   ln_dds = b1 + b2*log(dbh) + b3*dbh^2 + b4*log(cr) + ...
+   crown_ratio = 0.89722 - 0.0000461 * crown_competition_factor + small_random_component
+   crown_competition_factor = 0.001803 * crown_width**2
    ```
 
-### Crown Models (`crown_width.py`, `crown_ratio.py`)
-
-Crown modeling includes:
-
-1. **Crown Width Calculation**
-   - Separate models for forest-grown and open-grown trees
-   - Diameter-based equations with species-specific coefficients
+4. **Crown Width Relationships**
+   - The SN variant calculates the maximum crown width for each individual tree. 
+   - Crown width is used to calculate crown competition factor (CCF). (CCF) within the model. When available, forest-grown maximum crown width equations are used to compute PCC and open-grown maximum crown width equations are used to compute CCF.
+   - Crown width for the yellow pine species is estimated using the following functional forms:
    ```python
-   forest_crown = a1 + a2*dbh + a3*dbh^2  # Basic form
+   crown_width = a1 + (a2 * DBH) + (a3 * DBH**2) + (a4 * crown_ratio) + (a5 * hopkins_index) # for open-grown SA >= 5.0 inches
+   crown_width = (a1 + (a2 * 5.0) + (a3 * 5.0**2) + (a4 * crown_ratio) + (a5 * hopkins_index)) * (DBH / 5.0) # for open-grown SA < 5.0 inches
+   crown_width = a1 + (a2 * DBH * 2.54) + (a3 * (DBH * 2.54)**2) * 3.28084 # for open-grown LP, SP, LL >= 3.0 inches
+   crown_width = (a1 + (a2 * 3.0 * 2.54) + (a3 * (3.0 * 2.54)**2) * 3.28084) * (DBH / 3.0) # for open-grown LP, SP, LL < 3.0 inches
+   hopkins_index = (elevation - 887) / 100) * 1.0 + (latitude - 39.54) * 4.0 + (-82.52 - longitude) * 1.25
    ```
 
-2. **Crown Ratio Modeling**
-   - Actual crown ratio (ACR) calculations
-   - Competition and stand density effects
+5. **Small Tree Growth**
+   - The small-tree height growth model predicts periodic potential height growth from height growth curves using the Chapman-Richards nonlinear functional form. 
+   - A linear function fills in the height growth curves from 0 at age 0 to the lower end of the height growth curve. 
+   - Height growth is computed by subtracting the current predicted height from the predicted height 5 years in the future, as depicted in the following equation.
    ```python
-   acr = f(height, competition, stand_density)
+   small_tree_height_growth = c1 * si**c2 * (1.0 - exp(c3 * age))**(c4 * (si**c5))
+   age = 1.0/c3 * (log(1.0 - (height / c1 / si**c2)**(1.0 / c4 / si**c5))) # height is tree height in feet
    ```
 
-### Stand Management (`grow_stand.py`, `initialize_stand.py`)
+6. **Small to Large Tree Transition**
+   - Height growth estimates from the small-tree model are weighted with the height growth estimates from the large tree model over a range of diameters (Xmin and Xmax) in order to smooth the transition between the two models. 
+   - For example, the closer a tree’s DBH value is to the minimum diameter (Xmin), the more the growth estimate will be weighted towards the small-tree growth model. 
+   - The closer a tree’s DBH value is to the maximum diameter (Xmax), the more the growth estimate will be weighted towards the large-tree growth model. 
+   - If a tree’s DBH value falls outside of the range given by Xmin and Xmax, then the model will use only the small-tree or large-tree growth model in the growth estimate. 
+   - Xmin and Xmax vary by species.
+   - The weight applied to the growth estimate is given by the following equation:
+   ```python
+   weight = 0 # if dbh < Xmin
+   weight = 1 # if dbh >= Xmax
+   weight = (dbh - Xmin) / (Xmax - Xmin) # if Xmin <= dbh <= Xmax
+   estimated_height_growth = ((1 - weight) * small_tree_height_growth) + (weight * large_tree_height_growth)
+   ```
 
-Stand management functions handle:
-
-1. **Stand Initialization**
-   - Data validation and normalization
-   - Initial stand metrics calculation
-   - Species composition validation
-
-2. **Growth Projection**
-   - Time step management
-   - Growth model application
-   - Stand updating
+7. **Large Tree Growth**
+   - Trees are considered large when the diameter at breast height (DBH) is greater than or equal to 3.0 inches.
+   - The large-tree model is driven by diameter growth meaning diameter growth is estimated first, and then height growth is estimated from diameter growth and other variables.
+   - Instead of predicting diameter increment directly, the naturallog of the periodic change in squared inside-bark diameter (ln(DDS)) is predicted
+   - The Southern variant predicts 5-year diameter growth using equation:
+   ```python
+   ln_dds = b1 + b2*log(dbh) + b3*dbh^2 + b4*log(cr) + b5*relative_height + b6*si + b7*basal_area_per_acre + b8*plot_basal_area_for_large_trees + b9*slope + b10*cos(aspect)*slope + b11*sin(aspect)*slope + forest_type_factor + ecounit_factor + planting_factor
+   ```
 
 ## Species-Specific Parameters
 
@@ -181,47 +161,125 @@ Stand management functions handle:
 ```python
 species_data = {
     'LP': {  # Loblolly Pine
-        'CurtisArney_b0': 243.860648,
-        'CurtisArney_b1': 4.28460566,
-        'CurtisArney_b2': -0.47130185,
+        'p2': 243.860648,
+        'p3': 4.28460566,
+        'p4': -0.47130185,
         'Dbw': 0.5,
-        'Wykoff_b0': 4.6897,
-        'Wykoff_b1': -6.8801
+        'bark_ratio_b1': -0.48140,
+        'bark_ratio_b2': 0.91413,
+        'a1': 0.7380,
+        'a2': 0.2450,
+        'a3': 0.000809,
+        'c1': 1.1421,
+        'c2': 1.0042,
+        'c3': -0.0374,
+        'c4': 0.7632,
+        'c5': 0.0358,
+        'b1': 0.222214,
+        'b2': 1.163040,
+        'b3': -0.000863,
+        'b4': 0.028483,
+        'b5': 0.006935,
+        'b6': 0.005018,
+        'forest_type_factor': 0.000000,
+        'ecounit_factor': 0.000000,
+        'planting_factor': 0.245669,
+        'Xmin': 1,
+        'Xmax': 3
     },
     'SP': {  # Shortleaf Pine
-        'CurtisArney_b0': 444.0921666,
-        'CurtisArney_b1': 4.11876312,
-        'CurtisArney_b2': -0.30617043,
+        'p2': 444.0921666,
+        'p3': 4.11876312,
+        'p4': -0.30617043,
         'Dbw': 0.5,
-        'Wykoff_b0': 4.6271,
-        'Wykoff_b1': -6.4095
+        'bark_ratio_b1': -0.44121,
+        'bark_ratio_b2': 0.93045,
+        'a1': 0.5830,
+        'a2': 0.2450,
+        'a3': 0.0009,
+        'c1': 1.4232,
+        'c2': 0.9989,
+        'c3': -0.0285,
+        'c4': 1.2156,
+        'c5': 0.0088,
+        'b1': -0.008942,
+        'b2': 1.238170,
+        'b3': -0.001170,
+        'b4': 0.053076,
+        'b5': 0.040334,
+        'b6': 0.004723,
+        'forest_type_factor': 0.000000,
+        'ecounit_factor': -0.265699,
+        'planting_factor': 0.000000,
+        'Xmin': 1,
+        'Xmax': 3
     },
     'LL': {  # Longleaf Pine
-        'CurtisArney_b0': 98.56082813,
-        'CurtisArney_b1': 3.89930709,
-        'CurtisArney_b2': -0.86730393,
+        'p2': 98.56082813,
+        'p3': 3.89930709,
+        'p4': -0.86730393,
         'Dbw': 0.5,
-        'Wykoff_b0': 4.5991,
-        'Wykoff_b1': -5.9111
+        'bark_ratio_b1': -0.45903,
+        'bark_ratio_b2': 0.92746,
+        'a1': 0.113,
+        'a2': 0.259,
+        'a3': 0.0000001,
+        'c1': 1.1421,
+        'c2': 0.9947,
+        'c3': -0.0269,
+        'c4': 1.1344,
+        'c5': -0.0109,
+        'b1': -1.331052,
+        'b2': 1.098112,
+        'b3': -0.001834,
+        'b4': 0.184512,
+        'b5': 0.388018,
+        'b6': 0.008774,
+        'forest_type_factor': 0.000000,
+        'ecounit_factor': 0.000000,
+        'planting_factor': 0.110751,
+        'Xmin': 1,
+        'Xmax': 3
     },
     'SA': {  # Slash Pine
-        'CurtisArney_b0': 1087.101439,
-        'CurtisArney_b1': 5.10450596,
-        'CurtisArney_b2': -0.24284896,
+        'p2': 1087.101439,
+        'p3': 5.10450596,
+        'p4': -0.24284896,
         'Dbw': 0.5,
-        'Wykoff_b0': 4.6561,
-        'Wykoff_b1': -6.2258
+        'bark_ratio_b1': -0.55073,
+        'bark_ratio_b2': 0.91887,
+        'a1': -6.9659,
+        'a2': 2.1192,
+        'a3': -0.0333,
+        'a4': 0.0587,
+        'a5': -0.0959,
+        'c1': 1.1557,
+        'c2': 1.0031,
+        'c3': -0.0408,
+        'c4': 0.9807,
+        'c5': 0.0314,
+        'b1': -1.641698,
+        'b2': 1.461093,
+        'b3': -0.002530,
+        'b4': 0.265872,
+        'b5': 0.069104,
+        'b6': 0.006851,
+        'forest_type_factor': 0.000000,
+        'ecounit_factor': 0.000000,
+        'planting_factor': 0.227572,
+        'Xmin': 1,
+        'Xmax': 3
     }
 }
 ```
 
 ### Typical Stand Characteristics
-| Species | Initial TPA | Site Index (25yr) | Typical Rotation |
-|---------|-------------|-------------------|------------------|
-| Loblolly | 500-700 | 50-70 | 20-30 years |
-| Shortleaf | 400-600 | 45-65 | 30-40 years |
-| Longleaf | 300-500 | 45-65 | 35-45 years |
-| Slash | 450-650 | 50-70 | 25-35 years |
+| Species | Initial TPA |
+|---------|-------------|
+| Loblolly | 500-700 |
+| Shortleaf | 400-600 |
+| Longleaf | 300-500 |
+| Slash | 450-650 |
 
 ## Stand Simulation Process
 
@@ -365,213 +423,4 @@ for species in species_list:
 # Export results
 for species, table in yield_tables.items():
     table.to_csv(f'{species}_yield_table.csv', index=False)
-```
-
-## Development Guidelines
-
-### Code Style
-- Follow PEP 8 guidelines
-- Use type hints for function parameters
-- Document all functions using Google-style docstrings
-
-### Testing
-- Unit tests required for all new features
-- Integration tests for major components
-- Validation tests against FVS benchmarks
-
-### Version Control
-- Feature branches for new development
-- Pull request reviews required
-- Semantic versioning for releases
-
-### Documentation
-- Update documentation with code changes
-- Include examples for new features
-- Maintain changelog
-
-## Codebase Organization
-
-The codebase is organized into three main components:
-
-```mermaid
-graph TD
-    %% Styling
-    classDef core fill:#e1f5fe,stroke:#01579b,stroke-width:2px
-    classDef data fill:#f3e5f5,stroke:#4a148c,stroke-width:2px
-    classDef viz fill:#e8f5e9,stroke:#1b5e20,stroke-width:2px
-    classDef main fill:#fff3e0,stroke:#e65100,stroke-width:2px
-
-    %% Main initialization
-    init[("initialize_stand.py
-(Stand Setup)")]:::main
-    
-    %% Core components
-    grow[("grow_stand.py
-(Growth Controller)")]:::core
-    growth[("growth_models.py
-(Growth Equations)")]:::core
-    crown_w[("crown_width.py
-(Crown Calculations)")]:::core
-    crown_r[("crown_ratio.py
-(Crown Ratios)")]:::core
-    vol[("volume.py
-(Volume Calc)")]:::core
-    site[("site_index.py
-(Site Quality)")]:::core
-    
-    %% Data management
-    db[("db_utils.py
-(Database Operations)")]:::data
-    fia[("fia_utils.py
-(FIA Data)")]:::data
-    metrics[("stand_metrics.py
-(Stand Statistics)")]:::data
-    crown_calc[("crown_width_calculator.py
-(Crown Processing)")]:::data
-    
-    %% Visualization
-    viz[("visualize_stand_growth.py
-(Growth Visualization)")]:::viz
-    
-    %% Relationships
-    init --> grow
-    grow --> growth
-    grow --> crown_w
-    grow --> crown_r
-    grow --> vol
-    grow --> site
-    
-    db --> init
-    db --> crown_w
-    fia --> init
-    growth --> metrics
-    crown_w --> crown_calc
-    viz --> grow
-    
-    subgraph Core_Growth_Engine["Core Growth Engine"]
-        growth
-        grow
-        crown_w
-        crown_r
-        vol
-        site
-    end
-    
-    subgraph Data_Management["Data Management"]
-        db
-        fia
-        metrics
-        crown_calc
-    end
-    
-    subgraph Visualization["Visualization"]
-        viz
-    end
-```
-
-### Core Growth Engine
-- `grow_stand.py`: Central controller for growth simulation
-- `growth_models.py`: Implementation of growth equations
-- `crown_width.py` & `crown_ratio.py`: Crown modeling
-- `volume.py`: Volume calculations
-- `site_index.py`: Site quality calculations
-
-### Data Management
-- `db_utils.py`: SQLite database operations
-- `fia_utils.py`: Forest Inventory Analysis data processing
-- `stand_metrics.py`: Stand-level statistics
-- `crown_width_calculator.py`: Crown data processing
-
-### Visualization
-- `visualize_stand_growth.py`: Growth visualization tools
-
-## Database Structure
-
-The SQLite database (`fvspy.db`) is organized into three main categories:
-
-### 1. Species Data Tables
-```mermaid
-erDiagram
-    species ||--o{ crown_width_forest_grown : has
-    species ||--o{ crown_width_open_grown : has
-    species ||--o{ species_crown_ratio : has
-    species {
-        text species_code PK
-        text common_name
-        text scientific_name
-        integer fia_code
-    }
-    crown_width_forest_grown {
-        text species_code PK
-        real a1
-        real a2
-        real a3
-        real dbh_bound
-    }
-    crown_width_open_grown {
-        text species_code PK
-        real a1
-        real a2
-        real a3
-        real dbh_bound
-    }
-    species_crown_ratio {
-        text species_code PK
-        real a
-        real b0
-        real b1
-        real c
-    }
-```
-
-### 2. Growth Model Tables
-```mermaid
-erDiagram
-    species ||--o{ large_tree_growth : has
-    species ||--o{ small_tree_growth : has
-    species ||--o{ height_diameter : has
-    large_tree_growth {
-        text species_code PK
-        real b0
-        real b1
-        real b2
-        real b3
-    }
-    small_tree_growth {
-        text species_code PK
-        real c1
-        real c2
-        real c3
-        real c4
-    }
-    height_diameter {
-        text species_code PK
-        real wykoff_b0
-        real wykoff_b1
-        real curtis_b0
-        real curtis_b1
-    }
-```
-
-### 3. Site and Stand Tables
-```mermaid
-erDiagram
-    ecological_units ||--o{ ecological_coefficients : defines
-    forest_types ||--o{ ecological_coefficients : influences
-    site_index_groups ||--o{ site_index_range : has
-    ecological_units {
-        text ecounit_code PK
-        text region
-        text description
-    }
-    forest_types {
-        integer type_code PK
-        text description
-        text region
-    }
-    site_index_groups {
-        text group_code PK
-        real min_index
-        real max_index
-    }
 ```
