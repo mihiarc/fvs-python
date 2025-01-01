@@ -2,53 +2,8 @@
 
 import pytest
 import math
-from dataclasses import dataclass
 from fvs_python.modeling.growth.tree_growth_simulator import TreeGrowthSimulator
-
-# Test data structure to simulate Tree class
-@dataclass
-class TestTree:
-    species: str
-    dbh: float
-    height: float
-    crown_ratio: float
-    age: int = 5
-
-# Sample coefficients for testing
-TEST_COEFFICIENTS = {
-    'c1': 1.1421,  # LP coefficients
-    'c2': 1.0042,
-    'c3': -0.0374,
-    'c4': 0.7632,
-    'c5': 0.0358,
-    'Dbw': 0.5,
-    'Xmin': 1.0,
-    'Xmax': 3.0,
-    'forest_type_factor': 0.0,
-    'ecounit_factor': 0.0,
-    'planting_factor': 0.245669,
-    'b1': 0.222214,
-    'b2': 1.163040,
-    'b3': -0.000863,
-    'b4': 0.028483,
-    'b5': 0.006935,
-    'b6': 0.005018,
-    'b7': -0.000035,
-    'b8': -0.000045,
-    'b9': 0.0,
-    'b10': 0.0,
-    'b11': 0.0
-}
-
-# Sample stand conditions for testing
-SAMPLE_STAND_CONDITIONS = {
-    'basal_area': 100.0,
-    'plot_basal_area_larger': 50.0,
-    'crown_competition_factor': 150.0,
-    'relative_height': 0.8,
-    'slope': 0.1,
-    'aspect': 0.0
-}
+from tests.modeling.growth.test_utils import TestTree, TEST_COEFFICIENTS, SAMPLE_STAND_CONDITIONS
 
 def test_initialization():
     """Test TreeGrowthSimulator initialization."""
