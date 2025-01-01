@@ -96,8 +96,10 @@ class TreeGrowthSimulator:
             c5=self.coefficients['c5']
         )
         
-        # Apply competition modifier
-        height_growth = potential_height * self._competition_modifier(tree, conditions)
+        # Apply competition modifier with size-dependent effect
+        size_factor = (tree.dbh / 2.0)**0.5  # Smaller trees less affected by competition
+        competition_mod = self._competition_modifier(tree, conditions)
+        height_growth = potential_height * (competition_mod * size_factor + (1 - size_factor))
         
         # Calculate DBH from height using reverse Curtis-Arney
         new_height = tree.height + height_growth
@@ -128,8 +130,12 @@ class TreeGrowthSimulator:
             b_coeffs=self.coefficients
         )
         
-        # Convert ln(DDS) to diameter growth
-        dbh_growth = math.exp(ln_dds)
+        # Apply competition modifier with size-dependent effect
+        competition_mod = self._competition_modifier(tree, conditions)
+        size_factor = min((tree.dbh / 20.0), 1.0)  # Larger trees more affected by competition
+        
+        # Convert ln(DDS) to diameter growth with competition effect
+        dbh_growth = math.exp(ln_dds) * (competition_mod * size_factor + (1 - size_factor))
         
         # Calculate height growth using Curtis-Arney relationship
         new_dbh = tree.dbh + dbh_growth
@@ -171,20 +177,23 @@ class TreeGrowthSimulator:
     def _competition_modifier(self, tree: 'Tree', conditions: Dict) -> float:
         """Calculate competition modifier (0-1) based on stand conditions."""
         ccf = conditions['crown_competition_factor']
-        relative_height = conditions['relative_height']
         
-        # Basic modifier based on CCF and relative height
-        modifier = 1.0 - (0.0001 * ccf) * (1.0 - relative_height)
-        return max(0.05, min(1.0, modifier))
+        # Use documented density-dependent scaling
+        modifier = 1.0 - 0.00167 * (ccf - 100)
+        return max(0.3, min(1.0, modifier))
     
     def _estimate_crown_ratio_change(self, tree: 'Tree', conditions: Dict) -> float:
-        """Estimate change in crown ratio based on growth and competition."""
+        """Estimate change in crown ratio based on competition."""
         ccf = conditions['crown_competition_factor']
-        relative_height = conditions['relative_height']
         
-        # Basic crown ratio change model
-        # Decrease with competition, increase with relative height
-        change = 0.01 * (relative_height - 0.5) - 0.0001 * ccf
+        # Use documented crown ratio model with small random component
+        target_cr = 0.89722 - 0.0000461 * ccf
+        # Add small random component (-0.05 to 0.05)
+        random_component = (hash(str(tree.dbh)) % 100 - 50) / 1000.0
+        target_cr += random_component
+        
+        # Calculate change to move towards target
+        change = (target_cr - tree.crown_ratio) * 0.1  # Gradual change
         
         # Ensure crown ratio stays within bounds
         new_cr = tree.crown_ratio + change
