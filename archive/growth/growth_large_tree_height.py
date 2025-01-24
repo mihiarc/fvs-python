@@ -33,7 +33,9 @@ def large_tree_periodic_height_growth(pothtg, hgmdcr, hgmdrh):
     Returns:
         float: The periodic height growth for the tree.
     """
-    return pothtg * (0.25 * hgmdcr + 0.75 * hgmdrh)
+    CROWN_RATIO_WEIGHT = 0.25
+    RELATIVE_HEIGHT_WEIGHT = 0.75
+    return pothtg * (CROWN_RATIO_WEIGHT * hgmdcr + RELATIVE_HEIGHT_WEIGHT * hgmdrh)
 
 def large_tree_crown_ratio_modifier(cr):
     """

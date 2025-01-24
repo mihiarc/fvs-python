@@ -1,7 +1,7 @@
 # FVS-Python: Southern Yellow Pine Growth Simulator
 
-## Primary Objective
-This project focuses on simulating the growth and yield of four southern yellow pine species:
+## Overview
+FVS-Python is a Python implementation of the Southern variant of the Forest Vegetation Simulator (FVS). It simulates the growth and yield of four southern yellow pine species:
 - Loblolly Pine (Pinus taeda, LP)
 - Shortleaf Pine (Pinus echinata, SP)
 - Longleaf Pine (Pinus palustris, LL)
@@ -9,17 +9,39 @@ This project focuses on simulating the growth and yield of four southern yellow 
 
 The simulator generates yield tables for planted stands from age 0 to 50 years, using average stand characteristics.
 
-## Table of Contents
-1. [Overview](#overview)
-2. [Development Guidelines](#development-guidelines)
-3. [Core Components](#core-components)
-4. [Species-Specific Parameters](#species-specific-parameters)
-5. [Stand Simulation Process](#stand-simulation-process)
-6. [Usage Example: Generate Yield Tables](#usage-example-generate-yield-tables)
 
-## Overview
-
-FVS-Python is a Python implementation of the Southern variant of the Forest Vegetation Simulator (FVS). It provides a modular and maintainable library for forest growth modeling and economic analysis. Test with species-specific coefficients from README.md
+### Individual Tree Growth Model Interactions
+```mermaid
+graph TD
+    A[Tree Initial State] --> B{DBH >= 3.0?}
+    B -->|Yes| C[Large Tree Model]
+    B -->|No| D[Small Tree Model]
+    
+    %% Small Tree Path
+    D --> E[Small Tree Height Growth]
+    E --> F[Height-Diameter Relationship]
+    F --> G[Update DBH]
+    
+    %% Large Tree Path
+    C --> H[Predict ln_dds]
+    H --> I[Calculate DBH Growth]
+    I --> J[Height-Diameter Update]
+    
+    %% Crown Updates
+    G & J --> K[Update Crown Ratio]
+    K --> L[Calculate Crown Width]
+    L --> M[Crown Competition Factor]
+    
+    %% Competition & Growth Modifiers
+    M --> N[Competition Modifier]
+    N --> O[Final Growth Rate]
+    O --> P[Updated Tree State]
+    
+    %% Transition Zone
+    B -->|2.0-3.0| Q[Weighted Average]
+    Q --> R[Blend Growth Predictions]
+    R --> O
+```
 
 ## Development Guidelines
 
@@ -33,41 +55,19 @@ FVS-Python is a Python implementation of the Southern variant of the Forest Vege
 2. Keep it Simple, Stupid (KISS).
 3. Separation of Concerns.
 4. Separate Configuration from Code.
-5. You Aren’t Gonna Need It (YAGNI).
+5. You Aren't Gonna Need It (YAGNI).
 6. Premature Optimization is the Root of All Evil.
-7. Don’t Repeat Yourself (DRY).
+7. Don't Repeat Yourself (DRY).
 8. Composability.
 9. Test the Critical Bits.
 10. Fail Fast and Loudly.
 
-### Data Management
-- Track Data Lineage: Use a directed acyclic graph (DAG) to track the dependencies.
-- Keep Raw Data Immutable.
-- Document Data Acquisition.
-- Manage and visualize the data pipeline.
 
 ### Configuration
 - Use Configuration Files.
 - Use environment variables.
 - Clearly document all parameters.
 
-### Testing
-- Write Unit Tests for individual functions and components to verify their behavior in isolation.
-- Implement sanity checks and smoke tests to validate data and basic functionality.
-- Verify testing data is representative of production data.
-- Clearly document what each test is verifying, explain the logic and assumptions, and how to fix it if it fails.
-
-### Error Handling
-- Validate Assumptions: Implement checks to validate assumptions and ensure that results meet expected conditions.
-- Add assertions to enforce assumptions about data and code behavior.
-- Log Errors in detail.
-- Use exceptions to handle unexpected conditions.
-- Design the system to detect and respond to errors immediately, halting further execution if necessary.
-
-### Version Control (VCS)
-- Use Git for Code: Regularly commit code changes to the Git repository. 
-- Use branches to manage different features or stages of development.
-- Maintain a changelog to document significant changes and updates in the project.
 
 ### End-to-End Pipeline
 - Define the Minimal Pipeline: Identify the essential steps needed to process raw data to a final output and implement them.
@@ -134,9 +134,9 @@ bark
 
 6. **Small to Large Tree Transition**
    - Height growth estimates from the small-tree model are weighted with the height growth estimates from the large tree model over a range of diameters (Xmin and Xmax) in order to smooth the transition between the two models. 
-   - For example, the closer a tree’s DBH value is to the minimum diameter (Xmin), the more the growth estimate will be weighted towards the small-tree growth model. 
-   - The closer a tree’s DBH value is to the maximum diameter (Xmax), the more the growth estimate will be weighted towards the large-tree growth model. 
-   - If a tree’s DBH value falls outside of the range given by Xmin and Xmax, then the model will use only the small-tree or large-tree growth model in the growth estimate. 
+   - For example, the closer a tree's DBH value is to the minimum diameter (Xmin), the more the growth estimate will be weighted towards the small-tree growth model. 
+   - The closer a tree's DBH value is to the maximum diameter (Xmax), the more the growth estimate will be weighted towards the large-tree growth model. 
+   - If a tree's DBH value falls outside of the range given by Xmin and Xmax, then the model will use only the small-tree or large-tree growth model in the growth estimate. 
    - Xmin and Xmax vary by species.
    - The weight applied to the growth estimate is given by the following equation:
    ```python
@@ -401,26 +401,96 @@ def generate_yield_table(species, site_classes, tpa_range):
     return pd.DataFrame(results)
 ```
 
-## Usage Example: Generate Yield Tables
+# Loblolly Pine Stand Simulator
 
-```python
-from fvs_core import generate_yield_tables
+A simplified growth simulator for loblolly pine plantations, modeling stand development from planting to maturity (50 years).
 
-# Define simulation parameters
-species_list = ['LP', 'SP', 'LL', 'SA']
-site_classes = [50, 60, 70]  # Site index values
-tpa_range = [500, 600, 700]  # Initial planting densities
+## Growth Model Overview
 
-# Generate yield tables for all species
-yield_tables = {}
-for species in species_list:
-    yield_tables[species] = generate_yield_table(
-        species=species,
-        site_classes=site_classes,
-        tpa_range=tpa_range
-    )
-
-# Export results
-for species, table in yield_tables.items():
-    table.to_csv(f'{species}_yield_table.csv', index=False)
+```mermaid
+graph TD
+    %% Initial State
+    Start[Stand Initialization] --> |500 trees/acre| Init[Initial Trees]
+    Init --> |For each tree| TreeState[Tree State<br/>DBH, Height, Crown]
+    
+    %% Growth Decision
+    TreeState --> SizeCheck{DBH >= 3.0?}
+    
+    %% Small Tree Path
+    SizeCheck -->|No| SmallTree[Small Tree Model]
+    SmallTree --> HeightGrowth[Height Growth<br/>Chapman-Richards]
+    HeightGrowth --> HDSmall[Height-DBH<br/>Relationship]
+    
+    %% Large Tree Path
+    SizeCheck -->|Yes| LargeTree[Large Tree Model]
+    LargeTree --> DiameterGrowth[Diameter Growth<br/>ln(DDS)]
+    DiameterGrowth --> HDLarge[Height-DBH<br/>Relationship]
+    
+    %% Transition Zone
+    SizeCheck -->|2.0-3.0| Transition[Weighted Average<br/>of Both Models]
+    
+    %% Competition & Updates
+    HDSmall & HDLarge & Transition --> Competition[Competition<br/>Factor]
+    Competition --> Crown[Update Crown Ratio]
+    Crown --> Mortality[Apply Mortality]
+    
+    %% Stand Metrics
+    Mortality --> Metrics[Calculate Stand Metrics]
+    Metrics --> NextYear[Advance to Next Year]
+    NextYear -->|Repeat| TreeState
+    
+    %% Output
+    Metrics --> Output[Yield Table<br/>TPA, Volume, Size]
+    
+    %% Styling
+    classDef process fill:#e1f5fe,stroke:#01579b,stroke-width:2px;
+    classDef decision fill:#fff3e0,stroke:#ff6f00,stroke-width:2px;
+    classDef output fill:#e8f5e9,stroke:#2e7d32,stroke-width:2px;
+    
+    class Start,Init,TreeState,SmallTree,LargeTree,HeightGrowth,DiameterGrowth,HDSmall,HDLarge,Transition,Competition,Crown,Mortality,Metrics,NextYear process;
+    class SizeCheck decision;
+    class Output output;
 ```
+
+## Key Components
+
+1. **Stand Initialization**
+   - 500 trees per acre
+   - Initial DBH: 0.5 inches (with random variation)
+   - Initial height: 1.0 feet
+
+2. **Growth Models**
+   - Small Tree: Height-driven using Chapman-Richards
+   - Large Tree: Diameter-driven using ln(DDS)
+   - Smooth transition between 2-3 inches DBH
+
+3. **Competition & Mortality**
+   - Competition based on stand density
+   - Size-dependent mortality
+   - Background mortality rate
+
+4. **Output**
+   - Yield table at 5-year intervals
+   - Stand visualization plots
+   - Growth trajectory validation
+
+## Configuration
+
+All growth parameters are defined in `config/loblolly_params.yaml`:
+- Height-diameter relationships
+- Crown and bark parameters
+- Growth model coefficients
+- Mortality parameters
+- Stand initialization values
+
+## Usage
+
+```bash
+python -m src.main
+```
+
+This will:
+1. Initialize a planted stand
+2. Simulate growth for 50 years
+3. Generate yield table and plots
+4. Display summary statistics
