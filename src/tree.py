@@ -4,6 +4,8 @@ Implements both small-tree and large-tree growth models.
 """
 import math
 import yaml
+import numpy as np
+from scipy.stats import weibull_min
 from pathlib import Path
 
 class Tree:
@@ -26,15 +28,17 @@ class Tree:
         with open(config_path, 'r') as f:
             self.params = yaml.safe_load(f)
     
-    def grow(self, site_index: float, competition_factor: float) -> None:
-        """Grow the tree for one year.
+    def grow(self, site_index: float, competition_factor: float, rank: float = 0.5, relsdi: float = 5.0) -> None:
+        """Grow the tree for five years.
         
         Args:
             site_index: Site index (base age 25) in feet
             competition_factor: Competition factor (0-1)
+            rank: Tree's rank in diameter distribution (0-1)
+            relsdi: Relative stand density index (0-12)
         """
-        # Increment age
-        self.age += 1
+        # Increment age by 5 years
+        self.age += 5
         
         # Get transition parameters
         xmin = self.params['transition']['Xmin']
@@ -68,14 +72,14 @@ class Tree:
         self.dbh = (1 - weight) * small_dbh + weight * large_dbh
         self.height = (1 - weight) * small_height + weight * large_height
         
-        # Update crown ratio
-        self._update_crown_ratio(competition_factor)
+        # Update crown ratio using Weibull model
+        self._update_crown_ratio_weibull(rank, relsdi, competition_factor)
     
     def _grow_small_tree(self, site_index, competition_factor):
         """Implement small tree height growth model using Chapman-Richards function."""
         p = self.params['small_tree_growth']
         
-        # Calculate potential height growth
+        # Calculate potential 5-year height growth
         potential_growth = (
             p['c1'] * (site_index ** p['c2']) * 
             (1.0 - math.exp(p['c3'] * self.age)) ** 
@@ -95,7 +99,7 @@ class Tree:
         """Implement large tree diameter growth model."""
         p = self.params['large_tree_growth']
         
-        # Calculate ln(DDS)
+        # Calculate ln(DDS) - 5-year growth
         ln_dds = (
             p['b1'] +
             p['b2'] * math.log(self.dbh) +
@@ -116,29 +120,47 @@ class Tree:
         # Update height using height-diameter relationship
         self._update_height_from_dbh()
     
-    def _update_crown_ratio(self, competition_factor):
-        """Update crown ratio based on tree size, competition and age.
+    def _update_crown_ratio_weibull(self, rank, relsdi, competition_factor):
+        """Update crown ratio using Weibull-based model.
         
-        Crown ratio should decrease with:
-        1. Increasing competition (density-dependent)
-        2. Increasing age (slower in young trees)
-        3. Increasing size (DBH-dependent)
+        Args:
+            rank: Tree's rank in diameter distribution (0-1)
+            relsdi: Relative stand density index (0-12)
+            competition_factor: Competition factor (0-1)
         """
-        # Base reduction from competition
-        competition_effect = 0.15 * competition_factor
+        # Calculate average crown ratio based on stand density
+        p = self.params['crown']
+        acr = p['acr_b0'] + p['acr_b1'] * math.log(max(1.0, relsdi))
+        acr = max(0.2, min(0.85, acr))
         
-        # Age-related reduction (slower in young trees)
-        age_effect = 0.02 * (1.0 - math.exp(-0.05 * self.age))
+        # Calculate Weibull parameters
+        location = p['weibull_a'] / 100.0
+        scale = max(0.03, (p['weibull_b0'] + p['weibull_b1'] * acr) / 100.0)
+        shape = max(2.0, p['weibull_c'])
         
-        # Size-related reduction (more impact on larger trees)
-        size_effect = 0.01 * min(1.0, self.dbh / 10.0)
+        # Calculate density-dependent scaling factor (more sensitive to competition)
+        scale_factor = 1.0 - 0.7 * competition_factor
         
-        # Total reduction capped at 20% per year
-        total_reduction = min(0.2, competition_effect + age_effect + size_effect)
-        
-        # Update and bound crown ratio
-        self.crown_ratio = max(0.2, min(0.85, 
-            self.crown_ratio * (1.0 - total_reduction)))
+        try:
+            # Calculate new crown ratio using Weibull distribution
+            x = max(0.001, min(0.999, rank))  # Bound rank to avoid numerical issues
+            new_cr = weibull_min.ppf(x, shape, loc=location * scale_factor, scale=scale * scale_factor)
+            
+            # Apply age-related reduction
+            age_factor = 1.0 - 0.003 * self.age  # 0.3% reduction per year
+            new_cr *= max(0.5, age_factor)  # Cap age reduction at 50%
+            
+            # Ensure reasonable bounds
+            self.crown_ratio = max(0.2, min(0.85, new_cr))
+        except:
+            # Fallback to simpler update if Weibull calculation fails
+            reduction = (
+                0.15 * competition_factor +  # Competition effect
+                0.003 * self.age +          # Age effect
+                0.1 * (1.0 - rank)          # Size effect
+            )
+            self.crown_ratio = max(0.2, min(0.85, 
+                self.crown_ratio * (1.0 - min(0.3, reduction))))
     
     def _update_dbh_from_height(self):
         """Update DBH based on height using Curtis-Arney equation."""

@@ -16,14 +16,20 @@ HD_PARAMS = {
 
 # Crown and Bark Parameters
 CROWN_PARAMS = {
-    # Bark ratio parameters (diameter inside bark)
-    'bark_ratio_b1': -0.48140,
-    'bark_ratio_b2': 0.91413,
-    
-    # Crown width parameters
+    # Crown width parameters (for CCF calculation)
     'a1': 0.7380,
     'a2': 0.2450,
-    'a3': 0.000809
+    'a3': 0.000809,
+    
+    # Average crown ratio parameters
+    'acr_b0': 4.2,      # Increased base level
+    'acr_b1': -0.5,     # Stronger density response
+    
+    # Weibull crown ratio parameters
+    'weibull_a': 15.0,   # Higher minimum (percent)
+    'weibull_b0': 40.0,  # Higher base scale
+    'weibull_b1': 0.6,   # Stronger ACR response
+    'weibull_c': 3.0     # Sharper distribution
 }
 
 # Small Tree Growth Parameters (height growth)

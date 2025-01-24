@@ -5,6 +5,7 @@ Handles competition, mortality, and stand metrics.
 import math
 import random
 import yaml
+import numpy as np
 from pathlib import Path
 from .tree import Tree
 
@@ -55,78 +56,124 @@ class Stand:
         
         return cls(trees, site_index)
     
-    def grow(self, years=1):
+    def grow(self, years=5):
         """Grow stand for specified number of years.
         
         Args:
-            years: Number of years to grow
+            years: Number of years to grow (default 5 years to match FVS)
         """
-        for _ in range(years):
-            # Calculate competition for each tree
-            competition_factors = self._calculate_competition_factors()
+        # Ensure years is a multiple of 5
+        if years % 5 != 0:
+            years = 5 * math.ceil(years / 5)
+            
+        for _ in range(0, years, 5):  # Step in 5-year increments
+            # Calculate competition metrics
+            competition_metrics = self._calculate_competition_metrics()
             
             # Grow each tree
-            for tree, cf in zip(self.trees, competition_factors):
-                tree.grow(site_index=self.site_index, competition_factor=cf)
+            for tree, metrics in zip(self.trees, competition_metrics):
+                tree.grow(
+                    site_index=self.site_index,
+                    competition_factor=metrics['competition_factor']
+                )
             
             # Apply mortality
             self._apply_mortality()
             
-            self.age += 1
+            self.age += 5
     
-    def _calculate_competition_factors(self):
-        """Calculate competition factor for each tree.
+    def _calculate_crown_width(self, tree):
+        """Calculate maximum crown width for a tree.
         
-        Competition is based on:
-        1. Stand density relative to maximum (higher density = more competition)
-        2. Tree size relative to mean (larger trees experience more competition)
+        Uses equation from FVS Southern Variant for loblolly pine:
+        MCW = a1 + (a2 * DBH) + (a3 * DBH^2)
+        """
+        p = self.params['crown']
+        if tree.dbh >= 5.0:
+            return p['a1'] + (p['a2'] * tree.dbh) + (p['a3'] * tree.dbh**2)
+        else:
+            # Linear interpolation for small trees
+            mcw_at_5 = p['a1'] + (p['a2'] * 5.0) + (p['a3'] * 5.0**2)
+            return mcw_at_5 * (tree.dbh / 5.0)
+    
+    def _calculate_ccf(self):
+        """Calculate Crown Competition Factor.
+        
+        CCF is the sum of maximum crown areas divided by stand area,
+        expressed as a percentage.
+        """
+        total_crown_area = 0
+        for tree in self.trees:
+            crown_width = self._calculate_crown_width(tree)
+            crown_area = math.pi * (crown_width / 2)**2
+            total_crown_area += crown_area
+        
+        # Convert to percentage (1 acre = 43560 sq ft)
+        return (total_crown_area / 43560) * 100
+    
+    def _calculate_competition_metrics(self):
+        """Calculate competition metrics for each tree.
         
         Returns:
-            list: Competition factors (0-1) for each tree
+            list: Dictionaries containing competition metrics for each tree
         """
         if len(self.trees) <= 1:
-            return [0.0] * len(self.trees)
+            return [{'competition_factor': 0.0, 'pbal': 0.0}] * len(self.trees)
         
-        # Basic density effect (0-1)
+        # Sort trees by DBH for PBAL calculation
+        sorted_trees = sorted(self.trees, key=lambda t: t.dbh)
+        tree_to_rank = {tree: rank for rank, tree in enumerate(sorted_trees)}
+        
+        # Calculate stand-level metrics
         stand_ba = sum(math.pi * (tree.dbh / 24)**2 for tree in self.trees)
-        density_factor = min(0.8, stand_ba / 150)  # 150 sq ft/acre is typical maximum
+        ccf = self._calculate_ccf()
+        max_sdi = self.params['mortality']['max_sdi']
         
-        # Calculate mean DBH
-        mean_dbh = sum(tree.dbh for tree in self.trees) / len(self.trees)
-        
-        competition_factors = []
+        # Calculate metrics for each tree
+        metrics = []
         for tree in self.trees:
-            # Size effect (larger trees get more competition)
-            size_factor = min(1.0, tree.dbh / mean_dbh)
+            # Calculate PBAL (basal area in larger trees)
+            larger_trees = sorted_trees[tree_to_rank[tree]+1:]
+            pbal = sum(math.pi * (t.dbh / 24)**2 for t in larger_trees)
             
-            # Total competition increases with both density and size
-            cf = density_factor * size_factor
+            # Calculate relative position in diameter distribution
+            rank = tree_to_rank[tree] / len(self.trees)
             
-            # Ensure reasonable bounds
-            competition_factors.append(min(0.8, max(0.1, cf)))
+            # Calculate competition factor combining density and size effects
+            density_factor = min(0.8, stand_ba / 150)  # Basic density effect
+            ccf_factor = min(0.8, ccf / 200)  # CCF effect
+            size_factor = min(1.0, tree.dbh / (sum(t.dbh for t in self.trees) / len(self.trees)))
+            
+            # Combine factors with weights
+            competition_factor = min(0.95, 0.4 * density_factor + 0.4 * ccf_factor + 0.2 * size_factor)
+            
+            metrics.append({
+                'competition_factor': competition_factor,
+                'pbal': pbal,
+                'rank': rank,
+                'relsdi': (stand_ba / max_sdi) * 10  # Relative SDI (0-12 scale)
+            })
         
-        return competition_factors
+        return metrics
     
     def _apply_mortality(self):
-        """Apply mortality based on stand age and tree size.
-        
-        Mortality is higher:
-        1. During establishment (first 5 years)
-        2. For smaller trees (below mean DBH)
-        3. Under high competition
-        """
+        """Apply mortality based on stand density and tree characteristics."""
         if len(self.trees) <= 1:
             return
         
         # Calculate competition metrics
         basal_area = sum(math.pi * (tree.dbh / 24)**2 for tree in self.trees)
-        relative_density = basal_area / 400  # Using max SDI of 400 from params
+        max_sdi = self.params['mortality']['max_sdi']
+        relative_density = basal_area / max_sdi
         
         # Base mortality rate with competition effect
         if self.age <= 5:
-            mortality_rate = 0.08  # 8% early mortality
+            mortality_rate = 0.25  # 25% mortality in first 5 years
         else:
-            mortality_rate = 0.01 + max(0.0, 0.02 * (relative_density - 0.6))  # 1% base + competition
+            # Increased mortality rate for 5-year steps
+            base_rate = 0.05  # 5% per 5 years
+            competition_mortality = max(0.0, 0.1 * (relative_density - 0.55))
+            mortality_rate = base_rate + competition_mortality
         
         # Calculate mean DBH
         mean_dbh = sum(tree.dbh for tree in self.trees) / len(self.trees)
@@ -135,28 +182,25 @@ class Stand:
         survivors = []
         for tree in self.trees:
             # Smaller trees have higher mortality
-            size_effect = 1.0 + max(0.0, 0.15 * (1.0 - tree.dbh / mean_dbh))
+            size_effect = 1.0 + max(0.0, 0.2 * (1.0 - tree.dbh / mean_dbh))
             
-            # Check survival
+            # Check survival (adjusted for 5-year period)
             if random.random() > mortality_rate * size_effect:
                 survivors.append(tree)
         
         self.trees = survivors
     
     def get_metrics(self):
-        """Calculate stand-level metrics.
-        
-        Returns:
-            dict: Stand metrics including age, TPA, mean DBH, etc.
-        """
+        """Calculate stand-level metrics."""
         if not self.trees:
             return {
-                'age': 0,
+                'age': self.age,
                 'tpa': 0,
                 'mean_dbh': 0,
                 'mean_height': 0,
                 'basal_area': 0,
-                'volume': 0
+                'volume': 0,
+                'ccf': 0
             }
         
         n_trees = len(self.trees)
@@ -166,7 +210,8 @@ class Stand:
             'mean_dbh': sum(tree.dbh for tree in self.trees) / n_trees,
             'mean_height': sum(tree.height for tree in self.trees) / n_trees,
             'basal_area': sum(math.pi * (tree.dbh / 24)**2 for tree in self.trees),
-            'volume': sum(tree.get_volume() for tree in self.trees)
+            'volume': sum(tree.get_volume() for tree in self.trees),
+            'ccf': self._calculate_ccf()
         }
         
         return metrics 

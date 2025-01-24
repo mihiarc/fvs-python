@@ -27,7 +27,7 @@ def transition_tree():
     return Tree(dbh=2.5, height=20.0, age=8)
 
 def test_small_tree_growth(small_tree):
-    """Test small tree growth behavior."""
+    """Test small tree height growth behavior."""
     # Store initial state
     initial_metrics = [{
         'age': small_tree.age,
@@ -36,15 +36,14 @@ def test_small_tree_growth(small_tree):
         'crown_ratio': small_tree.crown_ratio
     }]
     
-    # Grow for 5 years
-    for _ in range(5):
-        small_tree.grow(site_index=70, competition_factor=0.0)
-        initial_metrics.append({
-            'age': small_tree.age,
-            'dbh': small_tree.dbh,
-            'height': small_tree.height,
-            'crown_ratio': small_tree.crown_ratio
-        })
+    # Grow for one 5-year period
+    small_tree.grow(site_index=70, competition_factor=0.0)
+    initial_metrics.append({
+        'age': small_tree.age,
+        'dbh': small_tree.dbh,
+        'height': small_tree.height,
+        'crown_ratio': small_tree.crown_ratio
+    })
     
     # Create visualization and get base64 data
     plot_base64 = plot_tree_growth_comparison(
@@ -65,7 +64,7 @@ def test_small_tree_growth(small_tree):
     assert small_tree.height > initial_metrics[0]['height']
     assert small_tree.dbh > initial_metrics[0]['dbh']
     assert 0.2 <= small_tree.crown_ratio <= 0.9
-    assert small_tree.age == 7
+    assert small_tree.age == 7  # 2 + 5 years
 
 def test_large_tree_growth(large_tree):
     """Test large tree growth behavior."""
@@ -77,15 +76,14 @@ def test_large_tree_growth(large_tree):
         'crown_ratio': large_tree.crown_ratio
     }]
     
-    # Grow for 5 years
-    for _ in range(5):
-        large_tree.grow(site_index=70, competition_factor=0.0)
-        metrics.append({
-            'age': large_tree.age,
-            'dbh': large_tree.dbh,
-            'height': large_tree.height,
-            'crown_ratio': large_tree.crown_ratio
-        })
+    # Grow for one 5-year period
+    large_tree.grow(site_index=70, competition_factor=0.0)
+    metrics.append({
+        'age': large_tree.age,
+        'dbh': large_tree.dbh,
+        'height': large_tree.height,
+        'crown_ratio': large_tree.crown_ratio
+    })
     
     # Create visualization and get base64 data
     plot_base64 = plot_tree_growth_comparison(
@@ -106,14 +104,14 @@ def test_large_tree_growth(large_tree):
     assert large_tree.dbh > metrics[0]['dbh']
     assert large_tree.height > metrics[0]['height']
     assert 0.2 <= large_tree.crown_ratio <= 0.9
-    assert large_tree.age == 20
+    assert large_tree.age == 20  # 15 + 5 years
 
 def test_transition_zone_growth(transition_tree):
     """Test growth behavior in transition zone."""
     initial_dbh = transition_tree.dbh
     initial_height = transition_tree.height
     
-    # Grow tree for one year
+    # Grow tree for one 5-year period
     transition_tree.grow(site_index=70, competition_factor=0.0)
     
     # Both diameter and height should increase
@@ -121,8 +119,8 @@ def test_transition_zone_growth(transition_tree):
     assert transition_tree.height > initial_height
     # Growth should be between small and large tree models
     assert 0.2 <= transition_tree.crown_ratio <= 0.9
-    # Age should increment
-    assert transition_tree.age == 9
+    # Age should increment by 5
+    assert transition_tree.age == 13  # 8 + 5 years
 
 def test_competition_effects(large_tree):
     """Test the effects of competition on growth."""
@@ -132,9 +130,10 @@ def test_competition_effects(large_tree):
         'Medium Competition': Tree(dbh=large_tree.dbh, height=large_tree.height, age=large_tree.age),
         'High Competition': Tree(dbh=large_tree.dbh, height=large_tree.height, age=large_tree.age)
     }
-    competition_levels = {'No Competition': 0.0, 'Medium Competition': 0.3, 'High Competition': 0.6}
+    competition_levels = {'No Competition': 0.0, 'Medium Competition': 0.5, 'High Competition': 0.9}
+    ranks = {'No Competition': 0.8, 'Medium Competition': 0.5, 'High Competition': 0.2}
     
-    # Collect metrics for each competition level over 5 years
+    # Collect metrics for each competition level over one 5-year period
     metrics_by_competition = {}
     for label, tree in trees.items():
         metrics = [{
@@ -143,14 +142,18 @@ def test_competition_effects(large_tree):
             'height': tree.height,
             'crown_ratio': tree.crown_ratio
         }]
-        for _ in range(5):
-            tree.grow(site_index=70, competition_factor=competition_levels[label])
-            metrics.append({
-                'age': tree.age,
-                'dbh': tree.dbh,
-                'height': tree.height,
-                'crown_ratio': tree.crown_ratio
-            })
+        
+        tree.grow(
+            site_index=70, 
+            competition_factor=competition_levels[label],
+            rank=ranks[label]
+        )
+        metrics.append({
+            'age': tree.age,
+            'dbh': tree.dbh,
+            'height': tree.height,
+            'crown_ratio': tree.crown_ratio
+        })
         metrics_by_competition[label] = metrics
     
     # Create visualization and get base64 data
@@ -201,8 +204,8 @@ def test_long_term_growth():
     tree = Tree(dbh=0.5, height=1.0, age=0)
     growth_metrics = []
     
-    # Grow for 60 years
-    for _ in range(60):
+    # Grow for 60 years (12 five-year periods)
+    for _ in range(12):
         growth_metrics.append({
             'age': tree.age,
             'dbh': tree.dbh,
@@ -237,7 +240,7 @@ def test_long_term_growth():
     )
     
     # Run assertions
-    assert tree.age == 60
+    assert tree.age == 60  # 12 * 5 years
     assert tree.dbh > 8.0  # Should reach merchantable size
     assert tree.height > 60.0  # Should reach typical mature height
     assert tree.get_volume() > 0
@@ -246,15 +249,16 @@ def test_long_term_growth():
     dbh_growth = [metrics['dbh'] for metrics in growth_metrics]
     height_growth = [metrics['height'] for metrics in growth_metrics]
     volume_growth = [metrics['volume'] for metrics in growth_metrics]
+    crown_ratios = [metrics['crown_ratio'] for metrics in growth_metrics]
     
     # Height growth should follow sigmoid pattern (faster early, slower late)
-    early_height_growth = height_growth[10] - height_growth[0]
-    late_height_growth = height_growth[-1] - height_growth[-11]
+    early_height_growth = height_growth[2] - height_growth[0]  # First 10 years
+    late_height_growth = height_growth[-1] - height_growth[-3]  # Last 10 years
     assert early_height_growth > late_height_growth
     
     # DBH growth should show gradual decline
-    early_dbh_growth = dbh_growth[10] - dbh_growth[0]
-    late_dbh_growth = dbh_growth[-1] - dbh_growth[-11]
+    early_dbh_growth = dbh_growth[2] - dbh_growth[0]
+    late_dbh_growth = dbh_growth[-1] - dbh_growth[-3]
     assert 0.25 < late_dbh_growth / early_dbh_growth < 1.5  # Later growth at least 25% of early growth
     
     # Volume growth should accelerate then level off
@@ -264,5 +268,4 @@ def test_long_term_growth():
     assert early_volume_growth < late_volume_growth  # Accelerating early
     
     # Crown ratio should decrease with age
-    crown_ratios = [metrics['crown_ratio'] for metrics in growth_metrics]
     assert crown_ratios[-1] < crown_ratios[0]  # Should decrease over time 
