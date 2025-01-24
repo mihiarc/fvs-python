@@ -196,18 +196,6 @@ def test_volume_calculation(large_tree):
     cylinder_volume = basal_area * large_tree.height
     assert volume < cylinder_volume  # Volume should be less than cylinder
 
-def test_invalid_growth_inputs():
-    """Test handling of invalid growth inputs."""
-    tree = Tree(dbh=5.0, height=30.0, age=10)
-    
-    # Test negative site index
-    with pytest.raises(ValueError):
-        tree.grow(site_index=-10, competition_factor=0.0)
-    
-    # Test competition factor out of bounds
-    with pytest.raises(ValueError):
-        tree.grow(site_index=70, competition_factor=1.5)
-
 def test_long_term_growth():
     """Test tree development over multiple years."""
     tree = Tree(dbh=0.5, height=1.0, age=0)

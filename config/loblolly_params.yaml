@@ -1,63 +1,48 @@
-# Loblolly Pine (Pinus taeda) Growth Parameters
-
-# Height-Diameter Parameters (Curtis-Arney equation)
-# height = 4.5 + p2 * exp(-p3 * DBH**p4)
+species: loblolly_pine
 height_diameter:
-  p2: 243.860648  # coefficient for exponential term
-  p3: 4.28460566  # coefficient for DBH power
-  p4: -0.47130185  # power term for DBH
-  dbw: 0.5  # diameter breakpoint for small trees
-
-# Crown Parameters
+  p2: 243.860648
+  p3: 4.28460566
+  p4: -0.47130185
+  Dbw: 0.5
 crown:
-  # Bark ratio (diameter inside bark = b1 + b2 * diameter outside bark)
-  bark_ratio_b1: -0.48140  # intercept
-  bark_ratio_b2: 0.91413  # slope
-  
-  # Crown width (a1 + a2*DBH + a3*DBH^2)
-  crown_width_a1: -0.8277  # intercept
-  crown_width_a2: 1.3946  # linear DBH term
-  crown_width_a3: -0.1469  # quadratic DBH term
-
-# Small Tree Growth (Chapman-Richards height growth)
-# height_growth = c1 * si^c2 * (1.0 - exp(c3 * age))^(c4 * (si^c5))
-small_tree:
-  c1: 1.1421  # scale parameter
-  c2: 1.0042  # site index power
-  c3: -0.0374  # age coefficient
-  c4: 0.7632  # shape parameter
-  c5: 0.0358  # site index power for shape
-
-# Large Tree Growth (diameter growth)
-# ln_dds = b1 + b2*log(dbh) + b3*dbh^2 + b4*log(cr) + b5*rel_ht + b6*si + other_terms
-large_tree:
-  b1: 0.222214   # intercept
-  b2: 1.163040   # log(dbh) coefficient
-  b3: -0.000863   # dbh^2 coefficient
-  b4: 0.028483   # log(crown ratio) coefficient
-  b5: 0.006935   # relative height coefficient
-  b6: 0.005018   # site index coefficient
-  planting_factor: 0.245669  # adjustment for planted stands
-
-# Model Transition
+  bark_ratio_b1: -0.4814
+  bark_ratio_b2: 0.91413
+  a1: 0.738
+  a2: 0.245
+  a3: 0.000809
+small_tree_growth:
+  c1: 1.1421
+  c2: 1.0042
+  c3: -0.0374
+  c4: 0.7632
+  c5: 0.0358
+large_tree_growth:
+  b1: 0.222214
+  b2: 1.16304
+  b3: -0.000863
+  b4: 0.028483
+  b5: 0.006935
+  b6: 0.005018
+  b7: 0.0
+  b8: 0.0
+  b9: 0.0
+  b10: 0.0
+  b11: 0.0
+  forest_type_factor: 0.0
+  ecounit_factor: 0.0
+  planting_factor: 0.245669
 transition:
-  dbh_min: 2  # minimum DBH for transition (inches)
-  dbh_max: 3  # maximum DBH for transition (inches)
-
-# Stand Initialization
+  Xmin: 1.0
+  Xmax: 3.0
 stand_init:
-  trees_per_acre: 500    # initial planting density
-  dbh_mean: 0.5         # initial mean DBH (inches)
-  dbh_sd: 0.1          # initial DBH standard deviation
-  height: 1.0          # initial height (feet)
-  site_index: 70       # site index (base age 25)
-
-# Mortality
+  initial_tpa: 500
+  initial_dbh_mean: 0.5
+  initial_dbh_sd: 0.1
+  initial_height: 1.0
+  site_index: 70
 mortality:
-  background_rate: 0.01      # annual background mortality rate (1% per year)
-  max_density_index: 400     # maximum stand density index for loblolly pine
-  competition_threshold: 0.60 # relative density for competition mortality (60% of max SDI)
-
-# Volume
+  background_rate: 0.005
+  max_sdi: 450
+  competition_threshold: 0.55
 volume:
-  form_factor: 0.42  # tree form factor for volume calculations (typical for southern pines) 
+  form_factor: 0.48

@@ -101,7 +101,7 @@ def write_config_file():
     config = create_config()
     
     # Create config directory if it doesn't exist
-    config_dir = Path(__file__).parent.parent.parent / 'config'
+    config_dir = Path(__file__).parent.parent / 'config'
     config_dir.mkdir(exist_ok=True)
     
     # Write config file
