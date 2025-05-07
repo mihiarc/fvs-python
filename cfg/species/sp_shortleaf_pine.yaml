@@ -1,0 +1,58 @@
+# Shortleaf Pine (Pinus echinata) Configuration
+# Common pine species throughout the southeastern US
+
+metadata:
+  code: SP
+  fia_code: 110
+  plants_symbol: PIEC2
+  scientific_name: Pinus echinata
+  common_name: shortleaf pine
+  valid_site_species: true  # Valid for site index calculation
+
+# Site index parameters
+site_index:
+  min: 30
+  max: 110
+  site_index_group: 1  # Group assignment for site index transformations
+  height_growth_equation: "NC-128: 110/25"  # Reference to site index curve
+
+# Stand density parameters
+density:
+  sdi_max: 400  # Maximum stand density index
+
+# Height-diameter relationship
+height_diameter:
+  model: "curtis_arney"  # Default model to use
+  curtis_arney:
+    p2: 148.49283
+    p3: 4.06477291
+    p4: -0.59160445
+    dbw: 0.5  # Diameter breakpoint for small trees
+  # Special Fort Bragg Military Reservation parameters
+  fort_bragg:
+    p2: 128.4
+    p3: 6.1030
+    p4: -0.7910
+    dbw: 0.5
+  wykoff:
+    b1: 4.9145
+    b2: -9.3883
+    fort_bragg_b1: 4.904
+    fort_bragg_b2: -10.084
+    
+# Bark ratio parameters
+bark_ratio:
+  b1: -0.43531
+  b2: 0.90368
+  
+# Crown ratio parameters
+crown_ratio:
+  equation: "4.3.1.6"  # Which equation form to use
+  d0: 53.0673
+  d1: -18.5878
+  d2: null  # Not used in this equation type
+  weibull:
+    a: 3.9695
+    b0: -5.9645
+    b1: 1.0260
+    c: 2.7678 

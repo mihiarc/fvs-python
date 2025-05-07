@@ -1,0 +1,50 @@
+# White Oak (Quercus alba) Configuration
+# Important hardwood species in the Southern US
+
+metadata:
+  code: WO
+  fia_code: 802
+  plants_symbol: QUAL
+  scientific_name: Quercus alba
+  common_name: white oak
+  valid_site_species: true  # Valid for site index calculation
+
+# Site index parameters
+site_index:
+  min: 25
+  max: 115
+  site_index_group: 9  # Group assignment for site index transformations
+  height_growth_equation: "NC-128: Upland Oak/52"  # Reference to site index curve
+
+# Stand density parameters
+density:
+  sdi_max: 361  # Maximum stand density index
+
+# Height-diameter relationship
+height_diameter:
+  model: "curtis_arney"  # Default model to use
+  curtis_arney:
+    p2: 170.1330787
+    p3: 3.27815866
+    p4: -0.48744214
+    dbw: 0.2  # Diameter breakpoint for small trees
+  wykoff:
+    b1: 4.5463
+    b2: -5.2287
+    
+# Bark ratio parameters
+bark_ratio:
+  b1: -0.24096
+  b2: 0.93789
+  
+# Crown ratio parameters
+crown_ratio:
+  equation: "4.3.1.6"  # Which equation form to use
+  d0: 48.2
+  d1: -0.01
+  d2: null  # Not used in this equation
+  weibull:
+    a: 4.6903
+    b0: -19.5613
+    b1: 1.2928
+    c: 3.3715 

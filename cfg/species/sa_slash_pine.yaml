@@ -1,0 +1,58 @@
+# Slash Pine (Pinus elliottii) Configuration
+# Major southern pine species commonly used in plantations
+
+metadata:
+  code: SA
+  fia_code: 111
+  plants_symbol: PIEL
+  scientific_name: Pinus elliottii
+  common_name: slash pine
+  valid_site_species: true  # Valid for site index calculation
+
+# Site index parameters
+site_index:
+  min: 35
+  max: 105
+  site_index_group: 1  # Group assignment for site index transformations
+  height_growth_equation: "NC-128: 111/99"  # Reference to site index curve
+
+# Stand density parameters
+density:
+  sdi_max: 385  # Maximum stand density index
+
+# Height-diameter relationship
+height_diameter:
+  model: "curtis_arney"  # Default model to use
+  curtis_arney:
+    p2: 1087.101439
+    p3: 5.10450596
+    p4: -0.24284896
+    dbw: 0.5  # Diameter breakpoint for small trees
+  # Special Fort Bragg Military Reservation parameters
+  fort_bragg:
+    p2: 110.3
+    p3: 7.0670
+    p4: -1.0420
+    dbw: 0.5
+  wykoff:
+    b1: 4.6561
+    b2: -6.2258
+    fort_bragg_b1: 4.787
+    fort_bragg_b2: -8.015
+    
+# Bark ratio parameters
+bark_ratio:
+  b1: -0.55073
+  b2: 0.91887
+  
+# Crown ratio parameters
+crown_ratio:
+  equation: "4.3.1.6"  # Which equation form to use
+  d0: 42.8255
+  d1: -15.0135
+  d2: null  # Not used in this equation type
+  weibull:
+    a: 3.8940
+    b0: -4.7342
+    b1: 0.9786
+    c: 2.9082 

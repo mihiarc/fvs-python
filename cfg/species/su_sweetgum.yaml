@@ -1,0 +1,50 @@
+# Sweetgum (Liquidambar styraciflua) Configuration
+# Common hardwood species in the southern US
+
+metadata:
+  code: SU
+  fia_code: 611
+  plants_symbol: LIST2
+  scientific_name: Liquidambar styraciflua
+  common_name: sweetgum
+  valid_site_species: true  # Valid for site index calculation
+
+# Site index parameters
+site_index:
+  min: 40
+  max: 120
+  site_index_group: 3  # Group assignment for site index transformations
+  height_growth_equation: "NC-128: 611"  # Reference to site index curve
+
+# Stand density parameters
+density:
+  sdi_max: 465  # Maximum stand density index
+
+# Height-diameter relationship
+height_diameter:
+  model: "curtis_arney"  # Default model to use
+  curtis_arney:
+    p2: 195.0254064
+    p3: 4.5764723
+    p4: -0.66343866
+    dbw: 0.5  # Diameter breakpoint for small trees
+  wykoff:
+    b1: 4.6461
+    b2: -7.3657
+    
+# Bark ratio parameters
+bark_ratio:
+  b1: -0.39900
+  b2: 0.95042
+  
+# Crown ratio parameters
+crown_ratio:
+  equation: "4.3.1.6"  # Which equation form to use
+  d0: 48.6583
+  d1: -17.5043
+  d2: null  # Not used in this equation type
+  weibull:
+    a: 4.1493
+    b0: -9.8204
+    b1: 1.1069
+    c: 3.0293 
