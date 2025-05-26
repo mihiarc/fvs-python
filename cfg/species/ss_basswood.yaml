@@ -25,15 +25,14 @@ bark_ratio:
   b1: -0.25063
   b2: 0.94349
 crown_ratio:
-  equation: 4.3.1.5
+  acr_equation: 4.3.1.5
   d0: 38.85
   d1: null
   d2: -0.99
-  weibull:
-    a: 4.9082
-    b0: -11.2413
-    b1: 1.1519
-    c: 2.4971
+  a: 4.9082
+  b0: -11.2413
+  b1: 1.1519
+  c: 2.4971
 diameter_growth:
   model: ln_dds
   coefficients:

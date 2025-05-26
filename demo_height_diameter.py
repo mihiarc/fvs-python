@@ -74,7 +74,8 @@ def main():
         print(f"{dbh:8.0f}  {ca_h:14.1f}  {wy_h:11.1f}  {diff:12.1f}")
     
     print("\n\nDemonstration complete!")
-    print("Check test_output/ directory for visualization figures.")
+    print("Note: This demo shows console output only.")
+    print("For visualizations, see the test_output/ directory for other module plots.")
 
 if __name__ == "__main__":
     main() 

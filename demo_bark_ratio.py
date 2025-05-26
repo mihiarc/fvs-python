@@ -104,13 +104,13 @@ def main():
     print("-" * 30)
     
     create_bark_ratio_plots()
-    print("Bark ratio plots saved to output/ directory")
+    print("Bark ratio plots saved to test_output/ directory")
 
 
 def create_bark_ratio_plots():
     """Create visualization plots for bark ratio relationships."""
-    # Create output directory
-    output_dir = Path("output")
+    # Create test_output directory
+    output_dir = Path("test_output")
     output_dir.mkdir(exist_ok=True)
     
     # Define species and diameter range for plotting

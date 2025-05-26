@@ -1,0 +1,111 @@
+# Functional Forms for FVS Southern Variant
+# Mathematical equations and model forms used throughout the variant
+
+metadata:
+  title: "Functional Forms for SN Southern Variant"
+  description: "Mathematical equations and model forms used in growth, mortality, and other calculations"
+  source: "FVS Southern Variant Documentation"
+
+# Height-Diameter Relationships
+height_diameter:
+  curtis_arney:
+    name: "Curtis-Arney Height-Diameter Model"
+    equation: "Height = 4.5 + P2 * exp(-P3 * DBH^P4)"
+    description: "Primary height-diameter model for most species"
+    parameters:
+      - "P2: asymptotic height parameter"
+      - "P3: rate parameter"
+      - "P4: shape parameter"
+      - "Dbw: diameter breakpoint for small trees"
+    
+  wykoff:
+    name: "Wykoff Height-Diameter Model"
+    equation: "Height = 4.5 + exp(B1 + B2 / (DBH + 1))"
+    description: "Alternative height-diameter model"
+    parameters:
+      - "B1: intercept parameter"
+      - "B2: slope parameter"
+
+# Crown Ratio Models
+crown_ratio:
+  average_crown_ratio:
+    equations:
+      "4.3.1.3": "ACR = exp[d0 + (d1 * ln(RELSDI)) + (d2 * RELSDI)]"
+      "4.3.1.4": "ACR = exp[d0 + (d1 * ln(RELSDI))]"
+      "4.3.1.5": "ACR = d0 + (d2 * RELSDI)"
+      "4.3.1.6": "ACR = d0 + (d1 * log10(RELSDI))"
+      "4.3.1.7": "ACR = RELSDI / ((d0 * RELSDI) + d1)"
+    
+  weibull_distribution:
+    name: "Weibull Crown Ratio Distribution"
+    equation: "Y = A + B(-ln(1-X))^(1/C)"
+    description: "Individual tree crown ratio prediction using Weibull distribution"
+    parameters:
+      - "A: minimum crown ratio parameter"
+      - "B: scale parameter (function of ACR)"
+      - "C: shape parameter"
+    
+  dead_trees:
+    equation_4_3_1_1: "X = 0.70 - 0.40/24.0 * DBH (for DBH < 24), X = 0.30 (for DBH >= 24)"
+    equation_4_3_1_2: "CR = 1 / (1 + exp(X + N(0,SD)))"
+    
+  regeneration:
+    equation_4_3_3_1: "CR = 0.89722 - 0.0000461 * PCCF + RAN"
+
+# Bark Ratio Models
+bark_ratio:
+  clark_1991:
+    name: "Clark (1991) Bark Ratio Model"
+    equation: "DIB = b1 + b2 * DOB"
+    derived: "BRATIO = DIB / DOB"
+    bounds: "0.80 < BRATIO < 0.99"
+    description: "Linear relationship between inside and outside bark diameters"
+
+# Diameter Growth Models
+diameter_growth:
+  large_tree_model:
+    name: "Large Tree Diameter Growth Model"
+    equation: "ln(DDS) = b1 + b2*ln(DBH) + b3*DBH^2 + b4*ln(CR) + b5*RELHT + b6*SI + b7*BA + b8*PBAL + b9*SLOPE + b10*COS(ASP)*SLOPE + b11*SIN(ASP)*SLOPE + FORTYPE + ECOUNIT + PLANT"
+    description: "Predicts 5-year change in squared inside-bark diameter"
+    variables:
+      DDS: "change in squared inside-bark diameter"
+      DBH: "diameter at breast height"
+      CR: "crown ratio"
+      RELHT: "relative height (tree height / site index)"
+      SI: "site index"
+      BA: "stand basal area"
+      PBAL: "plot basal area in larger trees"
+      SLOPE: "ground slope"
+      ASP: "aspect"
+      FORTYPE: "forest type effect"
+      ECOUNIT: "ecological unit effect"
+      PLANT: "planting effect"
+
+# Small Tree Growth Models
+small_tree_growth:
+  chapman_richards:
+    name: "Chapman-Richards Height Growth Model"
+    equation: "HG = c1 * (SI^c2) * (1 - exp(c3 * AGE))^(c4 * (SI^c5))"
+    description: "Height growth for small trees (DBH < 3 inches)"
+    variables:
+      HG: "5-year height growth"
+      SI: "site index"
+      AGE: "tree age"
+
+# Mortality Models
+mortality:
+  background:
+    description: "Background mortality rate applied annually"
+    typical_rate: "0.5% per year"
+    
+  competition:
+    description: "Competition-induced mortality based on stand density"
+    trigger: "Relative density > 55% of maximum SDI"
+
+# Volume Calculations
+volume:
+  standard_form:
+    equation: "Volume = π * (DIB/24)^2 * Height * Form_Factor"
+    description: "Standard volume calculation using inside bark diameter"
+    form_factor: 0.48
+    units: "cubic feet" 

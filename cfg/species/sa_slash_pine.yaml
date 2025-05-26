@@ -19,29 +19,21 @@ height_diameter:
     p3: 5.10450596
     p4: -0.24284896
     dbw: 0.5
-  fort_bragg:
-    p2: 110.3
-    p3: 7.067
-    p4: -1.042
-    dbw: 0.5
   wykoff:
     b1: 4.6561
     b2: -6.2258
-    fort_bragg_b1: 4.787
-    fort_bragg_b2: -8.015
 bark_ratio:
   b1: -0.55073
   b2: 0.91887
 crown_ratio:
-  equation: 4.3.1.6
+  acr_equation: 4.3.1.6
   d0: 42.8255
   d1: -15.0135
   d2: null
-  weibull:
-    a: 3.894
-    b0: -4.7342
-    b1: 0.9786
-    c: 2.9082
+  a: 3.894
+  b0: -4.7342
+  b1: 0.9786
+  c: 2.9082
 diameter_growth:
   model: ln_dds
   coefficients:

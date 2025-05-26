@@ -124,6 +124,8 @@ def main():
     print("• Crown ratio change bounds checking")
     print("• Density-dependent scaling factors")
     print("• Multi-species model comparison")
+    print("\nNote: This demo shows console output only.")
+    print("For visualizations, see the test_output/ directory for other module plots.")
 
 if __name__ == "__main__":
     main() 
