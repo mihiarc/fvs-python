@@ -29,25 +29,17 @@ class Tree:
         self._load_config()
     
     def _load_config(self):
-        """Load configuration from YAML files."""
-        cfg_dir = Path(__file__).parent.parent / 'cfg'
+        """Load configuration using the new config loader."""
+        from .config_loader import get_config_loader
         
-        # Load main species config
-        with open(cfg_dir / 'species_config.yaml', 'r') as f:
-            species_config = yaml.safe_load(f)
-        
-        # Load functional forms
-        with open(cfg_dir / species_config['functional_forms_file'], 'r') as f:
-            self.functional_forms = yaml.safe_load(f)
+        loader = get_config_loader()
         
         # Load species-specific parameters
-        species_file = species_config['species'][self.species]['file']
-        with open(cfg_dir / species_file, 'r') as f:
-            self.species_params = yaml.safe_load(f)
-            
-        # Load site index transformation parameters
-        with open(cfg_dir / species_config['site_index_transformation_file'], 'r') as f:
-            self.site_index_params = yaml.safe_load(f)
+        self.species_params = loader.load_species_config(self.species)
+        
+        # Load functional forms and site index parameters
+        self.functional_forms = loader.functional_forms
+        self.site_index_params = loader.site_index_params
     
     def grow(self, site_index: float, competition_factor: float, rank: float = 0.5, relsdi: float = 5.0, ba: float = 100, pbal: float = 50, slope: float = 0.05, aspect: float = 0, time_step: int = 5) -> None:
         """Grow the tree for the specified number of years.

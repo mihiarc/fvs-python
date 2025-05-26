@@ -4,7 +4,7 @@ All tests use 1 acre as the standard area for simplicity.
 """
 import pytest
 from pathlib import Path
-from src.stand import Stand
+from fvs_python.stand import Stand
 from tests.utils import (
     setup_test_output, 
     plot_stand_development, 

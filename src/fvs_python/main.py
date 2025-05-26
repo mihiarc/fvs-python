@@ -9,13 +9,10 @@ import os
 import csv
 import yaml
 
-# Import your package modules
-from src.stand import Stand
-from src.modeling.tree import Tree
-from src.utils.config import load_config
-from src.utils.logging_utils import setup_logging
-from src.visualization.plotting import plot_stand_development
-from src.growth_plots import (
+# Import package modules
+from .stand import Stand
+from .tree import Tree
+from .growth_plots import (
     plot_stand_trajectories,
     plot_size_distributions,
     plot_mortality_patterns,
@@ -114,11 +111,11 @@ def run_simulation(years=50, timestep=5):
         List of dictionaries containing stand metrics at each timestep
     """
     # Load configuration using new config system
-    from src.config_loader import load_stand_config
+    from .config_loader import load_stand_config
     params = load_stand_config('LP')
     
     # Initialize stand
-    stand = Stand.initialize_planted()
+    stand = Stand.initialize_planted(trees_per_acre=500)
     
     # Store metrics over time
     metrics = []

@@ -143,7 +143,8 @@ def plot_competition_effects(stand, save_path=None):
         return
     
     # Get competition factors
-    competition_factors = stand._calculate_competition_factors()
+    competition_metrics = stand._calculate_competition_metrics()
+    competition_factors = [m['competition_factor'] for m in competition_metrics]
     
     # Get tree data
     dbhs = [tree.dbh for tree in stand.trees]
