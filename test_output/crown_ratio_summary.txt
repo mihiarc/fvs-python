@@ -20,120 +20,120 @@ Predictions at different densities:
 
 Species: SP
 --------------------
-Equation Type: 4.3.1.6
+Equation Type: 4.3.1.3
 Parameters:
-  d0: 47.7297
-  d1: -16.352
-  d2: None
-  a: 4.6721
-  b0: -3.9456
-  b1: 1.0509
-  c: 3.0228
+  d0: 3.8284
+  d1: -0.2234
+  d2: 0.0172
+  a: 4.9701
+  b0: -14.668
+  b1: 1.3196
+  c: 2.8517
 
 Predictions at different densities:
-  RELSDI 2.0: ACR=0.428, Individual CR=0.073
-  RELSDI 5.0: ACR=0.363, Individual CR=0.073
-  RELSDI 8.0: ACR=0.330, Individual CR=0.073
+  RELSDI 2.0: ACR=0.408, Individual CR=0.076
+  RELSDI 5.0: ACR=0.350, Individual CR=0.076
+  RELSDI 8.0: ACR=0.332, Individual CR=0.076
 
 Species: WO
 --------------------
-Equation Type: 4.3.1.4
+Equation Type: 4.3.1.3
 Parameters:
-  d0: 4.05
-  d1: -0.12
-  d2: None
-  a: 5.0
-  b0: -16.0927
-  b1: 1.2319
-  c: 3.5016
+  d0: 3.8284
+  d1: -0.2234
+  d2: 0.0172
+  a: 4.9701
+  b0: -14.668
+  b1: 1.3196
+  c: 2.8517
 
 Predictions at different densities:
-  RELSDI 2.0: ACR=0.528, Individual CR=0.077
-  RELSDI 5.0: ACR=0.473, Individual CR=0.077
-  RELSDI 8.0: ACR=0.447, Individual CR=0.077
+  RELSDI 2.0: ACR=0.408, Individual CR=0.076
+  RELSDI 5.0: ACR=0.350, Individual CR=0.076
+  RELSDI 8.0: ACR=0.332, Individual CR=0.076
 
 Species: RM
 --------------------
-Equation Type: 4.3.1.6
+Equation Type: 4.3.1.3
 Parameters:
-  d0: 46.1653
-  d1: -6.088
-  d2: None
-  a: 4.7322
-  b0: -24.274
-  b1: 1.4587
-  c: 2.9951
+  d0: 3.8284
+  d1: -0.2234
+  d2: 0.0172
+  a: 4.9701
+  b0: -14.668
+  b1: 1.3196
+  c: 2.8517
 
 Predictions at different densities:
-  RELSDI 2.0: ACR=0.443, Individual CR=0.074
-  RELSDI 5.0: ACR=0.419, Individual CR=0.074
-  RELSDI 8.0: ACR=0.407, Individual CR=0.074
+  RELSDI 2.0: ACR=0.408, Individual CR=0.076
+  RELSDI 5.0: ACR=0.350, Individual CR=0.076
+  RELSDI 8.0: ACR=0.332, Individual CR=0.076
 
 Species: CA
 --------------------
-Equation Type: 4.3.1.6
+Equation Type: 4.3.1.3
 Parameters:
-  d0: 48.03
-  d1: -13.21
-  d2: None
-  a: 4.8371
-  b0: -14.318
-  b1: 1.206
-  c: 3.7345
+  d0: 3.8284
+  d1: -0.2234
+  d2: 0.0172
+  a: 4.9701
+  b0: -14.668
+  b1: 1.3196
+  c: 2.8517
 
 Predictions at different densities:
-  RELSDI 2.0: ACR=0.441, Individual CR=0.076
-  RELSDI 5.0: ACR=0.388, Individual CR=0.076
-  RELSDI 8.0: ACR=0.361, Individual CR=0.076
+  RELSDI 2.0: ACR=0.408, Individual CR=0.076
+  RELSDI 5.0: ACR=0.350, Individual CR=0.076
+  RELSDI 8.0: ACR=0.332, Individual CR=0.076
 
 Species: AB
 --------------------
-Equation Type: 4.3.1.6
+Equation Type: 4.3.1.3
 Parameters:
-  d0: 59.09
-  d1: -4.99
-  d2: None
-  a: 4.6965
-  b0: -14.3809
-  b1: 1.2016
-  c: 3.5571
+  d0: 3.8284
+  d1: -0.2234
+  d2: 0.0172
+  a: 4.9701
+  b0: -14.668
+  b1: 1.3196
+  c: 2.8517
 
 Predictions at different densities:
-  RELSDI 2.0: ACR=0.576, Individual CR=0.074
-  RELSDI 5.0: ACR=0.556, Individual CR=0.074
-  RELSDI 8.0: ACR=0.546, Individual CR=0.074
+  RELSDI 2.0: ACR=0.408, Individual CR=0.076
+  RELSDI 5.0: ACR=0.350, Individual CR=0.076
+  RELSDI 8.0: ACR=0.332, Individual CR=0.076
 
 Species: AS
 --------------------
-Equation Type: 4.3.1.5
+Equation Type: 4.3.1.3
 Parameters:
-  d0: 38.26
-  d1: None
-  d2: -0.77
-  a: 4.0098
-  b0: -12.7054
-  b1: 1.2224
-  c: 2.74
+  d0: 3.8284
+  d1: -0.2234
+  d2: 0.0172
+  a: 4.9701
+  b0: -14.668
+  b1: 1.3196
+  c: 2.8517
 
 Predictions at different densities:
-  RELSDI 2.0: ACR=0.367, Individual CR=0.066
-  RELSDI 5.0: ACR=0.344, Individual CR=0.066
-  RELSDI 8.0: ACR=0.321, Individual CR=0.066
+  RELSDI 2.0: ACR=0.408, Individual CR=0.076
+  RELSDI 5.0: ACR=0.350, Individual CR=0.076
+  RELSDI 8.0: ACR=0.332, Individual CR=0.076
 
 Species: WA
 --------------------
 Equation Type: 4.3.1.3
 Parameters:
-  d0: 3.7881
-  d1: -0.0634
-  d2: -0.0055
-  a: 4.8776
-  b0: -11.6617
-  b1: 1.1668
-  c: 3.8475
+  d0: 3.8284
+  d1: -0.2234
+  d2: 0.0172
+  a: 4.9701
+  b0: -14.668
+  b1: 1.3196
+  c: 2.8517
 
 Predictions at different densities:
-  RELSDI 2.0: ACR=0.418, Individual CR=0.076
-  RELSDI 5.0: ACR=0.388, Individual CR=0.076
-  RELSDI 8.0: ACR=0.370, Individual CR=0.076
+  RELSDI 2.0: ACR=0.408, Individual CR=0.076
+  RELSDI 5.0: ACR=0.350, Individual CR=0.076
+  RELSDI 8.0: ACR=0.332, Individual CR=0.076
 
