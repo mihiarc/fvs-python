@@ -47,4 +47,36 @@ crown_ratio:
     a: 4.9701
     b0: -14.6680
     b1: 1.3196
-    c: 2.8517 
+    c: 2.8517
+
+# Large tree diameter growth model parameters
+# Equation form: ln(DDS) = b1 + (b2 * ln(DBH)) + (b3 * DBH^2) + (b4 * ln(CR)) + (b5 * RELHT) + (b6 * SI) + 
+#                          (b7 * BA) + (b8 * PBAL) + (b9 * SLOPE) + (b10 * cos(ASP) * SLOPE) + 
+#                          (b11 * sin(ASP) * SLOPE) + FORTYPE + ECOUNIT + PLANT
+diameter_growth:
+  model: "ln_dds"  # Natural log of the periodic change in squared inside-bark diameter
+  coefficients:
+    b1: 0.222214   # Intercept
+    b2: 1.163040   # ln(DBH) coefficient
+    b3: -0.000863  # DBH^2 coefficient
+    b4: 0.028483   # ln(CR) coefficient
+    b5: 0.006935   # RELHT coefficient
+    b6: 0.005018   # SI coefficient
+    b7: -0.002716  # BA coefficient
+    b8: -0.217771  # PBAL coefficient
+    b9: 0.018819   # SLOPE coefficient
+    b10: -0.052142 # cos(ASP)*SLOPE coefficient
+    b11: -0.052142 # sin(ASP)*SLOPE coefficient
+  
+  # Special case for Fort Bragg Military Reservation (location code 701)
+  fort_bragg:
+    equation: "DG = (DBH * BRATIO) * ((-0.3428 * (-0.1741 - EXP(-0.1328 * DBH))) + (0.1145 * CR) - (0.0001682 * BA) - (0.00003978 * PBA) - (0.159400 * (PCT^-0.1299)) + (0.0006204 * SI) + (0.02474 * HREL))"
+
+# Volume specifications
+volume:
+  pulpwood:
+    min_dbh: 6      # Minimum DBH in inches
+    top_diameter: 4 # Top diameter outside bark in inches
+  sawtimber:
+    min_dbh: 10     # Default for softwoods
+    top_diameter: 7 # Default for softwoods 
