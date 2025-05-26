@@ -53,20 +53,32 @@ crown_ratio:
 # Equation form: ln(DDS) = b1 + (b2 * ln(DBH)) + (b3 * DBH^2) + (b4 * ln(CR)) + (b5 * RELHT) + (b6 * SI) + 
 #                          (b7 * BA) + (b8 * PBAL) + (b9 * SLOPE) + (b10 * cos(ASP) * SLOPE) + 
 #                          (b11 * sin(ASP) * SLOPE) + FORTYPE + ECOUNIT + PLANT
+# 
+# COEFFICIENTS FROM SOUTHERN VARIANT SOURCE OF TRUTH (docs/sn_variant/01_diameter_growth_models.md)
+# Table 4.7.1.1 - Coefficients (b1-b6) for Diameter Increment Model
+# Table 4.7.1.2 - Coefficients (b7-b11) for Non-Categorical Variables
 diameter_growth:
   model: "ln_dds"  # Natural log of the periodic change in squared inside-bark diameter
   coefficients:
-    b1: 0.222214   # Intercept
-    b2: 1.163040   # ln(DBH) coefficient
-    b3: -0.000863  # DBH^2 coefficient
-    b4: 0.028483   # ln(CR) coefficient
-    b5: 0.006935   # RELHT coefficient
-    b6: 0.005018   # SI coefficient
-    b7: -0.002716  # BA coefficient
-    b8: -0.217771  # PBAL coefficient
-    b9: 0.018819   # SLOPE coefficient
-    b10: -0.052142 # cos(ASP)*SLOPE coefficient
-    b11: -0.052142 # sin(ASP)*SLOPE coefficient
+    # Table 4.7.1.1 coefficients for LP (Loblolly Pine)
+    b1: -1.321662   # Intercept
+    b2: 1.640507    # ln(DBH) coefficient
+    b3: -0.000285   # DBH^2 coefficient
+    b4: 0.038193    # ln(CR) coefficient
+    b5: 0.086499    # RELHT coefficient
+    b6: 0.005844    # SI coefficient
+    # Table 4.7.1.2 coefficients for LP (Loblolly Pine)
+    b7: -0.003408   # BA coefficient
+    b8: -0.004184   # PBAL coefficient
+    b9: -0.759347   # SLOPE coefficient
+    b10: 0.185360   # cos(ASP)*SLOPE coefficient
+    b11: -0.072842  # sin(ASP)*SLOPE coefficient
+  
+  # DBH bounding function values from Table 4.7.1.8
+  # LP: DBH LOW = 998.0, DBH HI = 999.0 (no bounding function applied)
+  dbh_bounds:
+    lower_limit: 998.0  # No diameter bounding function
+    upper_limit: 999.0  # No diameter bounding function
   
   # Special case for Fort Bragg Military Reservation (location code 701)
   fort_bragg:
