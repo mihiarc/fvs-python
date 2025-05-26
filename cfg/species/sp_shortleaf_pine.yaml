@@ -30,8 +30,8 @@ height_diameter:
     fort_bragg_b1: 4.904
     fort_bragg_b2: -10.084
 bark_ratio:
-  b1: -0.43531
-  b2: 0.90368
+  b1: -0.44121
+  b2: 0.93045
 crown_ratio:
   equation: 4.3.1.6
   d0: 47.7297

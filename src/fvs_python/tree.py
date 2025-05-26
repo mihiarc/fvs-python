@@ -270,8 +270,14 @@ class Tree:
         self.height = hd_model.predict_height(self.dbh)
     
     def get_volume(self):
-        """Calculate tree volume in cubic feet."""
-        # Using a standard form factor for now
+        """Calculate tree volume in cubic feet using inside bark diameter."""
+        from .bark_ratio import create_bark_ratio_model
+        
+        # Convert DBH outside bark to inside bark for volume calculations
+        bark_model = create_bark_ratio_model(self.species)
+        dbh_inside_bark = bark_model.apply_bark_ratio_to_dbh(self.dbh)
+        
+        # Calculate volume using inside bark diameter (FVS standard)
         form_factor = 0.48
-        basal_area = math.pi * (self.dbh / 24)**2
-        return basal_area * self.height * form_factor 
+        basal_area_ib = math.pi * (dbh_inside_bark / 24)**2
+        return basal_area_ib * self.height * form_factor 

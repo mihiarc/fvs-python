@@ -23,8 +23,8 @@ height_diameter:
     b1: 4.5991
     b2: -5.9111
 bark_ratio:
-  b1: -0.52
-  b2: 0.89
+  b1: -0.45903
+  b2: 0.92746
 crown_ratio:
   equation: 4.3.1.6
   d0: 42.84
