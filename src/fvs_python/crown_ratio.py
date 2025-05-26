@@ -26,7 +26,7 @@ class CrownRatioModel:
     def _load_parameters(self):
         """Load crown ratio parameters from configuration."""
         # Load crown ratio coefficients from the extracted JSON file
-        crown_ratio_file = Path(__file__).parent.parent.parent / "docs" / "sn_crown_ratio_coefficients.json"
+        crown_ratio_file = Path(__file__).parent.parent.parent / "cfg" / "sn_crown_ratio_coefficients.json"
         
         if crown_ratio_file.exists():
             with open(crown_ratio_file, 'r') as f:

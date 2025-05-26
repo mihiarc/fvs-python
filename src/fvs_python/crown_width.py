@@ -126,13 +126,9 @@ class CrownWidthModel:
         a5 = coeffs.get('a5')
         
         # Determine equation type and calculate FCW
-        if eq_type in ['111', '128']:
-            # Equation 4.4.2: FCW = a1 + (a2 * DBH^a3)
-            if a3 is not None:
-                fcw = a1 + (a2 * dbh**a3)
-            else:
-                fcw = a1 + (a2 * dbh)
-        else:
+        # Use Bechtold equation (4.4.1) if species has a4 or a5 coefficients (crown ratio or Hopkins index terms)
+        # Use Bragg equation (4.4.2) if species only has a1, a2, a3 coefficients
+        if (a4 is not None or a5 is not None):
             # Equation 4.4.1: FCW = a1 + (a2 * DBH) + (a3 * DBH^2) + (a4 * CR) + (a5 * HI)
             fcw = a1 + (a2 * dbh)
             
@@ -142,6 +138,12 @@ class CrownWidthModel:
                 fcw += a4 * crown_ratio
             if a5 is not None:
                 fcw += a5 * hopkins_index
+        else:
+            # Equation 4.4.2: FCW = a1 + (a2 * DBH^a3)
+            if a3 is not None:
+                fcw = a1 + (a2 * dbh**a3)
+            else:
+                fcw = a1 + (a2 * dbh)
         
         # Apply scaling for small trees (DBH < 5.0)
         if dbh < 5.0:
@@ -163,12 +165,7 @@ class CrownWidthModel:
                     # Use the equation at the maximum allowed DBH
                     bounded_dbh = max_dbh - 0.1
                     # Recalculate with bounded DBH to avoid infinite recursion
-                    if eq_type in ['111', '128']:
-                        if a3 is not None:
-                            fcw = a1 + (a2 * bounded_dbh**a3)
-                        else:
-                            fcw = a1 + (a2 * bounded_dbh)
-                    else:
+                    if (a4 is not None or a5 is not None):
                         fcw = a1 + (a2 * bounded_dbh)
                         if a3 is not None:
                             fcw += a3 * bounded_dbh**2
@@ -176,6 +173,11 @@ class CrownWidthModel:
                             fcw += a4 * crown_ratio
                         if a5 is not None:
                             fcw += a5 * hopkins_index
+                    else:
+                        if a3 is not None:
+                            fcw = a1 + (a2 * bounded_dbh**a3)
+                        else:
+                            fcw = a1 + (a2 * bounded_dbh)
             except (ValueError, IndexError):
                 pass
         
