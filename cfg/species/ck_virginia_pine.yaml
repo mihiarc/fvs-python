@@ -57,3 +57,20 @@ volume:
   sawtimber:
     min_dbh: 10
     top_diameter: 7
+crown_width:
+  forest_grown:
+    equation_number: '82601'
+    a1: 0.5189
+    a2: 1.4134
+    a3: null
+    a4: 0.1365
+    a5: -0.0806
+    bounds: FCW < 45
+  open_grown:
+    equation_number: '82601'
+    a1: 0.5189
+    a2: 1.4134
+    a3: null
+    a4: 0.1365
+    a5: -0.0806
+    bounds: OCW < 45
