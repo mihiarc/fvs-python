@@ -113,10 +113,9 @@ def run_simulation(years=50, timestep=5):
     Returns:
         List of dictionaries containing stand metrics at each timestep
     """
-    # Load configuration
-    config_path = Path(__file__).parent.parent / 'config' / 'loblolly_params.yaml'
-    with open(config_path, 'r') as f:
-        params = yaml.safe_load(f)
+    # Load configuration using new config system
+    from src.config_loader import load_stand_config
+    params = load_stand_config('LP')
     
     # Initialize stand
     stand = Stand.initialize_planted()

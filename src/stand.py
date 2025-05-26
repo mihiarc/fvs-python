@@ -8,6 +8,7 @@ import yaml
 import numpy as np
 from pathlib import Path
 from .tree import Tree
+from .config_loader import load_stand_config
 
 class Stand:
     def __init__(self, trees, site_index=70):
@@ -26,10 +27,8 @@ class Stand:
         self.site_index = site_index
         self.age = 0
         
-        # Load configuration
-        config_path = Path(__file__).parent.parent / 'config' / 'loblolly_params.yaml'
-        with open(config_path, 'r') as f:
-            self.params = yaml.safe_load(f)
+        # Load configuration using new config system
+        self.params = load_stand_config('LP')
     
     @classmethod
     def initialize_planted(cls, trees_per_acre, site_index=70):
