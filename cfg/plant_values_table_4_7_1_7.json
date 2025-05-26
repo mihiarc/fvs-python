@@ -1,0 +1,15 @@
+{
+  "table_description": "Table 4.7.1.7 PLANT values by species for the SN variant",
+  "plant_values": {
+    "PU": 0.173758,
+    "SA": 0.227572,
+    "LL": 0.110751,
+    "WP": 0.098090,
+    "LP": 0.245669
+  },
+  "notes": {
+    "description": "PLANT values are species-specific coefficients used in growth calculations",
+    "usage": "These values are used in the managed pine stand coefficient calculations",
+    "reference": "Referenced in the diameter increment model equations"
+  }
+}

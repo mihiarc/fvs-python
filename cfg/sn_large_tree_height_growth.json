@@ -1,0 +1,229 @@
+{
+  "section": "4.7.2",
+  "title": "Large Tree Height Growth",
+  "description": "In the SN variant, the large-tree height growth model follows the approach of Wensel and others (1987) where the potential height growth is calculated for every tree and modified based on individual tree crown ratio and relative height in the stand.",
+  "methodology": {
+    "approach": "Wensel and others (1987)",
+    "potential_height_growth": "calculated using the methodology described in the small-tree height increment model",
+    "crown_ratio_function": "uses Hoerl's Special Function (HSF) form (Cuthbert and Wood 1971, p. 23)",
+    "crown_ratio_range": "0.0 to 1.0",
+    "optimal_crown_ratio": "height growth is maximized for crown ratios between 45 and 75%"
+  },
+  "equations": {
+    "4.7.2.1": {
+      "formula": "HTG = POTHTG * (0.25 * HGMDCR + 0.75 * HGMDRH)",
+      "description": "Main height growth equation",
+      "variables": {
+        "HTG": "periodic height growth",
+        "POTHTG": "potential periodic height growth, see section 4.6.1",
+        "HGMDCR": "crown ratio modifier (bounded to HGMDCR < 1.0)",
+        "HGMDRH": "relative height modifier"
+      }
+    },
+    "4.7.2.2": {
+      "formula": "HGMDCR = 100 * CR^3.0 * exp(-5.0*CR)",
+      "description": "Crown ratio modifier using Hoerl's Special Function",
+      "variables": {
+        "HGMDCR": "crown ratio modifier (bounded to HGMDCR < 1.0)",
+        "CR": "crown ratio expressed as a proportion"
+      }
+    },
+    "4.7.2.3": {
+      "formula": "FCTRKX = ((RHK / RHYXS)^(RHM – 1)) – 1",
+      "description": "Factor calculation for relative height modifier"
+    },
+    "4.7.2.4": {
+      "formula": "FCTRRB = (-1.0 * RHR) / (1 – RHB)",
+      "description": "Factor calculation for relative height modifier"
+    },
+    "4.7.2.5": {
+      "formula": "FCTRXB = RELHT^ (1 – RHB) – RHXS^ (1 – RHB)",
+      "description": "Factor calculation for relative height modifier"
+    },
+    "4.7.2.6": {
+      "formula": "FCTRM = 1 / (1 – RHM)",
+      "description": "Factor calculation for relative height modifier"
+    },
+    "4.7.2.7": {
+      "formula": "HGMDRH = RHK * (1 + FCTRKX * exp(FCTRRB*FCTRXB))^FCTRM",
+      "description": "Relative height modifier based on Generalized Chapman-Richards function",
+      "variables": {
+        "RELHT": "subject tree's height relative to the 40 tallest trees in the stand",
+        "HGMDRH": "relative height modifier used in equation {4.7.2.1}",
+        "RH...": "coefficients based on shade tolerance of a species shown in table 4.7.2.1"
+      },
+      "notes": [
+        "Based on Generalized Chapman-Richards function (Donnelly and Betters 1991, Donnelly and others 1992, and Pienaar and Turnbull 1973)",
+        "Parameters set to attenuate height growth based on relative height and shade tolerance",
+        "Modifier value (HGMDRH) decreases with decreasing relative height and species intolerance",
+        "Range between 0.0 and 1.0",
+        "Height growth reaches upper asymptote of 1.0 at relative height of 1.0 for intolerant species and 0.7 for tolerant species"
+      ]
+    }
+  },
+  "tables": {
+    "4.7.2.1": {
+      "title": "Shade tolerance coefficients for equations {4.7.2.3} – {4.7.2.7} the SN variant",
+      "columns": ["Shade Tolerance", "RHR", "RHYXS", "RHM", "RHB", "RHXS", "RHK"],
+      "data": [
+        {
+          "shade_tolerance": "Very Tolerant",
+          "RHR": 20,
+          "RHYXS": 0.20,
+          "RHM": 1.1,
+          "RHB": -1.10,
+          "RHXS": 0,
+          "RHK": 1
+        },
+        {
+          "shade_tolerance": "Tolerant",
+          "RHR": 16,
+          "RHYXS": 0.15,
+          "RHM": 1.1,
+          "RHB": -1.20,
+          "RHXS": 0,
+          "RHK": 1
+        },
+        {
+          "shade_tolerance": "Intermediate",
+          "RHR": 15,
+          "RHYXS": 0.10,
+          "RHM": 1.1,
+          "RHB": -1.45,
+          "RHXS": 0,
+          "RHK": 1
+        },
+        {
+          "shade_tolerance": "Intolerant",
+          "RHR": 13,
+          "RHYXS": 0.05,
+          "RHM": 1.1,
+          "RHB": -1.60,
+          "RHXS": 0,
+          "RHK": 1
+        },
+        {
+          "shade_tolerance": "Very Intolerant",
+          "RHR": 12,
+          "RHYXS": 0.01,
+          "RHM": 1.1,
+          "RHB": -1.60,
+          "RHXS": 0,
+          "RHK": 1
+        }
+      ]
+    },
+    "4.7.2.2": {
+      "title": "Shade tolerance by species in the SN variant",
+      "columns": ["Species Code", "Shade Tolerance"],
+      "data": [
+        {"species_code": "FR", "shade_tolerance": "Very Tolerant"},
+        {"species_code": "JU", "shade_tolerance": "Intolerant"},
+        {"species_code": "PI", "shade_tolerance": "Tolerant"},
+        {"species_code": "PU", "shade_tolerance": "Intolerant"},
+        {"species_code": "SP", "shade_tolerance": "Intolerant"},
+        {"species_code": "SA", "shade_tolerance": "Intolerant"},
+        {"species_code": "SR", "shade_tolerance": "Very Tolerant"},
+        {"species_code": "LL", "shade_tolerance": "Intolerant"},
+        {"species_code": "TM", "shade_tolerance": "Intolerant"},
+        {"species_code": "PP", "shade_tolerance": "Intolerant"},
+        {"species_code": "PD", "shade_tolerance": "Intolerant"},
+        {"species_code": "WP", "shade_tolerance": "Intermediate"},
+        {"species_code": "LP", "shade_tolerance": "Intolerant"},
+        {"species_code": "VP", "shade_tolerance": "Intolerant"},
+        {"species_code": "BY", "shade_tolerance": "Intermediate"},
+        {"species_code": "PC", "shade_tolerance": "Intermediate"},
+        {"species_code": "HM", "shade_tolerance": "Very Tolerant"},
+        {"species_code": "FM", "shade_tolerance": "Tolerant"},
+        {"species_code": "BE", "shade_tolerance": "Tolerant"},
+        {"species_code": "RM", "shade_tolerance": "Tolerant"},
+        {"species_code": "SV", "shade_tolerance": "Tolerant"},
+        {"species_code": "SM", "shade_tolerance": "Very Tolerant"},
+        {"species_code": "BU", "shade_tolerance": "Tolerant"},
+        {"species_code": "BB", "shade_tolerance": "Intolerant"},
+        {"species_code": "SB", "shade_tolerance": "Intolerant"},
+        {"species_code": "AH", "shade_tolerance": "Very Tolerant"},
+        {"species_code": "HI", "shade_tolerance": "Intermediate"},
+        {"species_code": "CA", "shade_tolerance": "Intolerant"},
+        {"species_code": "HB", "shade_tolerance": "Intermediate"},
+        {"species_code": "RD", "shade_tolerance": "Tolerant"},
+        {"species_code": "DW", "shade_tolerance": "Very Tolerant"},
+        {"species_code": "PS", "shade_tolerance": "Very Tolerant"},
+        {"species_code": "AB", "shade_tolerance": "Very Tolerant"},
+        {"species_code": "AS", "shade_tolerance": "Tolerant"},
+        {"species_code": "WA", "shade_tolerance": "Intolerant"},
+        {"species_code": "BA", "shade_tolerance": "Intolerant"},
+        {"species_code": "GA", "shade_tolerance": "Tolerant"},
+        {"species_code": "HL", "shade_tolerance": "Intolerant"},
+        {"species_code": "LB", "shade_tolerance": "Tolerant"},
+        {"species_code": "HA", "shade_tolerance": "Tolerant"},
+        {"species_code": "HY", "shade_tolerance": "Very Tolerant"},
+        {"species_code": "BN", "shade_tolerance": "Intolerant"},
+        {"species_code": "WN", "shade_tolerance": "Intolerant"},
+        {"species_code": "SU", "shade_tolerance": "Intolerant"},
+        {"species_code": "YP", "shade_tolerance": "Intolerant"},
+        {"species_code": "MG", "shade_tolerance": "Tolerant"},
+        {"species_code": "CT", "shade_tolerance": "Intermediate"},
+        {"species_code": "MS", "shade_tolerance": "Tolerant"},
+        {"species_code": "MV", "shade_tolerance": "Intermediate"},
+        {"species_code": "ML", "shade_tolerance": "Tolerant"},
+        {"species_code": "AP", "shade_tolerance": "Intolerant"},
+        {"species_code": "MB", "shade_tolerance": "Tolerant"},
+        {"species_code": "WT", "shade_tolerance": "Intolerant"},
+        {"species_code": "BG", "shade_tolerance": "Tolerant"},
+        {"species_code": "TS", "shade_tolerance": "Intolerant"},
+        {"species_code": "HH", "shade_tolerance": "Tolerant"},
+        {"species_code": "SD", "shade_tolerance": "Tolerant"},
+        {"species_code": "RA", "shade_tolerance": "Tolerant"},
+        {"species_code": "SY", "shade_tolerance": "Intermediate"},
+        {"species_code": "CW", "shade_tolerance": "Very Intolerant"},
+        {"species_code": "BT", "shade_tolerance": "Very Intolerant"},
+        {"species_code": "BC", "shade_tolerance": "Intolerant"},
+        {"species_code": "WO", "shade_tolerance": "Intermediate"},
+        {"species_code": "SO", "shade_tolerance": "Very Intolerant"},
+        {"species_code": "SK", "shade_tolerance": "Intermediate"},
+        {"species_code": "CB", "shade_tolerance": "Intolerant"},
+        {"species_code": "TO", "shade_tolerance": "Intolerant"},
+        {"species_code": "LK", "shade_tolerance": "Tolerant"},
+        {"species_code": "OV", "shade_tolerance": "Intermediate"},
+        {"species_code": "BJ", "shade_tolerance": "Intolerant"},
+        {"species_code": "SN", "shade_tolerance": "Intolerant"},
+        {"species_code": "CK", "shade_tolerance": "Intolerant"},
+        {"species_code": "WK", "shade_tolerance": "Intolerant"},
+        {"species_code": "CO", "shade_tolerance": "Intermediate"},
+        {"species_code": "RO", "shade_tolerance": "Intermediate"},
+        {"species_code": "QS", "shade_tolerance": "Intolerant"},
+        {"species_code": "PO", "shade_tolerance": "Intolerant"},
+        {"species_code": "BO", "shade_tolerance": "Intermediate"},
+        {"species_code": "LO", "shade_tolerance": "Intermediate"},
+        {"species_code": "BK", "shade_tolerance": "Very Intolerant"},
+        {"species_code": "WI", "shade_tolerance": "Very Intolerant"},
+        {"species_code": "SS", "shade_tolerance": "Intolerant"},
+        {"species_code": "BD", "shade_tolerance": "Tolerant"},
+        {"species_code": "EL", "shade_tolerance": "Intermediate"},
+        {"species_code": "WE", "shade_tolerance": "Tolerant"},
+        {"species_code": "AE", "shade_tolerance": "Intermediate"},
+        {"species_code": "RL", "shade_tolerance": "Tolerant"},
+        {"species_code": "OS", "shade_tolerance": "Intermediate"},
+        {"species_code": "OH", "shade_tolerance": "Intermediate"},
+        {"species_code": "OT", "shade_tolerance": "Intermediate"}
+      ]
+    }
+  },
+  "references": [
+    "Wensel and others (1987)",
+    "Cuthbert and Wood (1971, p. 23)",
+    "Donnelly and Betters (1991)",
+    "Donnelly and others (1992)",
+    "Pienaar and Turnbull (1973)"
+  ],
+  "notes": [
+    "The crown ratio modifying function uses Hoerl's Special Function (HSF) form with a range of 0.0 to 1.0",
+    "The a-c parameters are chosen so that height growth is maximized for crown ratios between 45 and 75%",
+    "The relative height modifying function (HGMDRH) is based on the height of the tree record compared to the top height of the stand, adjusted for shade tolerance",
+    "The modifying function is based on the Generalized Chapman-Richards function",
+    "Parameters are set to attenuate height growth based on relative height and shade tolerance",
+    "The modifier value (HGMDRH) decreases with decreasing relative height and species intolerance with a range between 0.0 and 1.0",
+    "Height growth reaches an upper asymptote of 1.0 at a relative height of 1.0 for intolerant species and 0.7 for tolerant species"
+  ]
+} 
