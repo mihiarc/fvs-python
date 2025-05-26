@@ -1,0 +1,728 @@
+{
+  "title": "Table 3.2.1 Species codes used in the SN variant",
+  "description": "Complete list of species codes recognized by the SN variant of FVS, including FVS species codes, FIA codes, PLANTS symbols, scientific names, and common names",
+  "total_species": 90,
+  "note": "The SN variant recognizes 87 species, plus three other composite species categories",
+  "species": [
+    {
+      "sequence": 1,
+      "fvs_code": "FR",
+      "fia_code": "010",
+      "plants_symbol": "ABIES",
+      "scientific_name": "Abies",
+      "common_name": "fir"
+    },
+    {
+      "sequence": 2,
+      "fvs_code": "JU",
+      "fia_code": "057",
+      "plants_symbol": "JUNIP",
+      "scientific_name": "Juniperus",
+      "common_name": "juniper"
+    },
+    {
+      "sequence": 3,
+      "fvs_code": "PI",
+      "fia_code": "090",
+      "plants_symbol": "PICEA",
+      "scientific_name": "Picea",
+      "common_name": "spruce"
+    },
+    {
+      "sequence": 4,
+      "fvs_code": "PU",
+      "fia_code": "107",
+      "plants_symbol": "PICL",
+      "scientific_name": "Pinus clausa",
+      "common_name": "sand pine"
+    },
+    {
+      "sequence": 5,
+      "fvs_code": "SP",
+      "fia_code": "110",
+      "plants_symbol": "PIEC2",
+      "scientific_name": "Pinus echinata",
+      "common_name": "shortleaf pine"
+    },
+    {
+      "sequence": 6,
+      "fvs_code": "SA",
+      "fia_code": "111",
+      "plants_symbol": "PIEL",
+      "scientific_name": "Pinus elliottii",
+      "common_name": "slash pine"
+    },
+    {
+      "sequence": 7,
+      "fvs_code": "SR",
+      "fia_code": "115",
+      "plants_symbol": "PIGL2",
+      "scientific_name": "Pinus glabra",
+      "common_name": "spruce pine"
+    },
+    {
+      "sequence": 8,
+      "fvs_code": "LL",
+      "fia_code": "121",
+      "plants_symbol": "PIPA2",
+      "scientific_name": "Pinus palustris",
+      "common_name": "longleaf pine"
+    },
+    {
+      "sequence": 9,
+      "fvs_code": "TM",
+      "fia_code": "123",
+      "plants_symbol": "PIPU5",
+      "scientific_name": "Pinus pungens",
+      "common_name": "Table Mountain pine"
+    },
+    {
+      "sequence": 10,
+      "fvs_code": "PP",
+      "fia_code": "126",
+      "plants_symbol": "PIRI",
+      "scientific_name": "Pinus rigida",
+      "common_name": "pitch pine"
+    },
+    {
+      "sequence": 11,
+      "fvs_code": "PD",
+      "fia_code": "128",
+      "plants_symbol": "PISE",
+      "scientific_name": "Pinus serotina",
+      "common_name": "pond pine"
+    },
+    {
+      "sequence": 12,
+      "fvs_code": "WP",
+      "fia_code": "129",
+      "plants_symbol": "PIST",
+      "scientific_name": "Pinus strobus",
+      "common_name": "eastern white pine"
+    },
+    {
+      "sequence": 13,
+      "fvs_code": "LP",
+      "fia_code": "131",
+      "plants_symbol": "PITA",
+      "scientific_name": "Pinus taeda",
+      "common_name": "loblolly pine"
+    },
+    {
+      "sequence": 14,
+      "fvs_code": "VP",
+      "fia_code": "132",
+      "plants_symbol": "PIVI2",
+      "scientific_name": "Pinus viginiana",
+      "common_name": "Virginia pine"
+    },
+    {
+      "sequence": 15,
+      "fvs_code": "BY",
+      "fia_code": "221",
+      "plants_symbol": "TADI2",
+      "scientific_name": "Taxodium distichum",
+      "common_name": "bald cypress"
+    },
+    {
+      "sequence": 16,
+      "fvs_code": "PC",
+      "fia_code": "222",
+      "plants_symbol": "TAAS",
+      "scientific_name": "Taxodium ascendens",
+      "common_name": "pond cypress"
+    },
+    {
+      "sequence": 17,
+      "fvs_code": "HM",
+      "fia_code": "260",
+      "plants_symbol": "TSUGA",
+      "scientific_name": "Tsuga",
+      "common_name": "hemlock"
+    },
+    {
+      "sequence": 18,
+      "fvs_code": "FM",
+      "fia_code": "311",
+      "plants_symbol": "ACBA3",
+      "scientific_name": "Acer barbatum",
+      "common_name": "southern sugar maple"
+    },
+    {
+      "sequence": 19,
+      "fvs_code": "BE",
+      "fia_code": "313",
+      "plants_symbol": "ACNE2",
+      "scientific_name": "Acer negundo",
+      "common_name": "boxelder"
+    },
+    {
+      "sequence": 20,
+      "fvs_code": "RM",
+      "fia_code": "316",
+      "plants_symbol": "ACRU",
+      "scientific_name": "Acer rubrum",
+      "common_name": "red maple"
+    },
+    {
+      "sequence": 21,
+      "fvs_code": "SV",
+      "fia_code": "317",
+      "plants_symbol": "ACSA2",
+      "scientific_name": "Acer saccharinum",
+      "common_name": "silver maple"
+    },
+    {
+      "sequence": 22,
+      "fvs_code": "SM",
+      "fia_code": "318",
+      "plants_symbol": "ACSA3",
+      "scientific_name": "Acer saccharum",
+      "common_name": "sugar maple"
+    },
+    {
+      "sequence": 23,
+      "fvs_code": "BU",
+      "fia_code": "330",
+      "plants_symbol": "AESCU",
+      "scientific_name": "Aesculus",
+      "common_name": "buckeye"
+    },
+    {
+      "sequence": 24,
+      "fvs_code": "BB",
+      "fia_code": "370",
+      "plants_symbol": "BETUL",
+      "scientific_name": "Betula",
+      "common_name": "birch"
+    },
+    {
+      "sequence": 25,
+      "fvs_code": "SB",
+      "fia_code": "372",
+      "plants_symbol": "BELE",
+      "scientific_name": "Betula lenta",
+      "common_name": "sweet birch"
+    },
+    {
+      "sequence": 26,
+      "fvs_code": "AH",
+      "fia_code": "391",
+      "plants_symbol": "CACA18",
+      "scientific_name": "Carpinus caroliniana",
+      "common_name": "American hornbeam"
+    },
+    {
+      "sequence": 27,
+      "fvs_code": "HI",
+      "fia_code": "400",
+      "plants_symbol": "CARYA",
+      "scientific_name": "Carya",
+      "common_name": "hybrid hickory"
+    },
+    {
+      "sequence": 28,
+      "fvs_code": "CA",
+      "fia_code": "450",
+      "plants_symbol": "CATAL",
+      "scientific_name": "Catalpa",
+      "common_name": "catalpa"
+    },
+    {
+      "sequence": 29,
+      "fvs_code": "HB",
+      "fia_code": "460",
+      "plants_symbol": "CELTI",
+      "scientific_name": "Celtis",
+      "common_name": "hackberry"
+    },
+    {
+      "sequence": 30,
+      "fvs_code": "RD",
+      "fia_code": "471",
+      "plants_symbol": "CECA4",
+      "scientific_name": "Cercis canadensis",
+      "common_name": "eastern redbud"
+    },
+    {
+      "sequence": 31,
+      "fvs_code": "DW",
+      "fia_code": "491",
+      "plants_symbol": "COFL2",
+      "scientific_name": "Cornus florida",
+      "common_name": "flowering dogwood"
+    },
+    {
+      "sequence": 32,
+      "fvs_code": "PS",
+      "fia_code": "521",
+      "plants_symbol": "DIVI5",
+      "scientific_name": "Diospyros virginiana",
+      "common_name": "common persimmon"
+    },
+    {
+      "sequence": 33,
+      "fvs_code": "AB",
+      "fia_code": "531",
+      "plants_symbol": "FAGR",
+      "scientific_name": "Fagus grandifolia",
+      "common_name": "American beech"
+    },
+    {
+      "sequence": 34,
+      "fvs_code": "AS",
+      "fia_code": "540",
+      "plants_symbol": "FRAXI",
+      "scientific_name": "Fraxinus",
+      "common_name": "ash"
+    },
+    {
+      "sequence": 35,
+      "fvs_code": "WA",
+      "fia_code": "541",
+      "plants_symbol": "FRAM2",
+      "scientific_name": "Fraxinus americana",
+      "common_name": "white ash"
+    },
+    {
+      "sequence": 36,
+      "fvs_code": "BA",
+      "fia_code": "543",
+      "plants_symbol": "FRNI",
+      "scientific_name": "Fraxinus nigra",
+      "common_name": "black ash"
+    },
+    {
+      "sequence": 37,
+      "fvs_code": "GA",
+      "fia_code": "544",
+      "plants_symbol": "FRPE",
+      "scientific_name": "Fraxinus pennsylvanica",
+      "common_name": "green ash"
+    },
+    {
+      "sequence": 38,
+      "fvs_code": "HL",
+      "fia_code": "552",
+      "plants_symbol": "GLTR",
+      "scientific_name": "Gleditsia triacanthos",
+      "common_name": "honeylocust"
+    },
+    {
+      "sequence": 39,
+      "fvs_code": "LB",
+      "fia_code": "555",
+      "plants_symbol": "GOLA",
+      "scientific_name": "Gordonia lasianthus",
+      "common_name": "loblolly bay"
+    },
+    {
+      "sequence": 40,
+      "fvs_code": "HA",
+      "fia_code": "580",
+      "plants_symbol": "HALES",
+      "scientific_name": "Halesia",
+      "common_name": "silverbell"
+    },
+    {
+      "sequence": 41,
+      "fvs_code": "HY",
+      "fia_code": "591",
+      "plants_symbol": "ILOP",
+      "scientific_name": "Ilex opaca",
+      "common_name": "American holly"
+    },
+    {
+      "sequence": 42,
+      "fvs_code": "BN",
+      "fia_code": "601",
+      "plants_symbol": "JUCI",
+      "scientific_name": "Juglans cinerea",
+      "common_name": "butternut"
+    },
+    {
+      "sequence": 43,
+      "fvs_code": "WN",
+      "fia_code": "602",
+      "plants_symbol": "JUNI",
+      "scientific_name": "Juglans nigra",
+      "common_name": "black walnut"
+    },
+    {
+      "sequence": 44,
+      "fvs_code": "SU",
+      "fia_code": "611",
+      "plants_symbol": "LIST2",
+      "scientific_name": "Liquidamber styraciflua",
+      "common_name": "sweetgum"
+    },
+    {
+      "sequence": 45,
+      "fvs_code": "YP",
+      "fia_code": "621",
+      "plants_symbol": "LITU",
+      "scientific_name": "Liriodendron tulipifera",
+      "common_name": "tuliptree"
+    },
+    {
+      "sequence": 46,
+      "fvs_code": "MG",
+      "fia_code": "650",
+      "plants_symbol": "MAGNO",
+      "scientific_name": "Magnolia",
+      "common_name": "magnolia"
+    },
+    {
+      "sequence": 47,
+      "fvs_code": "CT",
+      "fia_code": "651",
+      "plants_symbol": "MAAC",
+      "scientific_name": "Magnolia acuminata",
+      "common_name": "cucumber tree"
+    },
+    {
+      "sequence": 48,
+      "fvs_code": "MS",
+      "fia_code": "652",
+      "plants_symbol": "MAGR4",
+      "scientific_name": "Magnolia grandiflora",
+      "common_name": "southern magnolia"
+    },
+    {
+      "sequence": 49,
+      "fvs_code": "MV",
+      "fia_code": "653",
+      "plants_symbol": "MAVI2",
+      "scientific_name": "Magnolia virginiana",
+      "common_name": "sweetbay"
+    },
+    {
+      "sequence": 50,
+      "fvs_code": "ML",
+      "fia_code": "654",
+      "plants_symbol": "MAMA2",
+      "scientific_name": "Magnolia macrophylla",
+      "common_name": "bigleaf magnolia"
+    },
+    {
+      "sequence": 51,
+      "fvs_code": "AP",
+      "fia_code": "660",
+      "plants_symbol": "MALUS",
+      "scientific_name": "Malus",
+      "common_name": "apple"
+    },
+    {
+      "sequence": 52,
+      "fvs_code": "MB",
+      "fia_code": "680",
+      "plants_symbol": "MORUS",
+      "scientific_name": "Morus",
+      "common_name": "mulberry"
+    },
+    {
+      "sequence": 53,
+      "fvs_code": "WT",
+      "fia_code": "691",
+      "plants_symbol": "NYAQ2",
+      "scientific_name": "Nyssa aquatica",
+      "common_name": "water tupelo"
+    },
+    {
+      "sequence": 54,
+      "fvs_code": "BG",
+      "fia_code": "693",
+      "plants_symbol": "NYSY",
+      "scientific_name": "Nyssa sylvatica",
+      "common_name": "blackgum"
+    },
+    {
+      "sequence": 55,
+      "fvs_code": "TS",
+      "fia_code": "694",
+      "plants_symbol": "NYBI",
+      "scientific_name": "Nyssa biflora",
+      "common_name": "swamp tupelo"
+    },
+    {
+      "sequence": 56,
+      "fvs_code": "HH",
+      "fia_code": "701",
+      "plants_symbol": "OSVI",
+      "scientific_name": "Ostrya virginiana",
+      "common_name": "hophornbeam"
+    },
+    {
+      "sequence": 57,
+      "fvs_code": "SD",
+      "fia_code": "711",
+      "plants_symbol": "OXAR",
+      "scientific_name": "Oxydendrum arboreum",
+      "common_name": "sourwood"
+    },
+    {
+      "sequence": 58,
+      "fvs_code": "RA",
+      "fia_code": "721",
+      "plants_symbol": "PEBO",
+      "scientific_name": "Persea borbonia",
+      "common_name": "redbay"
+    },
+    {
+      "sequence": 59,
+      "fvs_code": "SY",
+      "fia_code": "731",
+      "plants_symbol": "PLOC",
+      "scientific_name": "Platanus occidentalis",
+      "common_name": "American sycamore"
+    },
+    {
+      "sequence": 60,
+      "fvs_code": "CW",
+      "fia_code": "740",
+      "plants_symbol": "POPUL",
+      "scientific_name": "Populus",
+      "common_name": "cottonwood"
+    },
+    {
+      "sequence": 61,
+      "fvs_code": "BT",
+      "fia_code": "743",
+      "plants_symbol": "POGR4",
+      "scientific_name": "Populus grandidentata",
+      "common_name": "bigtooth aspen"
+    },
+    {
+      "sequence": 62,
+      "fvs_code": "BC",
+      "fia_code": "762",
+      "plants_symbol": "PRSE2",
+      "scientific_name": "Prunus serotina",
+      "common_name": "black cherry"
+    },
+    {
+      "sequence": 63,
+      "fvs_code": "WO",
+      "fia_code": "802",
+      "plants_symbol": "QUAL",
+      "scientific_name": "Quercus alba",
+      "common_name": "white oak"
+    },
+    {
+      "sequence": 64,
+      "fvs_code": "SO",
+      "fia_code": "806",
+      "plants_symbol": "QUCO2",
+      "scientific_name": "Quercus coccinea",
+      "common_name": "scarlet oak"
+    },
+    {
+      "sequence": 65,
+      "fvs_code": "SK",
+      "fia_code": "812",
+      "plants_symbol": "QUFA",
+      "scientific_name": "Quercus falcata",
+      "common_name": "southern red oak"
+    },
+    {
+      "sequence": 66,
+      "fvs_code": "CB",
+      "fia_code": "813",
+      "plants_symbol": "QUPA5",
+      "scientific_name": "Quercus pagoda",
+      "common_name": "cherrybark oak"
+    },
+    {
+      "sequence": 67,
+      "fvs_code": "TO",
+      "fia_code": "819",
+      "plants_symbol": "QULA2",
+      "scientific_name": "Quercus laevis",
+      "common_name": "turkey oak"
+    },
+    {
+      "sequence": 68,
+      "fvs_code": "LK",
+      "fia_code": "820",
+      "plants_symbol": "QULA3",
+      "scientific_name": "Quercus laurifolia",
+      "common_name": "laurel oak"
+    },
+    {
+      "sequence": 69,
+      "fvs_code": "OV",
+      "fia_code": "822",
+      "plants_symbol": "QULY",
+      "scientific_name": "Quercus lyrata",
+      "common_name": "overcup oak"
+    },
+    {
+      "sequence": 70,
+      "fvs_code": "BJ",
+      "fia_code": "824",
+      "plants_symbol": "QUMA3",
+      "scientific_name": "Quercus marilandica",
+      "common_name": "blackjack oak"
+    },
+    {
+      "sequence": 71,
+      "fvs_code": "SN",
+      "fia_code": "825",
+      "plants_symbol": "QUMI",
+      "scientific_name": "Quercus michauxii",
+      "common_name": "swamp chestnut oak"
+    },
+    {
+      "sequence": 72,
+      "fvs_code": "CK",
+      "fia_code": "826",
+      "plants_symbol": "QUMU",
+      "scientific_name": "Quercus muehlenbergii",
+      "common_name": "chinkapin oak"
+    },
+    {
+      "sequence": 73,
+      "fvs_code": "WK",
+      "fia_code": "827",
+      "plants_symbol": "QUNI",
+      "scientific_name": "Quercus nigra",
+      "common_name": "water oak"
+    },
+    {
+      "sequence": 74,
+      "fvs_code": "CO",
+      "fia_code": "832",
+      "plants_symbol": "QUPR2",
+      "scientific_name": "Quercus prinus",
+      "common_name": "chestnut oak"
+    },
+    {
+      "sequence": 75,
+      "fvs_code": "RO",
+      "fia_code": "833",
+      "plants_symbol": "QURU",
+      "scientific_name": "Quercus rubra",
+      "common_name": "northern red oak"
+    },
+    {
+      "sequence": 76,
+      "fvs_code": "QS",
+      "fia_code": "834",
+      "plants_symbol": "QUSH",
+      "scientific_name": "Quercus shumardii",
+      "common_name": "Shumard's oak"
+    },
+    {
+      "sequence": 77,
+      "fvs_code": "PO",
+      "fia_code": "835",
+      "plants_symbol": "QUST",
+      "scientific_name": "Quercus stellata",
+      "common_name": "post oak"
+    },
+    {
+      "sequence": 78,
+      "fvs_code": "BO",
+      "fia_code": "837",
+      "plants_symbol": "QUVE",
+      "scientific_name": "Quercus velutina",
+      "common_name": "black oak"
+    },
+    {
+      "sequence": 79,
+      "fvs_code": "LO",
+      "fia_code": "838",
+      "plants_symbol": "QUVI",
+      "scientific_name": "Quercus virginiana",
+      "common_name": "live oak"
+    },
+    {
+      "sequence": 80,
+      "fvs_code": "BK",
+      "fia_code": "901",
+      "plants_symbol": "ROPS",
+      "scientific_name": "Robinia pseudoacacia",
+      "common_name": "black locust"
+    },
+    {
+      "sequence": 81,
+      "fvs_code": "WI",
+      "fia_code": "920",
+      "plants_symbol": "SALIX",
+      "scientific_name": "Salix",
+      "common_name": "willow"
+    },
+    {
+      "sequence": 82,
+      "fvs_code": "SS",
+      "fia_code": "931",
+      "plants_symbol": "SAAL5",
+      "scientific_name": "Sassafras albidum",
+      "common_name": "sassafras"
+    },
+    {
+      "sequence": 83,
+      "fvs_code": "BD",
+      "fia_code": "950",
+      "plants_symbol": "TILIA",
+      "scientific_name": "Tilia",
+      "common_name": "basswood"
+    },
+    {
+      "sequence": 84,
+      "fvs_code": "EL",
+      "fia_code": "970",
+      "plants_symbol": "ULMUS",
+      "scientific_name": "Ulmus",
+      "common_name": "elm"
+    },
+    {
+      "sequence": 85,
+      "fvs_code": "WE",
+      "fia_code": "971",
+      "plants_symbol": "ULAL",
+      "scientific_name": "Ulmus alata",
+      "common_name": "winged elm"
+    },
+    {
+      "sequence": 86,
+      "fvs_code": "AE",
+      "fia_code": "972",
+      "plants_symbol": "ULAM",
+      "scientific_name": "Ulmus americana",
+      "common_name": "American elm"
+    },
+    {
+      "sequence": 87,
+      "fvs_code": "RL",
+      "fia_code": "975",
+      "plants_symbol": "ULRU",
+      "scientific_name": "Ulmus rubra",
+      "common_name": "slippery elm"
+    },
+    {
+      "sequence": 88,
+      "fvs_code": "OS",
+      "fia_code": "299",
+      "plants_symbol": "2TN",
+      "scientific_name": "",
+      "common_name": "other softwood"
+    },
+    {
+      "sequence": 89,
+      "fvs_code": "OH",
+      "fia_code": "998",
+      "plants_symbol": "2TB",
+      "scientific_name": "",
+      "common_name": "other hardwood"
+    },
+    {
+      "sequence": 90,
+      "fvs_code": "OT",
+      "fia_code": "999",
+      "plants_symbol": "2TREE",
+      "scientific_name": "",
+      "common_name": "other"
+    }
+  ]
+} 

@@ -1,0 +1,263 @@
+{
+  "metadata": {
+    "title": "Relative Site Index Calculations for FVS Southern Variant",
+    "description": "Site index groups, species mapping and coefficients for site index transformations",
+    "source": "FVS Southern Variant Documentation - Table 3.4.2",
+    "equations": {
+      "3.4.1": "RISP = (SIsite - SImin) / (SImax - SImin)",
+      "3.4.2": "MGSPIX = A + B * (RSISP * (SIGmax - SIGmin) + SIGmin)",
+      "3.4.3": "MGRSI = ((C + D * MGSPIX) - SIGmin) / (SIGmax - SIGmin)",
+      "3.4.4": "SISP = MGRSI * (SImax - SImin) + SImin"
+    },
+    "variable_definitions": {
+      "RISP": "Relative site index of site species",
+      "SIsite": "Site index of site species",
+      "SImin": "Site index minimum of species",
+      "SImax": "Site index maximum of species",
+      "MGSPIX": "Site index transformation index for the site species group",
+      "SIGmin": "Site index minimum of site species group",
+      "SIGmax": "Site index maximum of site species group",
+      "A": "Coefficient A for transformation index",
+      "B": "Coefficient B for transformation index",
+      "MGRSI": "Relative site index of each site index group",
+      "C": "Coefficient C for site index group",
+      "D": "Coefficient D for site index group",
+      "SISP": "Species site index"
+    },
+    "notes": [
+      "All non-valid site species are assigned a site index based on the relative site index of white oak (site group 9)",
+      "Site types: M = Mountain, O = Other, S = species 78(BO)"
+    ]
+  },
+  "site_index_groups": {
+    "1": {
+      "site_index_species": "SP",
+      "mapped_species": ["SP", "SA", "PD", "HM"],
+      "site_types": {
+        "M": {
+          "A": -7.1837,
+          "B": 0.1633,
+          "C": 44,
+          "D": 6.13
+        },
+        "O": {
+          "A": -10.000,
+          "B": 0.2000,
+          "C": 50,
+          "D": 5.00
+        }
+      }
+    },
+    "2": {
+      "site_index_species": "SO",
+      "mapped_species": ["SO", "WA", "CT", "RO", "BO"],
+      "site_types": {
+        "M": {
+          "A": -8.6809,
+          "B": 0.1702,
+          "C": 51,
+          "D": 5.88
+        },
+        "O": {
+          "A": -12.000,
+          "B": 0.2000,
+          "C": 60,
+          "D": 5.00
+        },
+        "S": {
+          "A": -16.000,
+          "B": 0.2667,
+          "C": 60,
+          "D": 3.75
+        }
+      }
+    },
+    "3": {
+      "site_index_species": "YP",
+      "mapped_species": ["BY", "PC", "SU", "SY", "QS", "YP"],
+      "site_types": {
+        "All": {
+          "A": -4.0000,
+          "B": 0.1000,
+          "C": 40,
+          "D": 10.00
+        }
+      }
+    },
+    "4": {
+      "site_index_species": "WP",
+      "mapped_species": ["LL", "WP", "LP"],
+      "site_types": {
+        "All": {
+          "A": -9.4118,
+          "B": 0.1569,
+          "C": 60,
+          "D": 6.38
+        }
+      }
+    },
+    "5": {
+      "site_index_species": "VP",
+      "mapped_species": ["JU", "FR", "PI", "SR", "PU", "VP"],
+      "site_types": {
+        "All": {
+          "A": -9.3913,
+          "B": 0.1739,
+          "C": 54,
+          "D": 5.75
+        }
+      }
+    },
+    "6": {
+      "site_index_species": "SK",
+      "mapped_species": ["AS", "BT", "SK", "RL"],
+      "site_types": {
+        "All": {
+          "A": -10.000,
+          "B": 0.2000,
+          "C": 50,
+          "D": 5.00
+        }
+      }
+    },
+    "7": {
+      "site_index_species": "CO",
+      "mapped_species": ["CO"],
+      "site_types": {
+        "All": {
+          "A": -8.6809,
+          "B": 0.1702,
+          "C": 51,
+          "D": 5.88
+        }
+      }
+    },
+    "8": {
+      "site_index_species": "PP",
+      "mapped_species": ["PP"],
+      "site_types": {
+        "All": {
+          "A": -7.1839,
+          "B": 0.1633,
+          "C": 44,
+          "D": 6.13
+        }
+      }
+    },
+    "9": {
+      "site_index_species": "WO",
+      "mapped_species": ["RM", "SM", "BB", "SB", "AB", "CW", "BC", "WO", "CB", "OV", "SN", "WK", "BD"],
+      "site_types": {
+        "M": {
+          "A": -8.7442,
+          "B": 0.1860,
+          "C": 47,
+          "D": 5.38
+        },
+        "O": {
+          "A": -10.000,
+          "B": 0.2000,
+          "C": 50,
+          "D": 5.00
+        }
+      }
+    }
+  },
+  "species_site_index_ranges": {
+    "FR": {"si_min": 15, "si_max": 100, "nc128_equation": "012/70", "valid_site_species": true},
+    "JU": {"si_min": 15, "si_max": 70, "nc128_equation": "068/73", "valid_site_species": true},
+    "PI": {"si_min": 15, "si_max": 80, "nc128_equation": "097/88", "valid_site_species": true},
+    "PU": {"si_min": 35, "si_max": 100, "nc128_equation": "107/92", "valid_site_species": true},
+    "SP": {"si_min": 35, "si_max": 105, "nc128_equation": "110/93", "valid_site_species": true},
+    "SA": {"si_min": 35, "si_max": 105, "nc128_equation": "111/99", "valid_site_species": true},
+    "SR": {"si_min": 45, "si_max": 90, "nc128_equation": "097/88", "valid_site_species": true},
+    "LL": {"si_min": 45, "si_max": 125, "nc128_equation": "121/107", "valid_site_species": true},
+    "TM": {"si_min": 35, "si_max": 70, "nc128_equation": "068/73", "valid_site_species": false},
+    "PP": {"si_min": 25, "si_max": 95, "nc128_equation": "132/139", "valid_site_species": true},
+    "PD": {"si_min": 35, "si_max": 105, "nc128_equation": "128/117", "valid_site_species": true},
+    "WP": {"si_min": 40, "si_max": 135, "nc128_equation": "129/119", "valid_site_species": true},
+    "LP": {"si_min": 40, "si_max": 125, "nc128_equation": "131/125", "valid_site_species": true},
+    "VP": {"si_min": 35, "si_max": 95, "nc128_equation": "132/139", "valid_site_species": true},
+    "BY": {"si_min": 30, "si_max": 120, "nc128_equation": "611/36", "valid_site_species": true},
+    "PC": {"si_min": 30, "si_max": 120, "nc128_equation": "611/36", "valid_site_species": true},
+    "HM": {"si_min": 35, "si_max": 90, "nc128_equation": "261/142", "valid_site_species": true},
+    "FM": {"si_min": 35, "si_max": 70, "nc128_equation": "317/19", "valid_site_species": false},
+    "BE": {"si_min": 35, "si_max": 70, "nc128_equation": "316/16", "valid_site_species": false},
+    "RM": {"si_min": 35, "si_max": 85, "nc128_equation": "316/16", "valid_site_species": true},
+    "SV": {"si_min": 30, "si_max": 105, "nc128_equation": "317/19", "valid_site_species": false},
+    "SM": {"si_min": 35, "si_max": 100, "nc128_equation": "318/18", "valid_site_species": true},
+    "BU": {"si_min": 25, "si_max": 90, "nc128_equation": "318/18", "valid_site_species": false},
+    "BB": {"si_min": 35, "si_max": 85, "nc128_equation": "371/21", "valid_site_species": true},
+    "SB": {"si_min": 35, "si_max": 70, "nc128_equation": "371/21", "valid_site_species": true},
+    "AH": {"si_min": 15, "si_max": 40, "nc128_equation": "068/73", "valid_site_species": false},
+    "HI": {"si_min": 25, "si_max": 85, "nc128_equation": "400/25", "valid_site_species": false},
+    "CA": {"si_min": 30, "si_max": 90, "nc128_equation": "543/29", "valid_site_species": false},
+    "HB": {"si_min": 15, "si_max": 90, "nc128_equation": "068/73", "valid_site_species": false},
+    "RD": {"si_min": 15, "si_max": 40, "nc128_equation": "068/73", "valid_site_species": false},
+    "DW": {"si_min": 15, "si_max": 45, "nc128_equation": "068/73", "valid_site_species": false},
+    "PS": {"si_min": 15, "si_max": 70, "nc128_equation": "068/73", "valid_site_species": false},
+    "AB": {"si_min": 35, "si_max": 85, "nc128_equation": "531/26", "valid_site_species": true},
+    "AS": {"si_min": 35, "si_max": 105, "nc128_equation": "544/30", "valid_site_species": true},
+    "WA": {"si_min": 35, "si_max": 95, "nc128_equation": "541/28", "valid_site_species": true},
+    "BA": {"si_min": 35, "si_max": 85, "nc128_equation": "543/29", "valid_site_species": false},
+    "GA": {"si_min": 35, "si_max": 105, "nc128_equation": "544/30", "valid_site_species": false},
+    "HL": {"si_min": 25, "si_max": 120, "nc128_equation": "901/65", "valid_site_species": false},
+    "LB": {"si_min": 15, "si_max": 50, "nc128_equation": "043/72", "valid_site_species": false},
+    "HA": {"si_min": 15, "si_max": 65, "nc128_equation": "068/73", "valid_site_species": false},
+    "HY": {"si_min": 35, "si_max": 70, "nc128_equation": "531/26", "valid_site_species": false},
+    "BN": {"si_min": 35, "si_max": 85, "nc128_equation": "602/31", "valid_site_species": false},
+    "WN": {"si_min": 35, "si_max": 85, "nc128_equation": "602/31", "valid_site_species": false},
+    "SU": {"si_min": 30, "si_max": 125, "nc128_equation": "611/36", "valid_site_species": true},
+    "YP": {"si_min": 30, "si_max": 135, "nc128_equation": "621/39", "nc128_equation_alt": "621/38", "region_note": "Mountain/Piedmont", "valid_site_species": true},
+    "MG": {"si_min": 35, "si_max": 125, "nc128_equation": "694/42", "valid_site_species": false},
+    "CT": {"si_min": 25, "si_max": 115, "nc128_equation": "802/52", "valid_site_species": true},
+    "MS": {"si_min": 35, "si_max": 125, "nc128_equation": "694/42", "valid_site_species": false},
+    "MV": {"si_min": 15, "si_max": 75, "nc128_equation": "694/42", "valid_site_species": false},
+    "ML": {"si_min": 35, "si_max": 125, "nc128_equation": "694/42", "valid_site_species": false},
+    "AP": {"si_min": 15, "si_max": 40, "nc128_equation": "068/73", "valid_site_species": false},
+    "MB": {"si_min": 15, "si_max": 55, "nc128_equation": "068/73", "valid_site_species": false},
+    "WT": {"si_min": 30, "si_max": 105, "nc128_equation": "691/41", "valid_site_species": false},
+    "BG": {"si_min": 35, "si_max": 105, "nc128_equation": "694/42", "valid_site_species": false},
+    "TS": {"si_min": 35, "si_max": 95, "nc128_equation": "694/42", "valid_site_species": false},
+    "HH": {"si_min": 15, "si_max": 40, "nc128_equation": "068/73", "valid_site_species": false},
+    "SD": {"si_min": 15, "si_max": 70, "nc128_equation": "068/73", "valid_site_species": false},
+    "RA": {"si_min": 15, "si_max": 60, "nc128_equation": "068/73", "valid_site_species": false},
+    "SY": {"si_min": 30, "si_max": 120, "nc128_equation": "621/39", "valid_site_species": true},
+    "CW": {"si_min": 40, "si_max": 125, "nc128_equation": "742/45", "valid_site_species": true},
+    "BT": {"si_min": 30, "si_max": 90, "nc128_equation": "743/47", "valid_site_species": true},
+    "BC": {"si_min": 35, "si_max": 105, "nc128_equation": "762/50", "valid_site_species": true},
+    "WO": {"si_min": 25, "si_max": 115, "nc128_equation": "Upland Oak/52", "valid_site_species": true},
+    "SO": {"si_min": 25, "si_max": 115, "nc128_equation": "Upland Oak/52", "valid_site_species": true},
+    "SK": {"si_min": 25, "si_max": 115, "nc128_equation": "Upland Oak/52", "valid_site_species": true},
+    "CB": {"si_min": 30, "si_max": 125, "nc128_equation": "813/58", "valid_site_species": true},
+    "TO": {"si_min": 25, "si_max": 65, "nc128_equation": "068/73", "valid_site_species": false},
+    "LK": {"si_min": 25, "si_max": 65, "nc128_equation": "068/73", "valid_site_species": false},
+    "OV": {"si_min": 35, "si_max": 95, "nc128_equation": "828/60", "valid_site_species": true},
+    "BJ": {"si_min": 25, "si_max": 65, "nc128_equation": "068/73", "valid_site_species": false},
+    "SN": {"si_min": 35, "si_max": 95, "nc128_equation": "827/59", "valid_site_species": true},
+    "CK": {"si_min": 35, "si_max": 75, "nc128_equation": "802/52", "valid_site_species": false},
+    "WK": {"si_min": 30, "si_max": 115, "nc128_equation": "827/59", "valid_site_species": true},
+    "CO": {"si_min": 25, "si_max": 115, "nc128_equation": "Upland Oak/52", "valid_site_species": true},
+    "RO": {"si_min": 25, "si_max": 115, "nc128_equation": "Upland Oak/52", "valid_site_species": true},
+    "QS": {"si_min": 15, "si_max": 125, "nc128_equation": "813/58", "valid_site_species": true},
+    "PO": {"si_min": 25, "si_max": 85, "nc128_equation": "068/73", "valid_site_species": false},
+    "BO": {"si_min": 25, "si_max": 115, "nc128_equation": "Upland Oak/52", "valid_site_species": true},
+    "LO": {"si_min": 30, "si_max": 65, "nc128_equation": "827/59", "valid_site_species": false},
+    "BK": {"si_min": 25, "si_max": 95, "nc128_equation": "901/65", "valid_site_species": false},
+    "WI": {"si_min": 15, "si_max": 110, "nc128_equation": "901/65", "valid_site_species": false},
+    "SS": {"si_min": 15, "si_max": 80, "nc128_equation": "068/73", "valid_site_species": false},
+    "BD": {"si_min": 35, "si_max": 90, "nc128_equation": "951/66", "valid_site_species": true},
+    "EL": {"si_min": 35, "si_max": 90, "nc128_equation": "972/68", "valid_site_species": false},
+    "WE": {"si_min": 35, "si_max": 90, "nc128_equation": "972/68", "valid_site_species": false},
+    "AE": {"si_min": 35, "si_max": 90, "nc128_equation": "972/68", "valid_site_species": false},
+    "RL": {"si_min": 35, "si_max": 90, "nc128_equation": "972/68", "valid_site_species": true},
+    "OS": {"si_min": 15, "si_max": 55, "nc128_equation": "068/73", "valid_site_species": false},
+    "OH": {"si_min": 15, "si_max": 55, "nc128_equation": "068/73", "valid_site_species": false},
+    "OT": {"si_min": 15, "si_max": 55, "nc128_equation": "068/73", "valid_site_species": false}
+  },
+  "default_fallback": {
+    "group": 9,
+    "species": "WO",
+    "description": "All non-valid site species are assigned a site index based on the relative site index of white oak (site group 9)"
+  }
+} 

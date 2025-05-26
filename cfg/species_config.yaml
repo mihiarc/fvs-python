@@ -1,0 +1,106 @@
+# Southern Variant Species Configuration
+# Main configuration file listing all species and their config file paths
+
+metadata:
+  variant: SN
+  variant_name: Southern
+  description: "Parameters for the Southern (SN) variant of FVS covering southeastern US"
+  source: "FVS Southern Variant Overview, April 2024"
+
+# Path to functional form definitions
+functional_forms_file: "functional_forms.yaml"
+
+# Path to site index transformation definitions
+site_index_transformation_file: "site_index_transformation.yaml"
+
+# Species configurations
+species:
+  # Conifers
+  FR:
+    name: "fir"
+    file: "species/fr_fir.yaml"
+  JU:
+    name: "juniper"
+    file: "species/ju_juniper.yaml"
+  PI:
+    name: "spruce"
+    file: "species/pi_spruce.yaml" 
+  PU:
+    name: "sand pine"
+    file: "species/pu_sand_pine.yaml"
+  SP:
+    name: "shortleaf pine"
+    file: "species/sp_shortleaf_pine.yaml"
+  SA:
+    name: "slash pine"
+    file: "species/sa_slash_pine.yaml"
+  SR:
+    name: "spruce pine"
+    file: "species/sr_spruce_pine.yaml"
+  LL:
+    name: "longleaf pine"
+    file: "species/ll_longleaf_pine.yaml"
+  TM:
+    name: "table mountain pine"
+    file: "species/tm_table_mountain_pine.yaml"
+  PP:
+    name: "pitch pine"
+    file: "species/pp_pitch_pine.yaml"
+  PD:
+    name: "pond pine"
+    file: "species/pd_pond_pine.yaml"
+  WP:
+    name: "eastern white pine"
+    file: "species/wp_eastern_white_pine.yaml"
+  LP:
+    name: "loblolly pine"
+    file: "species/lp_loblolly_pine.yaml"
+  VP:
+    name: "Virginia pine"
+    file: "species/vp_virginia_pine.yaml"
+  BY:
+    name: "baldcypress"
+    file: "species/by_baldcypress.yaml"
+  PC:
+    name: "pondcypress"
+    file: "species/pc_pondcypress.yaml"
+  HM:
+    name: "hemlock"
+    file: "species/hm_hemlock.yaml"
+  
+  # Hardwoods
+  FM:
+    name: "southern sugar maple"
+    file: "species/fm_southern_sugar_maple.yaml"
+  BE:
+    name: "boxelder"
+    file: "species/be_boxelder.yaml"
+  RM:
+    name: "red maple"
+    file: "species/rm_red_maple.yaml"
+  SV:
+    name: "silver maple"
+    file: "species/sv_silver_maple.yaml"
+  SM:
+    name: "sugar maple"
+    file: "species/sm_sugar_maple.yaml"
+  SU:
+    name: "sweetgum"
+    file: "species/su_sweetgum.yaml"
+  YP:
+    name: "tuliptree"
+    file: "species/yp_tuliptree.yaml"
+  WO:
+    name: "white oak"
+    file: "species/wo_white_oak.yaml"
+  
+  # Other categories  
+  OS:
+    name: "other softwood"
+    file: "species/os_other_softwood.yaml"
+  OH:
+    name: "other hardwood"
+    file: "species/oh_other_hardwood.yaml"
+  OT:
+    name: "other"
+    file: "species/ot_other.yaml" 

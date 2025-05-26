@@ -4,7 +4,7 @@ All tests use 1 acre as the standard area for simplicity.
 """
 import pytest
 from pathlib import Path
-from src.stand import Stand
+from fvs_python.stand import Stand
 from tests.utils import (
     setup_test_output, 
     plot_stand_development, 
@@ -138,7 +138,8 @@ def test_mortality_effects():
 
 def test_competition_effects(mature_stand):
     """Test competition factor calculations and effects in 1 acre."""
-    competition_factors = mature_stand._calculate_competition_factors()
+    competition_metrics = mature_stand._calculate_competition_metrics()
+    competition_factors = [m['competition_factor'] for m in competition_metrics]
     tree_data = [
         {
             'dbh': tree.dbh,

@@ -1,0 +1,398 @@
+{
+  "metadata": {
+    "title": "Stand Density Index (SDI) for FVS Southern Variant",
+    "description": "Maximum stand density index values, calculation methods, and species-specific SDI maximums",
+    "source": "FVS Southern Variant Documentation - Section 3.5",
+    "equations": {
+      "3.5.1": "SDIMAXi = BAMAX / (0.5454154 * SDIU)"
+    },
+    "calculation_method": "Zeide calculation method (Dixon 2002)",
+    "variable_definitions": {
+      "SDIMAXi": "Species-specific SDI maximum",
+      "BAMAX": "User-specified stand basal area maximum",
+      "SDIU": "Proportion of theoretical maximum density at which the stand reaches actual maximum density (default 0.85, changed with the SDIMAX keyword)",
+      "SDI": "Stand density index",
+      "BA": "Basal area"
+    },
+    "methodology": {
+      "description": "Maximum stand density index (SDI) and maximum basal area (BA) are important variables in determining density related mortality and crown ratio change. Maximum basal area is a stand level metric that can be set using the BAMAX or SETSITE keywords. If not set by the user, a default value is calculated from maximum stand SDI each projection cycle. Maximum stand density index can be set for each species using the SDIMAX or SETSITE keywords. If not set by the user, a default value is assigned as discussed below.",
+      "default_sdi_assignment": "The default maximum SDI is set by species or a user specified basal area maximum. If a user specified basal area maximum is present, the maximum SDI for all species is computed using equation 3.5.1; otherwise, species SDI maximums are assigned from the SDI maximums shown in table 3.5.1.",
+      "stand_level_calculation": "Maximum stand density index at the stand level is a weighted average, by basal area, of the individual species SDI maximums.",
+      "calculation_method": "Stand SDI is calculated using the Zeide calculation method (Dixon 2002)."
+    }
+  },
+  "sdi_maximums": {
+    "FR": {
+      "sdi_maximum": 655,
+      "mapped_to": "balsam fir"
+    },
+    "JU": {
+      "sdi_maximum": 354,
+      "mapped_to": "eastern redcedar"
+    },
+    "PI": {
+      "sdi_maximum": 412,
+      "mapped_to": "white spruce"
+    },
+    "PU": {
+      "sdi_maximum": 499,
+      "mapped_to": "Virginia pine"
+    },
+    "SP": {
+      "sdi_maximum": 490,
+      "mapped_to": ""
+    },
+    "SA": {
+      "sdi_maximum": 385,
+      "mapped_to": ""
+    },
+    "SR": {
+      "sdi_maximum": 490,
+      "mapped_to": "shortleaf pine"
+    },
+    "LL": {
+      "sdi_maximum": 332,
+      "mapped_to": ""
+    },
+    "TM": {
+      "sdi_maximum": 398,
+      "mapped_to": "pitch pine"
+    },
+    "PP": {
+      "sdi_maximum": 398,
+      "mapped_to": ""
+    },
+    "PD": {
+      "sdi_maximum": 310,
+      "mapped_to": ""
+    },
+    "WP": {
+      "sdi_maximum": 529,
+      "mapped_to": ""
+    },
+    "LP": {
+      "sdi_maximum": 480,
+      "mapped_to": ""
+    },
+    "VP": {
+      "sdi_maximum": 499,
+      "mapped_to": ""
+    },
+    "BY": {
+      "sdi_maximum": 692,
+      "mapped_to": ""
+    },
+    "PC": {
+      "sdi_maximum": 623,
+      "mapped_to": ""
+    },
+    "HM": {
+      "sdi_maximum": 518,
+      "mapped_to": "eastern hemlock"
+    },
+    "FM": {
+      "sdi_maximum": 371,
+      "mapped_to": "sugar maple"
+    },
+    "BE": {
+      "sdi_maximum": 344,
+      "mapped_to": ""
+    },
+    "RM": {
+      "sdi_maximum": 421,
+      "mapped_to": ""
+    },
+    "SV": {
+      "sdi_maximum": 590,
+      "mapped_to": ""
+    },
+    "SM": {
+      "sdi_maximum": 371,
+      "mapped_to": ""
+    },
+    "BU": {
+      "sdi_maximum": 371,
+      "mapped_to": "sugar maple"
+    },
+    "BB": {
+      "sdi_maximum": 400,
+      "mapped_to": "river birch"
+    },
+    "SB": {
+      "sdi_maximum": 350,
+      "mapped_to": ""
+    },
+    "AH": {
+      "sdi_maximum": 375,
+      "mapped_to": ""
+    },
+    "HI": {
+      "sdi_maximum": 276,
+      "mapped_to": "pignut hickory"
+    },
+    "CA": {
+      "sdi_maximum": 492,
+      "mapped_to": "sassafras"
+    },
+    "HB": {
+      "sdi_maximum": 420,
+      "mapped_to": "hackberry"
+    },
+    "RD": {
+      "sdi_maximum": 422,
+      "mapped_to": ""
+    },
+    "DW": {
+      "sdi_maximum": 257,
+      "mapped_to": ""
+    },
+    "PS": {
+      "sdi_maximum": 147,
+      "mapped_to": ""
+    },
+    "AB": {
+      "sdi_maximum": 364,
+      "mapped_to": ""
+    },
+    "AS": {
+      "sdi_maximum": 414,
+      "mapped_to": "green ash"
+    },
+    "WA": {
+      "sdi_maximum": 408,
+      "mapped_to": ""
+    },
+    "BA": {
+      "sdi_maximum": 423,
+      "mapped_to": ""
+    },
+    "GA": {
+      "sdi_maximum": 414,
+      "mapped_to": ""
+    },
+    "HL": {
+      "sdi_maximum": 338,
+      "mapped_to": ""
+    },
+    "LB": {
+      "sdi_maximum": 492,
+      "mapped_to": "sweetbay"
+    },
+    "HA": {
+      "sdi_maximum": 430,
+      "mapped_to": "blackgum"
+    },
+    "HY": {
+      "sdi_maximum": 155,
+      "mapped_to": ""
+    },
+    "BN": {
+      "sdi_maximum": 283,
+      "mapped_to": "black walnut"
+    },
+    "WN": {
+      "sdi_maximum": 283,
+      "mapped_to": ""
+    },
+    "SU": {
+      "sdi_maximum": 430,
+      "mapped_to": ""
+    },
+    "YP": {
+      "sdi_maximum": 478,
+      "mapped_to": ""
+    },
+    "MG": {
+      "sdi_maximum": 492,
+      "mapped_to": "sweetbay"
+    },
+    "CT": {
+      "sdi_maximum": 415,
+      "mapped_to": ""
+    },
+    "MS": {
+      "sdi_maximum": 492,
+      "mapped_to": "sweetbay"
+    },
+    "MV": {
+      "sdi_maximum": 492,
+      "mapped_to": ""
+    },
+    "ML": {
+      "sdi_maximum": 492,
+      "mapped_to": "sweetbay"
+    },
+    "AP": {
+      "sdi_maximum": 422,
+      "mapped_to": "eastern redbud"
+    },
+    "MB": {
+      "sdi_maximum": 277,
+      "mapped_to": "red mulberry"
+    },
+    "WT": {
+      "sdi_maximum": 726,
+      "mapped_to": ""
+    },
+    "BG": {
+      "sdi_maximum": 430,
+      "mapped_to": ""
+    },
+    "TS": {
+      "sdi_maximum": 704,
+      "mapped_to": ""
+    },
+    "HH": {
+      "sdi_maximum": 304,
+      "mapped_to": ""
+    },
+    "SD": {
+      "sdi_maximum": 164,
+      "mapped_to": ""
+    },
+    "RA": {
+      "sdi_maximum": 492,
+      "mapped_to": "sweetbay"
+    },
+    "SY": {
+      "sdi_maximum": 499,
+      "mapped_to": ""
+    },
+    "CW": {
+      "sdi_maximum": 648,
+      "mapped_to": "eastern cottonwood"
+    },
+    "BT": {
+      "sdi_maximum": 520,
+      "mapped_to": ""
+    },
+    "BC": {
+      "sdi_maximum": 384,
+      "mapped_to": ""
+    },
+    "WO": {
+      "sdi_maximum": 361,
+      "mapped_to": ""
+    },
+    "SO": {
+      "sdi_maximum": 315,
+      "mapped_to": ""
+    },
+    "SK": {
+      "sdi_maximum": 342,
+      "mapped_to": ""
+    },
+    "CB": {
+      "sdi_maximum": 405,
+      "mapped_to": ""
+    },
+    "TO": {
+      "sdi_maximum": 326,
+      "mapped_to": "blackjack oak"
+    },
+    "LK": {
+      "sdi_maximum": 387,
+      "mapped_to": ""
+    },
+    "OV": {
+      "sdi_maximum": 384,
+      "mapped_to": ""
+    },
+    "BJ": {
+      "sdi_maximum": 326,
+      "mapped_to": ""
+    },
+    "SN": {
+      "sdi_maximum": 417,
+      "mapped_to": "chestnut oak"
+    },
+    "CK": {
+      "sdi_maximum": 336,
+      "mapped_to": ""
+    },
+    "WK": {
+      "sdi_maximum": 365,
+      "mapped_to": ""
+    },
+    "CO": {
+      "sdi_maximum": 417,
+      "mapped_to": ""
+    },
+    "RO": {
+      "sdi_maximum": 414,
+      "mapped_to": ""
+    },
+    "QS": {
+      "sdi_maximum": 342,
+      "mapped_to": "southern red oak"
+    },
+    "PO": {
+      "sdi_maximum": 311,
+      "mapped_to": ""
+    },
+    "BO": {
+      "sdi_maximum": 370,
+      "mapped_to": ""
+    },
+    "LO": {
+      "sdi_maximum": 410,
+      "mapped_to": ""
+    },
+    "BK": {
+      "sdi_maximum": 343,
+      "mapped_to": ""
+    },
+    "WI": {
+      "sdi_maximum": 447,
+      "mapped_to": "black willow"
+    },
+    "SS": {
+      "sdi_maximum": 492,
+      "mapped_to": ""
+    },
+    "BD": {
+      "sdi_maximum": 526,
+      "mapped_to": "American basswood"
+    },
+    "EL": {
+      "sdi_maximum": 282,
+      "mapped_to": "American elm"
+    },
+    "WE": {
+      "sdi_maximum": 263,
+      "mapped_to": ""
+    },
+    "AE": {
+      "sdi_maximum": 282,
+      "mapped_to": ""
+    },
+    "RL": {
+      "sdi_maximum": 227,
+      "mapped_to": ""
+    },
+    "OS": {
+      "sdi_maximum": 354,
+      "mapped_to": "eastern redcedar"
+    },
+    "OH": {
+      "sdi_maximum": 492,
+      "mapped_to": "sassafras"
+    },
+    "OT": {
+      "sdi_maximum": 421,
+      "mapped_to": "red maple"
+    }
+  },
+  "data_source": {
+    "note": "Source of SDI maximums is an unpublished analysis of FIA data by John Shaw."
+  },
+  "keywords": {
+    "BAMAX": "Set maximum basal area",
+    "SETSITE": "Set site characteristics including maximum basal area and SDI",
+    "SDIMAX": "Set maximum stand density index by species"
+  },
+  "default_parameters": {
+    "sdiu_default": 0.85,
+    "zeide_constant": 0.5454154
+  }
+} 

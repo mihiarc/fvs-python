@@ -1,0 +1,113 @@
+# Site Index Transformation Parameters for FVS Southern Variant
+# Defines site productivity relationships and transformations
+
+metadata:
+  title: "Site Index Transformations for SN Southern Variant"
+  description: "Site productivity parameters and transformations between different base ages"
+  source: "FVS Southern Variant Documentation"
+
+# Standard site index definitions
+site_index:
+  base_age: 25
+  units: "feet"
+  description: "Height of dominant and codominant trees at base age"
+  
+  # Site index classes commonly used
+  classes:
+    poor: 50
+    below_average: 60
+    average: 70
+    above_average: 80
+    excellent: 90
+
+# Site index transformations between base ages
+transformations:
+  # Most common transformation is from base age 50 to base age 25
+  base_50_to_25:
+    description: "Transform site index from base age 50 to base age 25"
+    # These would be species-specific equations
+    # For now, using general relationships
+    
+  base_25_to_50:
+    description: "Transform site index from base age 25 to base age 50"
+
+# Site productivity factors
+productivity:
+  factors:
+    - "Soil depth and drainage"
+    - "Climate (temperature and precipitation)"
+    - "Topographic position"
+    - "Aspect and slope"
+    - "Soil fertility"
+    
+  modifiers:
+    slope_adjustment:
+      description: "Site index adjustment for slope"
+      # Typically reduces site index on steep slopes
+      
+    aspect_adjustment:
+      description: "Site index adjustment for aspect"
+      # North-facing slopes typically more productive in southern regions
+      
+    elevation_adjustment:
+      description: "Site index adjustment for elevation"
+      # Higher elevations typically less productive
+
+# Regional site index curves
+regional_curves:
+  southeastern_us:
+    description: "Site index curves for southeastern United States"
+    applicable_states:
+      - "Alabama"
+      - "Arkansas" 
+      - "Florida"
+      - "Georgia"
+      - "Louisiana"
+      - "Mississippi"
+      - "North Carolina"
+      - "South Carolina"
+      - "Tennessee"
+      - "Texas (eastern)"
+      - "Virginia"
+
+# Species-specific site index information
+species_site_index:
+  loblolly_pine:
+    typical_range: "50-90 feet at base age 25"
+    excellent_sites: "> 90 feet"
+    poor_sites: "< 50 feet"
+    
+  slash_pine:
+    typical_range: "50-85 feet at base age 25"
+    excellent_sites: "> 85 feet"
+    poor_sites: "< 50 feet"
+    
+  longleaf_pine:
+    typical_range: "45-80 feet at base age 25"
+    excellent_sites: "> 80 feet"
+    poor_sites: "< 45 feet"
+    
+  shortleaf_pine:
+    typical_range: "45-75 feet at base age 25"
+    excellent_sites: "> 75 feet"
+    poor_sites: "< 45 feet"
+
+# Site index validation
+validation:
+  minimum_site_index: 30
+  maximum_site_index: 120
+  typical_range: "50-90 feet"
+  
+# Growth and yield implications
+growth_implications:
+  high_site_index:
+    - "Faster height growth"
+    - "Earlier culmination of mean annual increment"
+    - "Higher maximum stand density"
+    - "Greater volume production"
+    
+  low_site_index:
+    - "Slower height growth"
+    - "Later culmination of mean annual increment"
+    - "Lower maximum stand density"
+    - "Reduced volume production" 

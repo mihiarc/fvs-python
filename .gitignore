@@ -46,3 +46,6 @@ Thumbs.db
 tests/test_output/
 outputs/data/sqlite_databases/*.db
 *.ipynb
+docs/EconUserGuide_chunks.json
+docs/EssentialFVS_chunks.json
+docs/FVSsn_Overview_chunks.json

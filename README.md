@@ -476,7 +476,7 @@ graph TD
 
 ## Configuration
 
-All growth parameters are defined in `config/loblolly_params.yaml`:
+All growth parameters are defined in `cfg/species/lp_loblolly_pine.yaml` and related configuration files:
 - Height-diameter relationships
 - Crown and bark parameters
 - Growth model coefficients

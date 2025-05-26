@@ -1,0 +1,38 @@
+{
+  "table_description": "Table 4.7.1.4 Forest type mapping by forest type group of the diameter increment model for the SN variant",
+  "forest_type_groups": {
+    "FTLOHD": {
+      "name": "Lowland Hardwoods",
+      "fia_forest_types": [168, 508, 601, 602, 605, 606, 607, 608, 702, 703, 704, 705, 706, 708]
+    },
+    "FTNOHD": {
+      "name": "Northern Hardwoods", 
+      "fia_forest_types": [701, 801, 805]
+    },
+    "FTOKPN": {
+      "name": "Oak - Pine",
+      "fia_forest_types": [165, 403, 404, 405, 406, 407, 409]
+    },
+    "FTSFHP": {
+      "name": "Spruce - Fir - Hemlock - Pine",
+      "fia_forest_types": [104, 105, 121, 124]
+    },
+    "FTUPHD": {
+      "name": "Upland Hardwoods",
+      "fia_forest_types": [103, 167, 181, 401, 402, 506, 511, 512, 513, 519, 520, 802, 807, 809]
+    },
+    "FTUPOK": {
+      "name": "Upland Oak",
+      "fia_forest_types": [501, 502, 503, 504, 505, 510, 514, 515]
+    },
+    "FTYLPN": {
+      "name": "Yellow Pine",
+      "fia_forest_types": [141, 142, 161, 162, 163, 164, 166]
+    }
+  },
+  "notes": {
+    "source": "FIA Forest Types reference: Appendix B, Dixon 2002",
+    "usage": "Maps FIA forest type codes to forest type groups for diameter increment modeling",
+    "variant": "Southern (SN) variant"
+  }
+} 

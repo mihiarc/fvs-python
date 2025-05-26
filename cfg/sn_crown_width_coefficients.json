@@ -1,0 +1,1664 @@
+{
+  "metadata": {
+    "source": "FVS Southern Variant Documentation",
+    "description": "Crown width equation coefficients and assignments",
+    "equations": {
+      "4.4.1": {
+        "name": "Bechtold (2003)",
+        "type": "forest_grown",
+        "formula": "FCW = a1 + (a2 * DBH) + (a3 * DBH^2) + (a4 * CR) + (a5 * HI)",
+        "bounds": "DBH > 5.0 for full equation, DBH < 5.0 uses scaled version"
+      },
+      "4.4.2": {
+        "name": "Bragg (2001)",
+        "type": "forest_grown",
+        "formula": "FCW = a1 + (a2 * DBH^a3)",
+        "bounds": "DBH > 5.0 for full equation, DBH < 5.0 uses scaled version"
+      },
+      "4.4.3": {
+        "name": "Ek (1974)",
+        "type": "open_grown",
+        "formula": "OCW = a1 + (a2 * DBH^a3)",
+        "bounds": "DBH > 3.0 for full equation, DBH < 3.0 uses scaled version"
+      },
+      "4.4.4": {
+        "name": "Krajicek et al. (1961)",
+        "type": "open_grown",
+        "formula": "OCW = a1 + (a2 * DBH)",
+        "bounds": "DBH > 3.0 for full equation, DBH < 3.0 uses scaled version"
+      },
+      "4.4.5": {
+        "name": "Smith et al. (1992)",
+        "type": "open_grown",
+        "formula": "OCW = a1 + (a2 * DBH * 2.54) + (a3 * (DBH * 2.54)^2) * 3.28084",
+        "bounds": "DBH > 3.0 for full equation, DBH < 3.0 uses scaled version"
+      }
+    },
+    "variables": {
+      "FCW": "Forest-grown crown width (feet) - used in PCC calculations",
+      "OCW": "Open-grown crown width (feet) - used in CCF calculations",
+      "DBH": "Diameter at breast height (inches)",
+      "CR": "Crown ratio (percent)",
+      "HI": "Hopkins Index = (ELEVATION - 887)/100 * 1.0 + (LATITUDE - 39.54) * 4.0 + (-82.52 - LONGITUDE) * 1.25"
+    },
+    "ccf_calculation": {
+      "formula": "CCF = 0.001803 * OCW^2 (for DBH > 0.1), CCF = 0.001 (for DBH <= 0.1)",
+      "description": "Crown Competition Factor calculation using open-grown crown width"
+    }
+  },
+  "forest_grown": {
+    "FR": {
+      "equation_number": "01201",
+      "a1": 0.6564,
+      "a2": 0.8403,
+      "a3": null,
+      "a4": 0.0792,
+      "a5": null,
+      "bounds": "FCW < 34"
+    },
+    "JU": {
+      "equation_number": "06801",
+      "a1": 1.2359,
+      "a2": 1.2962,
+      "a3": null,
+      "a4": 0.0545,
+      "a5": null,
+      "bounds": "FCW < 33"
+    },
+    "PI": {
+      "equation_number": "09401",
+      "a1": 0.3789,
+      "a2": 0.8658,
+      "a3": null,
+      "a4": 0.0878,
+      "a5": null,
+      "bounds": "FCW < 30"
+    },
+    "PU": {
+      "equation_number": "13201",
+      "a1": -0.1211,
+      "a2": 1.2319,
+      "a3": null,
+      "a4": 0.1212,
+      "a5": null,
+      "bounds": "FCW < 34"
+    },
+    "SP": {
+      "equation_number": "11001",
+      "a1": -2.2564,
+      "a2": 1.3004,
+      "a3": null,
+      "a4": 0.1031,
+      "a5": -0.0562,
+      "bounds": "FCW < 34"
+    },
+    "SA": {
+      "equation_number": "11101",
+      "a1": -6.9659,
+      "a2": 2.1192,
+      "a3": -0.0333,
+      "a4": 0.0587,
+      "a5": -0.0959,
+      "bounds": "DBH < 30"
+    },
+    "SR": {
+      "equation_number": "11001",
+      "a1": -2.2564,
+      "a2": 1.3004,
+      "a3": null,
+      "a4": 0.1031,
+      "a5": -0.0562,
+      "bounds": "FCW < 34"
+    },
+    "LL": {
+      "equation_number": "12101",
+      "a1": -12.2105,
+      "a2": 1.3376,
+      "a3": null,
+      "a4": 0.1237,
+      "a5": -0.2759,
+      "bounds": "FCW < 50"
+    },
+    "TM": {
+      "equation_number": "12601",
+      "a1": -0.9442,
+      "a2": 1.4531,
+      "a3": null,
+      "a4": 0.0543,
+      "a5": -0.1144,
+      "bounds": "FCW < 34"
+    },
+    "PP": {
+      "equation_number": "12601",
+      "a1": -0.9442,
+      "a2": 1.4531,
+      "a3": null,
+      "a4": 0.0543,
+      "a5": -0.1144,
+      "bounds": "FCW < 34"
+    },
+    "PD": {
+      "equation_number": "12801",
+      "a1": -8.7711,
+      "a2": 3.7252,
+      "a3": -0.1063,
+      "a4": null,
+      "a5": null,
+      "bounds": "DBH < 18"
+    },
+    "WP": {
+      "equation_number": "12901",
+      "a1": 0.3914,
+      "a2": 0.9923,
+      "a3": null,
+      "a4": 0.108,
+      "a5": null,
+      "bounds": "FCW < 45"
+    },
+    "LP": {
+      "equation_number": "13101",
+      "a1": -0.8277,
+      "a2": 1.3946,
+      "a3": null,
+      "a4": 0.0768,
+      "a5": null,
+      "bounds": "FCW < 55"
+    },
+    "VP": {
+      "equation_number": "13201",
+      "a1": -0.1211,
+      "a2": 1.2319,
+      "a3": null,
+      "a4": 0.1212,
+      "a5": null,
+      "bounds": "FCW < 34"
+    },
+    "BY": {
+      "equation_number": "22101",
+      "a1": -1.0183,
+      "a2": 0.8856,
+      "a3": null,
+      "a4": 0.1162,
+      "a5": null,
+      "bounds": "FCW < 37"
+    },
+    "PC": {
+      "equation_number": "22101",
+      "a1": -1.0183,
+      "a2": 0.8856,
+      "a3": null,
+      "a4": 0.1162,
+      "a5": null,
+      "bounds": "FCW < 37"
+    },
+    "HM": {
+      "equation_number": "26101",
+      "a1": 6.1924,
+      "a2": 1.4491,
+      "a3": -0.0178,
+      "a4": null,
+      "a5": -0.0341,
+      "bounds": "DBH < 40"
+    },
+    "FM": {
+      "equation_number": "31801",
+      "a1": 4.9399,
+      "a2": 1.0727,
+      "a3": null,
+      "a4": 0.1096,
+      "a5": -0.0493,
+      "bounds": "FCW < 54"
+    },
+    "BE": {
+      "equation_number": "31301",
+      "a1": 6.4741,
+      "a2": 1.0778,
+      "a3": null,
+      "a4": 0.0719,
+      "a5": -0.0637,
+      "bounds": "FCW < 57"
+    },
+    "RM": {
+      "equation_number": "31601",
+      "a1": 2.7563,
+      "a2": 1.4212,
+      "a3": 0.0143,
+      "a4": 0.0993,
+      "a5": null,
+      "bounds": "DBH < 50"
+    },
+    "SV": {
+      "equation_number": "31701",
+      "a1": 3.3576,
+      "a2": 1.1312,
+      "a3": null,
+      "a4": 0.1011,
+      "a5": -0.173,
+      "bounds": "FCW < 45"
+    },
+    "SM": {
+      "equation_number": "31801",
+      "a1": 4.9399,
+      "a2": 1.0727,
+      "a3": null,
+      "a4": 0.1096,
+      "a5": -0.0493,
+      "bounds": "FCW < 54"
+    },
+    "BU": {
+      "equation_number": "40701",
+      "a1": 4.5453,
+      "a2": 1.3721,
+      "a3": null,
+      "a4": 0.043,
+      "a5": null,
+      "bounds": "FCW < 54"
+    },
+    "BB": {
+      "equation_number": "37301",
+      "a1": 11.6634,
+      "a2": 1.0028,
+      "a3": null,
+      "a4": null,
+      "a5": null,
+      "bounds": "FCW < 68"
+    },
+    "SB": {
+      "equation_number": "37201",
+      "a1": 4.6725,
+      "a2": 1.2968,
+      "a3": null,
+      "a4": 0.0787,
+      "a5": null,
+      "bounds": "FCW < 54"
+    },
+    "AH": {
+      "equation_number": "39101",
+      "a1": 0.9219,
+      "a2": 1.6303,
+      "a3": null,
+      "a4": 0.115,
+      "a5": -0.1113,
+      "bounds": "FCW < 42"
+    },
+    "HI": {
+      "equation_number": "40701",
+      "a1": 4.5453,
+      "a2": 1.3721,
+      "a3": null,
+      "a4": 0.043,
+      "a5": null,
+      "bounds": "FCW < 54"
+    },
+    "CA": {
+      "equation_number": "93101",
+      "a1": 4.6311,
+      "a2": 1.0108,
+      "a3": null,
+      "a4": 0.0564,
+      "a5": null,
+      "bounds": "FCW < 29"
+    },
+    "HB": {
+      "equation_number": "46201",
+      "a1": 7.1043,
+      "a2": 1.3041,
+      "a3": null,
+      "a4": 0.0456,
+      "a5": null,
+      "bounds": "FCW < 51"
+    },
+    "RD": {
+      "equation_number": "49101",
+      "a1": 2.9646,
+      "a2": 1.9917,
+      "a3": null,
+      "a4": 0.0707,
+      "a5": null,
+      "bounds": "FCW < 36"
+    },
+    "DW": {
+      "equation_number": "49101",
+      "a1": 2.9646,
+      "a2": 1.9917,
+      "a3": null,
+      "a4": 0.0707,
+      "a5": null,
+      "bounds": "FCW < 36"
+    },
+    "PS": {
+      "equation_number": "52101",
+      "a1": 3.5393,
+      "a2": 1.3939,
+      "a3": null,
+      "a4": 0.0625,
+      "a5": null,
+      "bounds": "FCW < 36"
+    },
+    "AB": {
+      "equation_number": "53101",
+      "a1": 3.9361,
+      "a2": 1.15,
+      "a3": null,
+      "a4": 0.1237,
+      "a5": -0.0691,
+      "bounds": "FCW < 80"
+    },
+    "AS": {
+      "equation_number": "54401",
+      "a1": 2.9672,
+      "a2": 1.3066,
+      "a3": null,
+      "a4": 0.0585,
+      "a5": null,
+      "bounds": "FCW < 61"
+    },
+    "WA": {
+      "equation_number": "54101",
+      "a1": 1.7625,
+      "a2": 1.3413,
+      "a3": null,
+      "a4": 0.0957,
+      "a5": null,
+      "bounds": "FCW < 62"
+    },
+    "BA": {
+      "equation_number": "54301",
+      "a1": 5.2824,
+      "a2": 1.1184,
+      "a3": null,
+      "a4": null,
+      "a5": null,
+      "bounds": "FCW < 34"
+    },
+    "GA": {
+      "equation_number": "54401",
+      "a1": 2.9672,
+      "a2": 1.3066,
+      "a3": null,
+      "a4": 0.0585,
+      "a5": null,
+      "bounds": "FCW < 61"
+    },
+    "HL": {
+      "equation_number": "55201",
+      "a1": 4.1971,
+      "a2": 1.5567,
+      "a3": null,
+      "a4": 0.088,
+      "a5": null,
+      "bounds": "FCW < 46"
+    },
+    "LB": {
+      "equation_number": "65301",
+      "a1": 8.2119,
+      "a2": 0.9708,
+      "a3": null,
+      "a4": null,
+      "a5": null,
+      "bounds": "FCW < 41"
+    },
+    "HA": {
+      "equation_number": "49101",
+      "a1": 2.9646,
+      "a2": 1.9917,
+      "a3": null,
+      "a4": 0.0707,
+      "a5": null,
+      "bounds": "FCW < 36"
+    },
+    "HY": {
+      "equation_number": "59101",
+      "a1": 4.5803,
+      "a2": 1.0747,
+      "a3": null,
+      "a4": 0.0661,
+      "a5": null,
+      "bounds": "FCW < 31"
+    },
+    "BN": {
+      "equation_number": "60201",
+      "a1": 3.6031,
+      "a2": 1.1472,
+      "a3": null,
+      "a4": 0.1224,
+      "a5": null,
+      "bounds": "FCW < 37"
+    },
+    "WN": {
+      "equation_number": "60201",
+      "a1": 3.6031,
+      "a2": 1.1472,
+      "a3": null,
+      "a4": 0.1224,
+      "a5": null,
+      "bounds": "FCW < 37"
+    },
+    "SU": {
+      "equation_number": "61101",
+      "a1": 1.8853,
+      "a2": 1.1625,
+      "a3": null,
+      "a4": 0.0656,
+      "a5": null,
+      "bounds": "FCW < 50"
+    },
+    "YP": {
+      "equation_number": "62101",
+      "a1": 3.3543,
+      "a2": 1.1627,
+      "a3": null,
+      "a4": 0.0857,
+      "a5": null,
+      "bounds": "FCW < 61"
+    },
+    "MG": {
+      "equation_number": "65301",
+      "a1": 8.2119,
+      "a2": 0.9708,
+      "a3": null,
+      "a4": null,
+      "a5": null,
+      "bounds": "FCW < 41"
+    },
+    "CT": {
+      "equation_number": "65101",
+      "a1": 4.1711,
+      "a2": 1.6275,
+      "a3": null,
+      "a4": null,
+      "a5": null,
+      "bounds": "FCW < 39"
+    },
+    "MS": {
+      "equation_number": "65301",
+      "a1": 8.2119,
+      "a2": 0.9708,
+      "a3": null,
+      "a4": null,
+      "a5": null,
+      "bounds": "FCW < 41"
+    },
+    "MV": {
+      "equation_number": "65301",
+      "a1": 8.2119,
+      "a2": 0.9708,
+      "a3": null,
+      "a4": null,
+      "a5": null,
+      "bounds": "FCW < 41"
+    },
+    "ML": {
+      "equation_number": "65301",
+      "a1": 8.2119,
+      "a2": 0.9708,
+      "a3": null,
+      "a4": null,
+      "a5": null,
+      "bounds": "FCW < 41"
+    },
+    "AP": {
+      "equation_number": "76102",
+      "a1": 4.102718,
+      "a2": 1.396006,
+      "a3": 1.077474,
+      "a4": null,
+      "a5": null,
+      "bounds": "FCW < 52"
+    },
+    "MB": {
+      "equation_number": "68201",
+      "a1": 13.3255,
+      "a2": 1.0735,
+      "a3": null,
+      "a4": null,
+      "a5": null,
+      "bounds": "FCW < 46"
+    },
+    "WT": {
+      "equation_number": "69101",
+      "a1": 5.3409,
+      "a2": 0.7499,
+      "a3": null,
+      "a4": 0.1047,
+      "a5": null,
+      "bounds": "FCW < 37"
+    },
+    "BG": {
+      "equation_number": "69301",
+      "a1": 5.5037,
+      "a2": 1.0567,
+      "a3": null,
+      "a4": 0.088,
+      "a5": 0.061,
+      "bounds": "FCW < 50"
+    },
+    "TS": {
+      "equation_number": "69401",
+      "a1": 1.3564,
+      "a2": 1.0991,
+      "a3": null,
+      "a4": 0.1243,
+      "a5": null,
+      "bounds": "FCW < 41"
+    },
+    "HH": {
+      "equation_number": "70101",
+      "a1": 7.8084,
+      "a2": 0.8129,
+      "a3": null,
+      "a4": 0.0941,
+      "a5": -0.0817,
+      "bounds": "FCW < 39"
+    },
+    "SD": {
+      "equation_number": "71101",
+      "a1": 7.975,
+      "a2": 0.8303,
+      "a3": null,
+      "a4": 0.0423,
+      "a5": -0.0706,
+      "bounds": "FCW < 36"
+    },
+    "RA": {
+      "equation_number": "72101",
+      "a1": 4.2756,
+      "a2": 1.0773,
+      "a3": null,
+      "a4": 0.1526,
+      "a5": 0.165,
+      "bounds": "FCW < 25"
+    },
+    "SY": {
+      "equation_number": "73101",
+      "a1": -1.3973,
+      "a2": 1.3756,
+      "a3": null,
+      "a4": 0.1835,
+      "a5": null,
+      "bounds": "FCW < 66"
+    },
+    "CW": {
+      "equation_number": "74201",
+      "a1": 3.4375,
+      "a2": 1.4092,
+      "a3": null,
+      "a4": null,
+      "a5": null,
+      "bounds": "FCW < 80"
+    },
+    "BT": {
+      "equation_number": "74301",
+      "a1": 0.6847,
+      "a2": 1.105,
+      "a3": null,
+      "a4": 0.142,
+      "a5": -0.0265,
+      "bounds": "FCW < 43"
+    },
+    "BC": {
+      "equation_number": "76201",
+      "a1": 3.0237,
+      "a2": 1.1119,
+      "a3": null,
+      "a4": 0.1112,
+      "a5": -0.0493,
+      "bounds": "FCW < 52"
+    },
+    "WO": {
+      "equation_number": "80201",
+      "a1": 3.2375,
+      "a2": 1.5234,
+      "a3": null,
+      "a4": 0.0455,
+      "a5": -0.0324,
+      "bounds": "FCW < 69"
+    },
+    "SO": {
+      "equation_number": "80601",
+      "a1": 0.5656,
+      "a2": 1.6766,
+      "a3": null,
+      "a4": 0.0739,
+      "a5": null,
+      "bounds": "FCW < 66"
+    },
+    "SK": {
+      "equation_number": "81201",
+      "a1": 2.1517,
+      "a2": 1.6064,
+      "a3": null,
+      "a4": 0.0609,
+      "a5": null,
+      "bounds": "FCW < 56"
+    },
+    "CB": {
+      "equation_number": "81201",
+      "a1": 2.1517,
+      "a2": 1.6064,
+      "a3": null,
+      "a4": 0.0609,
+      "a5": null,
+      "bounds": "FCW < 56"
+    },
+    "TO": {
+      "equation_number": "81901",
+      "a1": 5.8858,
+      "a2": 1.4935,
+      "a3": null,
+      "a4": null,
+      "a5": null,
+      "bounds": "FCW < 29"
+    },
+    "LK": {
+      "equation_number": "82001",
+      "a1": 6.3149,
+      "a2": 1.6455,
+      "a3": null,
+      "a4": null,
+      "a5": null,
+      "bounds": "FCW < 54"
+    },
+    "OV": {
+      "equation_number": "82301",
+      "a1": 1.7827,
+      "a2": 1.6549,
+      "a3": null,
+      "a4": 0.0343,
+      "a5": null,
+      "bounds": "FCW < 61"
+    },
+    "BJ": {
+      "equation_number": "82401",
+      "a1": 0.5443,
+      "a2": 1.4882,
+      "a3": null,
+      "a4": 0.0565,
+      "a5": null,
+      "bounds": "FCW < 37"
+    },
+    "SN": {
+      "equation_number": "83201",
+      "a1": 2.148,
+      "a2": 1.6928,
+      "a3": -0.0176,
+      "a4": 0.0569,
+      "a5": null,
+      "bounds": "DBH < 50"
+    },
+    "CK": {
+      "equation_number": "82601",
+      "a1": 0.5189,
+      "a2": 1.4134,
+      "a3": null,
+      "a4": 0.1365,
+      "a5": -0.0806,
+      "bounds": "FCW < 45"
+    },
+    "WK": {
+      "equation_number": "82701",
+      "a1": 1.6349,
+      "a2": 1.5443,
+      "a3": null,
+      "a4": 0.0637,
+      "a5": -0.0764,
+      "bounds": "FCW < 57"
+    },
+    "CO": {
+      "equation_number": "83201",
+      "a1": 2.148,
+      "a2": 1.6928,
+      "a3": -0.0176,
+      "a4": 0.0569,
+      "a5": null,
+      "bounds": "DBH < 50"
+    },
+    "RO": {
+      "equation_number": "83301",
+      "a1": 2.8908,
+      "a2": 1.4077,
+      "a3": null,
+      "a4": 0.0643,
+      "a5": null,
+      "bounds": "FCW < 82"
+    },
+    "QS": {
+      "equation_number": "81201",
+      "a1": 2.1517,
+      "a2": 1.6064,
+      "a3": null,
+      "a4": 0.0609,
+      "a5": null,
+      "bounds": "FCW < 56"
+    },
+    "PO": {
+      "equation_number": "83501",
+      "a1": 1.6125,
+      "a2": 1.6669,
+      "a3": null,
+      "a4": 0.0536,
+      "a5": null,
+      "bounds": "FCW < 45"
+    },
+    "BO": {
+      "equation_number": "83701",
+      "a1": 2.8974,
+      "a2": 1.3697,
+      "a3": null,
+      "a4": 0.0671,
+      "a5": null,
+      "bounds": "FCW < 52"
+    },
+    "LO": {
+      "equation_number": "83801",
+      "a1": 5.6694,
+      "a2": 1.6402,
+      "a3": null,
+      "a4": null,
+      "a5": null,
+      "bounds": "FCW < 66"
+    },
+    "BK": {
+      "equation_number": "90101",
+      "a1": 3.0012,
+      "a2": 0.8165,
+      "a3": null,
+      "a4": 0.1395,
+      "a5": null,
+      "bounds": "FCW < 48"
+    },
+    "WI": {
+      "equation_number": "97201",
+      "a1": 1.7296,
+      "a2": 2.0732,
+      "a3": null,
+      "a4": 0.059,
+      "a5": -0.0869,
+      "bounds": "FCW < 50"
+    },
+    "SS": {
+      "equation_number": "93101",
+      "a1": 4.6311,
+      "a2": 1.0108,
+      "a3": null,
+      "a4": 0.0564,
+      "a5": null,
+      "bounds": "FCW < 29"
+    },
+    "BD": {
+      "equation_number": "95101",
+      "a1": 1.6871,
+      "a2": 1.211,
+      "a3": null,
+      "a4": 0.1194,
+      "a5": -0.0264,
+      "bounds": "FCW < 61"
+    },
+    "EL": {
+      "equation_number": "97201",
+      "a1": 1.7296,
+      "a2": 2.0732,
+      "a3": null,
+      "a4": 0.059,
+      "a5": -0.0869,
+      "bounds": "FCW < 50"
+    },
+    "WE": {
+      "equation_number": "97101",
+      "a1": 4.3649,
+      "a2": 1.6612,
+      "a3": null,
+      "a4": 0.0643,
+      "a5": null,
+      "bounds": "FCW < 40"
+    },
+    "AE": {
+      "equation_number": "97201",
+      "a1": 1.7296,
+      "a2": 2.0732,
+      "a3": null,
+      "a4": 0.059,
+      "a5": -0.0869,
+      "bounds": "FCW < 50"
+    },
+    "RL": {
+      "equation_number": "97501",
+      "a1": 9.0023,
+      "a2": 1.3933,
+      "a3": null,
+      "a4": null,
+      "a5": -0.0785,
+      "bounds": "FCW < 49"
+    },
+    "OS": {
+      "equation_number": "06801",
+      "a1": 1.2359,
+      "a2": 1.2962,
+      "a3": null,
+      "a4": 0.0545,
+      "a5": null,
+      "bounds": "FCW < 33"
+    },
+    "OH": {
+      "equation_number": "93101",
+      "a1": 4.6311,
+      "a2": 1.0108,
+      "a3": null,
+      "a4": 0.0564,
+      "a5": null,
+      "bounds": "FCW < 29"
+    },
+    "OT": {
+      "equation_number": "31601",
+      "a1": 2.7563,
+      "a2": 1.4212,
+      "a3": 0.0143,
+      "a4": 0.0993,
+      "a5": null,
+      "bounds": "DBH < 50"
+    }
+  },
+  "open_grown": {
+    "FR": {
+      "equation_number": "01203",
+      "a1": 0.327,
+      "a2": 5.116,
+      "a3": 0.5035,
+      "a4": null,
+      "a5": null,
+      "bounds": "OCW < 34"
+    },
+    "JU": {
+      "equation_number": "06801",
+      "a1": 1.2359,
+      "a2": 1.2962,
+      "a3": null,
+      "a4": 0.0545,
+      "a5": null,
+      "bounds": "OCW < 33"
+    },
+    "PI": {
+      "equation_number": "09403",
+      "a1": 3.594,
+      "a2": 1.963,
+      "a3": 0.882,
+      "a4": null,
+      "a5": null,
+      "bounds": "OCW < 37"
+    },
+    "PU": {
+      "equation_number": "13201",
+      "a1": -0.1211,
+      "a2": 1.2319,
+      "a3": null,
+      "a4": 0.1212,
+      "a5": null,
+      "bounds": "OCW < 34"
+    },
+    "SP": {
+      "equation_number": "11005",
+      "a1": 0.583,
+      "a2": 0.245,
+      "a3": 0.0009,
+      "a4": null,
+      "a5": null,
+      "bounds": "OCW < 45"
+    },
+    "SA": {
+      "equation_number": "11101",
+      "a1": -6.9659,
+      "a2": 2.1192,
+      "a3": -0.0333,
+      "a4": 0.0587,
+      "a5": -0.0959,
+      "bounds": "DBH < 30"
+    },
+    "SR": {
+      "equation_number": "11005",
+      "a1": 0.583,
+      "a2": 0.245,
+      "a3": 0.0009,
+      "a4": null,
+      "a5": null,
+      "bounds": "OCW < 45"
+    },
+    "LL": {
+      "equation_number": "12105",
+      "a1": 0.113,
+      "a2": 0.259,
+      "a3": null,
+      "a4": null,
+      "a5": null,
+      "bounds": "OCW < 50"
+    },
+    "TM": {
+      "equation_number": "12601",
+      "a1": -0.9442,
+      "a2": 1.4531,
+      "a3": null,
+      "a4": 0.0543,
+      "a5": -0.1144,
+      "bounds": "OCW < 34"
+    },
+    "PP": {
+      "equation_number": "12601",
+      "a1": -0.9442,
+      "a2": 1.4531,
+      "a3": null,
+      "a4": 0.0543,
+      "a5": -0.1144,
+      "bounds": "OCW < 34"
+    },
+    "PD": {
+      "equation_number": "12801",
+      "a1": -8.7711,
+      "a2": 3.7252,
+      "a3": -0.1063,
+      "a4": null,
+      "a5": null,
+      "bounds": "DBH < 18"
+    },
+    "WP": {
+      "equation_number": "12903",
+      "a1": 1.62,
+      "a2": 3.197,
+      "a3": 0.7981,
+      "a4": null,
+      "a5": null,
+      "bounds": "OCW < 58"
+    },
+    "LP": {
+      "equation_number": "13105",
+      "a1": 0.738,
+      "a2": 0.245,
+      "a3": 0.000809,
+      "a4": null,
+      "a5": null,
+      "bounds": "OCW < 66"
+    },
+    "VP": {
+      "equation_number": "13201",
+      "a1": -0.1211,
+      "a2": 1.2319,
+      "a3": null,
+      "a4": 0.1212,
+      "a5": null,
+      "bounds": "OCW < 34"
+    },
+    "BY": {
+      "equation_number": "22101",
+      "a1": -1.0183,
+      "a2": 0.8856,
+      "a3": null,
+      "a4": 0.1162,
+      "a5": null,
+      "bounds": "OCW < 37"
+    },
+    "PC": {
+      "equation_number": "22101",
+      "a1": -1.0183,
+      "a2": 0.8856,
+      "a3": null,
+      "a4": 0.1162,
+      "a5": null,
+      "bounds": "OCW < 37"
+    },
+    "HM": {
+      "equation_number": "26101",
+      "a1": 6.1924,
+      "a2": 1.4491,
+      "a3": -0.0178,
+      "a4": null,
+      "a5": -0.0341,
+      "bounds": "DBH < 40"
+    },
+    "FM": {
+      "equation_number": "31803",
+      "a1": 0.868,
+      "a2": 4.15,
+      "a3": 0.7514,
+      "a4": null,
+      "a5": null,
+      "bounds": "OCW < 54"
+    },
+    "BE": {
+      "equation_number": "31301",
+      "a1": 6.4741,
+      "a2": 1.0778,
+      "a3": null,
+      "a4": 0.0719,
+      "a5": -0.0637,
+      "bounds": "OCW < 57"
+    },
+    "RM": {
+      "equation_number": "31603",
+      "a1": 0.0,
+      "a2": 4.776,
+      "a3": 0.7656,
+      "a4": null,
+      "a5": null,
+      "bounds": "OCW < 55"
+    },
+    "SV": {
+      "equation_number": "31701",
+      "a1": 3.3576,
+      "a2": 1.1312,
+      "a3": null,
+      "a4": 0.1011,
+      "a5": -0.173,
+      "bounds": "OCW < 45"
+    },
+    "SM": {
+      "equation_number": "31803",
+      "a1": 0.868,
+      "a2": 4.15,
+      "a3": 0.7514,
+      "a4": null,
+      "a5": null,
+      "bounds": "OCW < 54"
+    },
+    "BU": {
+      "equation_number": "40703",
+      "a1": 2.36,
+      "a2": 3.548,
+      "a3": 0.7986,
+      "a4": null,
+      "a5": null,
+      "bounds": "OCW < 54"
+    },
+    "BB": {
+      "equation_number": "37301",
+      "a1": 11.6634,
+      "a2": 1.0028,
+      "a3": null,
+      "a4": null,
+      "a5": null,
+      "bounds": "OCW < 68"
+    },
+    "SB": {
+      "equation_number": "37201",
+      "a1": 4.6725,
+      "a2": 1.2968,
+      "a3": null,
+      "a4": 0.0787,
+      "a5": null,
+      "bounds": "OCW < 54"
+    },
+    "AH": {
+      "equation_number": "39101",
+      "a1": 0.9219,
+      "a2": 1.6303,
+      "a3": null,
+      "a4": 0.115,
+      "a5": -0.1113,
+      "bounds": "OCW < 42"
+    },
+    "HI": {
+      "equation_number": "40703",
+      "a1": 2.36,
+      "a2": 3.548,
+      "a3": 0.7986,
+      "a4": null,
+      "a5": null,
+      "bounds": "OCW < 54"
+    },
+    "CA": {
+      "equation_number": "93101",
+      "a1": 4.6311,
+      "a2": 1.0108,
+      "a3": null,
+      "a4": 0.0564,
+      "a5": null,
+      "bounds": "OCW < 29"
+    },
+    "HB": {
+      "equation_number": "46201",
+      "a1": 7.1043,
+      "a2": 1.3041,
+      "a3": null,
+      "a4": 0.0456,
+      "a5": null,
+      "bounds": "OCW < 51"
+    },
+    "RD": {
+      "equation_number": "49101",
+      "a1": 2.9646,
+      "a2": 1.9917,
+      "a3": null,
+      "a4": 0.0707,
+      "a5": null,
+      "bounds": "OCW < 36"
+    },
+    "DW": {
+      "equation_number": "49101",
+      "a1": 2.9646,
+      "a2": 1.9917,
+      "a3": null,
+      "a4": 0.0707,
+      "a5": null,
+      "bounds": "OCW < 36"
+    },
+    "PS": {
+      "equation_number": "52101",
+      "a1": 3.5393,
+      "a2": 1.3939,
+      "a3": null,
+      "a4": 0.0625,
+      "a5": null,
+      "bounds": "OCW < 36"
+    },
+    "AB": {
+      "equation_number": "53101",
+      "a1": 3.9361,
+      "a2": 1.15,
+      "a3": null,
+      "a4": 0.1237,
+      "a5": -0.0691,
+      "bounds": "OCW < 80"
+    },
+    "AS": {
+      "equation_number": "54403",
+      "a1": 0.0,
+      "a2": 4.755,
+      "a3": 0.7381,
+      "a4": null,
+      "a5": null,
+      "bounds": "OCW < 61"
+    },
+    "WA": {
+      "equation_number": "54101",
+      "a1": 1.7625,
+      "a2": 1.3413,
+      "a3": null,
+      "a4": 0.0957,
+      "a5": null,
+      "bounds": "OCW < 62"
+    },
+    "BA": {
+      "equation_number": "54301",
+      "a1": 5.2824,
+      "a2": 1.1184,
+      "a3": null,
+      "a4": null,
+      "a5": null,
+      "bounds": "OCW < 34"
+    },
+    "GA": {
+      "equation_number": "54403",
+      "a1": 0.0,
+      "a2": 4.755,
+      "a3": 0.7381,
+      "a4": null,
+      "a5": null,
+      "bounds": "OCW < 61"
+    },
+    "HL": {
+      "equation_number": "55201",
+      "a1": 4.1971,
+      "a2": 1.5567,
+      "a3": null,
+      "a4": 0.088,
+      "a5": null,
+      "bounds": "OCW < 46"
+    },
+    "LB": {
+      "equation_number": "65301",
+      "a1": 8.2119,
+      "a2": 0.9708,
+      "a3": null,
+      "a4": null,
+      "a5": null,
+      "bounds": "OCW < 41"
+    },
+    "HA": {
+      "equation_number": "49101",
+      "a1": 2.9646,
+      "a2": 1.9917,
+      "a3": null,
+      "a4": 0.0707,
+      "a5": null,
+      "bounds": "OCW < 36"
+    },
+    "HY": {
+      "equation_number": "59101",
+      "a1": 4.5803,
+      "a2": 1.0747,
+      "a3": null,
+      "a4": 0.0661,
+      "a5": null,
+      "bounds": "OCW < 31"
+    },
+    "BN": {
+      "equation_number": "60201",
+      "a1": 3.6031,
+      "a2": 1.1472,
+      "a3": null,
+      "a4": 0.1224,
+      "a5": null,
+      "bounds": "OCW < 37"
+    },
+    "WN": {
+      "equation_number": "60201",
+      "a1": 3.6031,
+      "a2": 1.1472,
+      "a3": null,
+      "a4": 0.1224,
+      "a5": null,
+      "bounds": "OCW < 37"
+    },
+    "SU": {
+      "equation_number": "61101",
+      "a1": 1.8853,
+      "a2": 1.1625,
+      "a3": null,
+      "a4": 0.0656,
+      "a5": -0.03,
+      "bounds": "OCW < 50"
+    },
+    "YP": {
+      "equation_number": "62101",
+      "a1": 3.3543,
+      "a2": 1.1627,
+      "a3": null,
+      "a4": 0.0857,
+      "a5": null,
+      "bounds": "OCW < 61"
+    },
+    "MG": {
+      "equation_number": "65301",
+      "a1": 8.2119,
+      "a2": 0.9708,
+      "a3": null,
+      "a4": null,
+      "a5": null,
+      "bounds": "OCW < 41"
+    },
+    "CT": {
+      "equation_number": "65101",
+      "a1": 4.1711,
+      "a2": 1.6275,
+      "a3": null,
+      "a4": null,
+      "a5": null,
+      "bounds": "OCW < 39"
+    },
+    "MV": {
+      "equation_number": "65301",
+      "a1": 8.2119,
+      "a2": 0.9708,
+      "a3": null,
+      "a4": null,
+      "a5": null,
+      "bounds": "OCW < 41"
+    },
+    "ML": {
+      "equation_number": "65301",
+      "a1": 8.2119,
+      "a2": 0.9708,
+      "a3": null,
+      "a4": null,
+      "a5": null,
+      "bounds": "OCW < 41"
+    },
+    "AP": {
+      "equation_number": "76102",
+      "a1": 4.102718,
+      "a2": 1.396006,
+      "a3": 1.077474,
+      "a4": null,
+      "a5": null,
+      "bounds": "OCW < 52"
+    },
+    "MB": {
+      "equation_number": "68201",
+      "a1": 13.3255,
+      "a2": 1.0735,
+      "a3": null,
+      "a4": null,
+      "a5": null,
+      "bounds": "OCW < 46"
+    },
+    "WT": {
+      "equation_number": "69101",
+      "a1": 5.3409,
+      "a2": 0.7499,
+      "a3": null,
+      "a4": 0.1047,
+      "a5": null,
+      "bounds": "OCW < 37"
+    },
+    "BG": {
+      "equation_number": "69301",
+      "a1": 5.5037,
+      "a2": 1.0567,
+      "a3": null,
+      "a4": 0.088,
+      "a5": 0.061,
+      "bounds": "OCW < 50"
+    },
+    "TS": {
+      "equation_number": "69401",
+      "a1": 1.3564,
+      "a2": 1.0991,
+      "a3": null,
+      "a4": 0.1243,
+      "a5": null,
+      "bounds": "OCW < 41"
+    },
+    "HH": {
+      "equation_number": "70101",
+      "a1": 7.8084,
+      "a2": 0.8129,
+      "a3": null,
+      "a4": 0.0941,
+      "a5": -0.0817,
+      "bounds": "OCW < 39"
+    },
+    "SD": {
+      "equation_number": "71101",
+      "a1": 7.975,
+      "a2": 0.8303,
+      "a3": null,
+      "a4": 0.0423,
+      "a5": -0.0706,
+      "bounds": "OCW < 36"
+    },
+    "RA": {
+      "equation_number": "72101",
+      "a1": 4.2756,
+      "a2": 1.0773,
+      "a3": null,
+      "a4": 0.1526,
+      "a5": 0.165,
+      "bounds": "OCW < 25"
+    },
+    "SY": {
+      "equation_number": "73101",
+      "a1": -1.3973,
+      "a2": 1.3756,
+      "a3": null,
+      "a4": 0.1835,
+      "a5": null,
+      "bounds": "OCW < 66"
+    },
+    "CW": {
+      "equation_number": "74203",
+      "a1": 2.934,
+      "a2": 2.538,
+      "a3": 0.8617,
+      "a4": null,
+      "a5": null,
+      "bounds": "OCW < 80"
+    },
+    "BT": {
+      "equation_number": "74301",
+      "a1": 0.6847,
+      "a2": 1.105,
+      "a3": null,
+      "a4": 0.142,
+      "a5": -0.0265,
+      "bounds": "OCW < 43"
+    },
+    "BC": {
+      "equation_number": "76203",
+      "a1": 0.621,
+      "a2": 7.059,
+      "a3": 0.5441,
+      "a4": null,
+      "a5": null,
+      "bounds": "OCW < 52"
+    },
+    "WO": {
+      "equation_number": "80204",
+      "a1": 1.8,
+      "a2": 1.883,
+      "a3": null,
+      "a4": null,
+      "a5": null,
+      "bounds": "OCW < 69"
+    },
+    "SO": {
+      "equation_number": "80601",
+      "a1": 0.5656,
+      "a2": 1.6766,
+      "a3": null,
+      "a4": 0.0739,
+      "a5": null,
+      "bounds": "OCW < 66"
+    },
+    "SK": {
+      "equation_number": "81201",
+      "a1": 2.1517,
+      "a2": 1.6064,
+      "a3": null,
+      "a4": 0.0609,
+      "a5": null,
+      "bounds": "OCW < 56"
+    },
+    "CB": {
+      "equation_number": "81201",
+      "a1": 2.1517,
+      "a2": 1.6064,
+      "a3": null,
+      "a4": 0.0609,
+      "a5": null,
+      "bounds": "OCW < 56"
+    },
+    "TO": {
+      "equation_number": "81901",
+      "a1": 5.8858,
+      "a2": 1.4935,
+      "a3": null,
+      "a4": null,
+      "a5": null,
+      "bounds": "OCW < 29"
+    },
+    "LK": {
+      "equation_number": "82001",
+      "a1": 6.3149,
+      "a2": 1.6455,
+      "a3": null,
+      "a4": null,
+      "a5": null,
+      "bounds": "OCW < 54"
+    },
+    "OV": {
+      "equation_number": "82303",
+      "a1": 0.942,
+      "a2": 3.539,
+      "a3": 0.7952,
+      "a4": null,
+      "a5": null,
+      "bounds": "OCW < 78"
+    },
+    "BJ": {
+      "equation_number": "82401",
+      "a1": 0.5443,
+      "a2": 1.4882,
+      "a3": null,
+      "a4": 0.0565,
+      "a5": null,
+      "bounds": "OCW < 37"
+    },
+    "SN": {
+      "equation_number": "83201",
+      "a1": 2.148,
+      "a2": 1.6928,
+      "a3": -0.0176,
+      "a4": 0.0569,
+      "a5": null,
+      "bounds": "DBH < 50"
+    },
+    "CK": {
+      "equation_number": "82601",
+      "a1": 0.5189,
+      "a2": 1.4134,
+      "a3": null,
+      "a4": 0.1365,
+      "a5": -0.0806,
+      "bounds": "OCW < 45"
+    },
+    "WK": {
+      "equation_number": "82701",
+      "a1": 1.6349,
+      "a2": 1.5443,
+      "a3": null,
+      "a4": 0.0637,
+      "a5": -0.0764,
+      "bounds": "OCW < 57"
+    },
+    "CO": {
+      "equation_number": "83201",
+      "a1": 2.148,
+      "a2": 1.6928,
+      "a3": -0.0176,
+      "a4": 0.0569,
+      "a5": null,
+      "bounds": "DBH < 50"
+    },
+    "RO": {
+      "equation_number": "83303",
+      "a1": 2.85,
+      "a2": 3.782,
+      "a3": 0.7968,
+      "a4": null,
+      "a5": null,
+      "bounds": "OCW < 82"
+    },
+    "QS": {
+      "equation_number": "81201",
+      "a1": 2.1517,
+      "a2": 1.6064,
+      "a3": null,
+      "a4": 0.0609,
+      "a5": null,
+      "bounds": "OCW < 56"
+    },
+    "PO": {
+      "equation_number": "83501",
+      "a1": 1.6125,
+      "a2": 1.6669,
+      "a3": null,
+      "a4": 0.0536,
+      "a5": null,
+      "bounds": "OCW < 45"
+    },
+    "BO": {
+      "equation_number": "83704",
+      "a1": 4.51,
+      "a2": 1.67,
+      "a3": null,
+      "a4": null,
+      "a5": null,
+      "bounds": "OCW < 52"
+    },
+    "LO": {
+      "equation_number": "83801",
+      "a1": 5.6694,
+      "a2": 1.6402,
+      "a3": null,
+      "a4": null,
+      "a5": null,
+      "bounds": "OCW < 66"
+    },
+    "BK": {
+      "equation_number": "90101",
+      "a1": 3.0012,
+      "a2": 0.8165,
+      "a3": null,
+      "a4": 0.1395,
+      "a5": null,
+      "bounds": "OCW < 48"
+    },
+    "WI": {
+      "equation_number": "97203",
+      "a1": 2.829,
+      "a2": 3.456,
+      "a3": 0.8575,
+      "a4": null,
+      "a5": null,
+      "bounds": "OCW < 72"
+    },
+    "SS": {
+      "equation_number": "93101",
+      "a1": 4.6311,
+      "a2": 1.0108,
+      "a3": null,
+      "a4": 0.0564,
+      "a5": null,
+      "bounds": "OCW < 29"
+    },
+    "BD": {
+      "equation_number": "95101",
+      "a1": 1.6871,
+      "a2": 1.211,
+      "a3": null,
+      "a4": 0.1194,
+      "a5": -0.0264,
+      "bounds": "OCW < 61"
+    },
+    "EL": {
+      "equation_number": "97203",
+      "a1": 2.829,
+      "a2": 3.456,
+      "a3": 0.8575,
+      "a4": null,
+      "a5": null,
+      "bounds": "OCW < 72"
+    },
+    "WE": {
+      "equation_number": "97101",
+      "a1": 4.3649,
+      "a2": 1.6612,
+      "a3": null,
+      "a4": 0.0643,
+      "a5": null,
+      "bounds": "OCW < 40"
+    },
+    "AE": {
+      "equation_number": "97203",
+      "a1": 2.829,
+      "a2": 3.456,
+      "a3": 0.8575,
+      "a4": null,
+      "a5": null,
+      "bounds": "OCW < 72"
+    },
+    "RL": {
+      "equation_number": "97501",
+      "a1": 9.0023,
+      "a2": 1.3933,
+      "a3": null,
+      "a4": null,
+      "a5": -0.0785,
+      "bounds": "OCW < 49"
+    },
+    "OS": {
+      "equation_number": "06801",
+      "a1": 1.2359,
+      "a2": 1.2962,
+      "a3": null,
+      "a4": 0.0545,
+      "a5": null,
+      "bounds": "OCW < 33"
+    },
+    "OH": {
+      "equation_number": "93101",
+      "a1": 4.6311,
+      "a2": 1.0108,
+      "a3": null,
+      "a4": 0.0564,
+      "a5": null,
+      "bounds": "OCW < 29"
+    },
+    "OT": {
+      "equation_number": "31603",
+      "a1": 0.0,
+      "a2": 4.776,
+      "a3": 0.7656,
+      "a4": null,
+      "a5": null,
+      "bounds": "OCW < 55"
+    }
+  }
+}

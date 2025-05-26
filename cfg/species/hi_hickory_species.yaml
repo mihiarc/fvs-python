@@ -1,0 +1,252 @@
+metadata:
+  code: HI
+  fia_code: 400
+  scientific_name: Carya species
+  common_name: hickory species
+  valid_site_species: false
+site_index:
+  min: 25
+  max: 85
+  site_index_group: 3
+  height_growth_equation: 'NC-128: 400/25'
+density:
+  sdi_max: 276
+height_diameter:
+  model: curtis_arney
+  curtis_arney:
+    p2: 337.6684758
+    p3: 3.62726466
+    p4: -0.32083172
+    dbw: 0.3
+  wykoff:
+    b1: 4.5128
+    b2: -4.9918
+bark_ratio:
+  b1: -0.60912
+  b2: 0.94347
+crown_ratio:
+  acr_equation: 4.3.1.3
+  d0: 3.9939
+  d1: -0.2117
+  d2: 0.0238
+  a: 5.0
+  b0: -29.1096
+  b1: 1.5626
+  c: 3.531
+diameter_growth:
+  model: ln_dds
+  coefficients:
+    b1: -2.728289
+    b2: 1.548449
+    b3: -0.000761
+    b4: 0.203837
+    b5: 0.570012
+    b6: 0.004399
+    b7: -0.003339
+    b8: -0.001029
+    b9: -0.245761
+    b10: 0.055798
+    b11: 0.080648
+  dbh_bounds:
+    lower_limit: null
+    upper_limit: null
+    note: No diameter bounds applied
+volume:
+  pulpwood:
+    min_dbh: 6
+    top_diameter: 4
+  sawtimber:
+    min_dbh: 10
+    top_diameter: 7
+crown_width:
+  forest_grown:
+    equation_number: '40701'
+    a1: 4.5453
+    a2: 1.3721
+    a3: null
+    a4: 0.043
+    a5: null
+    bounds: FCW < 54
+  open_grown:
+    equation_number: '40703'
+    a1: 2.36
+    a2: 3.548
+    a3: 0.7986
+    a4: null
+    a5: null
+    bounds: OCW < 54
+small_tree_height_growth:
+  model: chapman_richards_nc128
+  threshold_diameter: 3.0
+  fia_code: '400'
+  page_number: '25'
+  c1: 1.8326
+  c2: 1.0015
+  c3: -0.0207
+  c4: 1.408
+  c5: -0.0005
+large_tree_height_growth:
+  model: wensel_1987
+  threshold_diameter: 3.0
+  methodology:
+    approach: Wensel and others (1987)
+    crown_ratio_weight: 0.25
+    relative_height_weight: 0.75
+  equations:
+    main: HTG = POTHTG * (0.25 * HGMDCR + 0.75 * HGMDRH)
+    crown_ratio_modifier: HGMDCR = 100 * CR^3.0 * exp(-5.0*CR)
+    relative_height_modifier: HGMDRH = RHK * (1 + FCTRKX * exp(FCTRRB*FCTRXB))^FCTRM
+  shade_tolerance: Intermediate
+  shade_tolerance_coefficients:
+    RHR: 15
+    RHYXS: 0.1
+    RHM: 1.1
+    RHB: -1.45
+    RHXS: 0
+    RHK: 1
+fortype:
+  base_fortype: FTUPOK
+  coefficients:
+    FTLOHD: 0.307092
+    FTNOHD: 0.127121
+    FTOKPN: 0.075082
+    FTSFHP: 0.163686
+    FTUPHD: 0.145813
+    FTUPOK: 0.0
+    FTYLPN: 0.091028
+  forest_type_groups:
+    FTLOHD:
+      name: Lowland Hardwoods
+      fia_forest_types:
+      - 168
+      - 508
+      - 601
+      - 602
+      - 605
+      - 606
+      - 607
+      - 608
+      - 702
+      - 703
+      - 704
+      - 705
+      - 706
+      - 708
+    FTNOHD:
+      name: Northern Hardwoods
+      fia_forest_types:
+      - 701
+      - 801
+      - 805
+    FTOKPN:
+      name: Oak - Pine
+      fia_forest_types:
+      - 165
+      - 403
+      - 404
+      - 405
+      - 406
+      - 407
+      - 409
+    FTSFHP:
+      name: Spruce - Fir - Hemlock - Pine
+      fia_forest_types:
+      - 104
+      - 105
+      - 121
+      - 124
+    FTUPHD:
+      name: Upland Hardwoods
+      fia_forest_types:
+      - 103
+      - 167
+      - 181
+      - 401
+      - 402
+      - 506
+      - 511
+      - 512
+      - 513
+      - 519
+      - 520
+      - 802
+      - 807
+      - 809
+    FTUPOK:
+      name: Upland Oak
+      fia_forest_types:
+      - 501
+      - 502
+      - 503
+      - 504
+      - 505
+      - 510
+      - 514
+      - 515
+    FTYLPN:
+      name: Yellow Pine
+      fia_forest_types:
+      - 141
+      - 142
+      - 161
+      - 162
+      - 163
+      - 164
+      - 166
+ecounit:
+  table_4_7_1_5:
+    base_ecounit: 231T
+    coefficients:
+      M221: 0.03407
+      M222: -0.221662
+      M231: -0.17272
+      '221': 0.04251
+      '222': -0.012725
+      231T: 0.0
+    ecological_unit_groups:
+      M221: Ecological unit group M221
+      M222: Ecological unit group M222
+      M231: Ecological unit group M231
+      '221': Ecological unit group 221
+      '222': Ecological unit group 222
+      231T: Ecological unit group 231T
+      231L: Ecological unit group 231L
+      '232': Ecological unit group 232
+      '234': Ecological unit group 234
+      '255': Ecological unit group 255
+      '411': Ecological unit group 411
+  table_4_7_1_6:
+    base_ecounit: 231T
+    coefficients:
+      231L: 0.116846
+      '232': 0.113816
+      '234': 0.183886
+      '255': 0.441744
+      '411': 0.0
+    ecological_unit_groups:
+      231L: Ecological unit group 231L
+      '232': Ecological unit group 232
+      '234': Ecological unit group 234
+      '255': Ecological unit group 255
+      '411': Ecological unit group 411
+mortality:
+  background_mortality:
+    equation: 5.0.1
+    formula: RI = [1 / (1 + exp(p0 + p1 * DBH))]
+    coefficients:
+      p0: 5.9617
+      p1: -0.0340128
+  mortality_weight:
+    mwt: 0.5
+    description: Species-specific mortality weight value representing shade tolerance
+regeneration:
+  parameters:
+    sprouting_capable: true
+    min_bud_width: 0.3
+    min_height: 0.51
+    max_height: 20
+  sprouting:
+    probability: 0.95
+    equation: fixed
+    sprout_records: 1
+    source: Keyser and Loftis, 2014

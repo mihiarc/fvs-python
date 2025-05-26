@@ -1,0 +1,1183 @@
+{
+  "table_description": "Table 4.7.1.3 FORTYPE values by species and forest type groups for the SN variant",
+  "forest_type_groups": {
+    "FTLOHD": {
+      "name": "Lowland Hardwoods",
+      "fia_forest_types": [
+        168,
+        508,
+        601,
+        602,
+        605,
+        606,
+        607,
+        608,
+        702,
+        703,
+        704,
+        705,
+        706,
+        708
+      ]
+    },
+    "FTNOHD": {
+      "name": "Northern Hardwoods",
+      "fia_forest_types": [
+        701,
+        801,
+        805
+      ]
+    },
+    "FTOKPN": {
+      "name": "Oak - Pine",
+      "fia_forest_types": [
+        165,
+        403,
+        404,
+        405,
+        406,
+        407,
+        409
+      ]
+    },
+    "FTSFHP": {
+      "name": "Spruce - Fir - Hemlock - Pine",
+      "fia_forest_types": [
+        104,
+        105,
+        121,
+        124
+      ]
+    },
+    "FTUPHD": {
+      "name": "Upland Hardwoods",
+      "fia_forest_types": [
+        103,
+        167,
+        181,
+        401,
+        402,
+        506,
+        511,
+        512,
+        513,
+        519,
+        520,
+        802,
+        807,
+        809
+      ]
+    },
+    "FTUPOK": {
+      "name": "Upland Oak",
+      "fia_forest_types": [
+        501,
+        502,
+        503,
+        504,
+        505,
+        510,
+        514,
+        515
+      ]
+    },
+    "FTYLPN": {
+      "name": "Yellow Pine",
+      "fia_forest_types": [
+        141,
+        142,
+        161,
+        162,
+        163,
+        164
+      ]
+    }
+  },
+  "species_coefficients": {
+    "FR": {
+      "base_fortype": "FTUPOK",
+      "fortype_codes": {
+        "FTLOHD": 0.0,
+        "FTNOHD": -0.023264,
+        "FTOKPN": 0.294886,
+        "FTSFHP": -0.271743,
+        "FTUPHD": -0.004304,
+        "FTUPOK": 0.0,
+        "FTYLPN": 0.039012
+      }
+    },
+    "JU": {
+      "base_fortype": "FTUPOK",
+      "fortype_codes": {
+        "FTLOHD": 0.128828,
+        "FTNOHD": -0.020186,
+        "FTOKPN": 0.054362,
+        "FTSFHP": 0.0,
+        "FTUPHD": 0.079239,
+        "FTUPOK": 0.0,
+        "FTYLPN": 0.144288
+      }
+    },
+    "PI": {
+      "base_fortype": "FTUPOK",
+      "fortype_codes": {
+        "FTLOHD": 0.0,
+        "FTNOHD": -0.023264,
+        "FTOKPN": 0.294886,
+        "FTSFHP": -0.271743,
+        "FTUPHD": -0.004304,
+        "FTUPOK": 0.0,
+        "FTYLPN": 0.039012
+      }
+    },
+    "PU": {
+      "base_fortype": "FTYLPN",
+      "fortype_codes": {
+        "FTLOHD": 1.214007,
+        "FTNOHD": 0.0,
+        "FTOKPN": 0.751229,
+        "FTSFHP": 0.0,
+        "FTUPHD": 1.139953,
+        "FTUPOK": 0.23948,
+        "FTYLPN": 0.0
+      }
+    },
+    "SP": {
+      "base_fortype": "FTYLPN",
+      "fortype_codes": {
+        "FTLOHD": 0.106418,
+        "FTNOHD": 0.45502,
+        "FTOKPN": 0.017518,
+        "FTSFHP": 0.0,
+        "FTUPHD": 0.066811,
+        "FTUPOK": -0.040181,
+        "FTYLPN": 0.0
+      }
+    },
+    "SA": {
+      "base_fortype": "FTYLPN",
+      "fortype_codes": {
+        "FTLOHD": 0.325861,
+        "FTNOHD": 0.0,
+        "FTOKPN": 0.116235,
+        "FTSFHP": 0.0,
+        "FTUPHD": 0.16202,
+        "FTUPOK": 0.410684,
+        "FTYLPN": 0.0
+      }
+    },
+    "SR": {
+      "base_fortype": "FTLOHD",
+      "fortype_codes": {
+        "FTLOHD": 0.0,
+        "FTNOHD": 0.0,
+        "FTOKPN": -0.09895,
+        "FTSFHP": 0.0,
+        "FTUPHD": 0.072308,
+        "FTUPOK": -0.055071,
+        "FTYLPN": -0.236871
+      }
+    },
+    "LL": {
+      "base_fortype": "FTYLPN",
+      "fortype_codes": {
+        "FTLOHD": 0.048216,
+        "FTNOHD": 0.0,
+        "FTOKPN": 0.088872,
+        "FTSFHP": 0.0,
+        "FTUPHD": 0.08672,
+        "FTUPOK": 0.106061,
+        "FTYLPN": 0.0
+      }
+    },
+    "TM": {
+      "base_fortype": "FTYLPN",
+      "fortype_codes": {
+        "FTLOHD": -0.059007,
+        "FTNOHD": 0.325781,
+        "FTOKPN": 0.04537,
+        "FTSFHP": 0.091999,
+        "FTUPHD": -0.004333,
+        "FTUPOK": -0.067779,
+        "FTYLPN": 0.0
+      }
+    },
+    "PP": {
+      "base_fortype": "FTUPHD",
+      "fortype_codes": {
+        "FTLOHD": 0.0,
+        "FTNOHD": -0.110161,
+        "FTOKPN": -0.010394,
+        "FTSFHP": 0.043707,
+        "FTUPHD": 0.0,
+        "FTUPOK": -0.315855,
+        "FTYLPN": 0.116814
+      }
+    },
+    "PD": {
+      "base_fortype": "FTYLPN",
+      "fortype_codes": {
+        "FTLOHD": 0.187724,
+        "FTNOHD": 0.0,
+        "FTOKPN": 0.044416,
+        "FTSFHP": 0.0,
+        "FTUPHD": 0.482241,
+        "FTUPOK": 0.296549,
+        "FTYLPN": 0.0
+      }
+    },
+    "WP": {
+      "base_fortype": "FTUPHD",
+      "fortype_codes": {
+        "FTLOHD": -0.585211,
+        "FTNOHD": -0.062163,
+        "FTOKPN": -0.073668,
+        "FTSFHP": -0.198969,
+        "FTUPHD": 0.0,
+        "FTUPOK": 0.022013,
+        "FTYLPN": 0.046063
+      }
+    },
+    "LP": {
+      "base_fortype": "FTYLPN",
+      "fortype_codes": {
+        "FTLOHD": 0.126441,
+        "FTNOHD": -0.122163,
+        "FTOKPN": 0.050835,
+        "FTSFHP": 0.0,
+        "FTUPHD": 0.063669,
+        "FTUPOK": -0.016885,
+        "FTYLPN": 0.0
+      }
+    },
+    "VP": {
+      "base_fortype": "FTYLPN",
+      "fortype_codes": {
+        "FTLOHD": -0.059007,
+        "FTNOHD": 0.325781,
+        "FTOKPN": 0.04537,
+        "FTSFHP": 0.091999,
+        "FTUPHD": -0.004333,
+        "FTUPOK": -0.067779,
+        "FTYLPN": 0.0
+      }
+    },
+    "BY": {
+      "base_fortype": "FTLOHD",
+      "fortype_codes": {
+        "FTLOHD": 0.0,
+        "FTNOHD": -0.050765,
+        "FTOKPN": -0.201498,
+        "FTSFHP": 0.0,
+        "FTUPHD": 0.19488,
+        "FTUPOK": 0.081554,
+        "FTYLPN": -0.324291
+      }
+    },
+    "PC": {
+      "base_fortype": "FTLOHD",
+      "fortype_codes": {
+        "FTLOHD": 0.0,
+        "FTNOHD": 0.0,
+        "FTOKPN": -0.196837,
+        "FTSFHP": 0.0,
+        "FTUPHD": 0.0,
+        "FTUPOK": 0.0,
+        "FTYLPN": -0.24176
+      }
+    },
+    "HM": {
+      "base_fortype": "FTUPOK",
+      "fortype_codes": {
+        "FTLOHD": 0.0,
+        "FTNOHD": -0.023264,
+        "FTOKPN": 0.294886,
+        "FTSFHP": -0.271743,
+        "FTUPHD": -0.004304,
+        "FTUPOK": 0.0,
+        "FTYLPN": 0.039012
+      }
+    },
+    "FM": {
+      "base_fortype": "FTLOHD",
+      "fortype_codes": {
+        "FTLOHD": 0.0,
+        "FTNOHD": -0.581137,
+        "FTOKPN": -0.049388,
+        "FTSFHP": 0.0,
+        "FTUPHD": -0.021913,
+        "FTUPOK": -0.323458,
+        "FTYLPN": 0.304165
+      }
+    },
+    "BE": {
+      "base_fortype": "FTLOHD",
+      "fortype_codes": {
+        "FTLOHD": 0.0,
+        "FTNOHD": 0.197314,
+        "FTOKPN": -0.002307,
+        "FTSFHP": -0.361488,
+        "FTUPHD": 0.213336,
+        "FTUPOK": -0.003385,
+        "FTYLPN": -0.252234
+      }
+    },
+    "RM": {
+      "base_fortype": "FTLOHD",
+      "fortype_codes": {
+        "FTLOHD": 0.0,
+        "FTNOHD": -0.008575,
+        "FTOKPN": -0.091712,
+        "FTSFHP": -0.2265,
+        "FTUPHD": -0.115718,
+        "FTUPOK": -0.233899,
+        "FTYLPN": -4.2e-05
+      }
+    },
+    "SV": {
+      "base_fortype": "FTLOHD",
+      "fortype_codes": {
+        "FTLOHD": 0.0,
+        "FTNOHD": -0.008575,
+        "FTOKPN": -0.091712,
+        "FTSFHP": -0.2265,
+        "FTUPHD": -0.115718,
+        "FTUPOK": -0.233899,
+        "FTYLPN": -4.2e-05
+      }
+    },
+    "SM": {
+      "base_fortype": "FTUPOK",
+      "fortype_codes": {
+        "FTLOHD": 0.177698,
+        "FTNOHD": 0.081088,
+        "FTOKPN": -0.00783,
+        "FTSFHP": 0.268289,
+        "FTUPHD": 0.018085,
+        "FTUPOK": 0.0,
+        "FTYLPN": -0.969059
+      }
+    },
+    "BU": {
+      "base_fortype": "FTNOHD",
+      "fortype_codes": {
+        "FTLOHD": 0.276485,
+        "FTNOHD": 0.0,
+        "FTOKPN": 0.0,
+        "FTSFHP": 0.0,
+        "FTUPHD": -0.158379,
+        "FTUPOK": -0.066001,
+        "FTYLPN": 0.0
+      }
+    },
+    "BB": {
+      "base_fortype": "FTLOHD",
+      "fortype_codes": {
+        "FTLOHD": 0.0,
+        "FTNOHD": -0.090106,
+        "FTOKPN": -0.211483,
+        "FTSFHP": -0.11285,
+        "FTUPHD": -0.150287,
+        "FTUPOK": -0.229603,
+        "FTYLPN": -0.122245
+      }
+    },
+    "SB": {
+      "base_fortype": "FTLOHD",
+      "fortype_codes": {
+        "FTLOHD": 0.0,
+        "FTNOHD": -0.090106,
+        "FTOKPN": -0.211483,
+        "FTSFHP": -0.11285,
+        "FTUPHD": -0.150287,
+        "FTUPOK": -0.229603,
+        "FTYLPN": -0.122245
+      }
+    },
+    "AH": {
+      "base_fortype": "FTLOHD",
+      "fortype_codes": {
+        "FTLOHD": 0.0,
+        "FTNOHD": 0.107053,
+        "FTOKPN": -0.184779,
+        "FTSFHP": 0.0,
+        "FTUPHD": -0.144979,
+        "FTUPOK": -0.125931,
+        "FTYLPN": -0.023984
+      }
+    },
+    "HI": {
+      "base_fortype": "FTUPOK",
+      "fortype_codes": {
+        "FTLOHD": 0.307092,
+        "FTNOHD": 0.127121,
+        "FTOKPN": 0.075082,
+        "FTSFHP": 0.163686,
+        "FTUPHD": 0.145813,
+        "FTUPOK": 0.0,
+        "FTYLPN": 0.091028
+      }
+    },
+    "CA": {
+      "base_fortype": "FTLOHD",
+      "fortype_codes": {
+        "FTLOHD": 0.0,
+        "FTNOHD": 0.0,
+        "FTOKPN": -0.122639,
+        "FTSFHP": 0.0,
+        "FTUPHD": -0.227215,
+        "FTUPOK": 0.428371,
+        "FTYLPN": -0.127654
+      }
+    },
+    "HB": {
+      "base_fortype": "FTLOHD",
+      "fortype_codes": {
+        "FTLOHD": 0.0,
+        "FTNOHD": -0.020917,
+        "FTOKPN": -0.227013,
+        "FTSFHP": 0.0,
+        "FTUPHD": -0.0466,
+        "FTUPOK": -0.142184,
+        "FTYLPN": -0.37316
+      }
+    },
+    "RD": {
+      "base_fortype": "FTUPHD",
+      "fortype_codes": {
+        "FTLOHD": -0.131762,
+        "FTNOHD": -0.159125,
+        "FTOKPN": 0.081533,
+        "FTSFHP": 0.0,
+        "FTUPHD": 0.0,
+        "FTUPOK": -0.091293,
+        "FTYLPN": 0.005318
+      }
+    },
+    "DW": {
+      "base_fortype": "FTUPOK",
+      "fortype_codes": {
+        "FTLOHD": 0.193678,
+        "FTNOHD": 0.080191,
+        "FTOKPN": 0.22776,
+        "FTSFHP": -0.207255,
+        "FTUPHD": 0.123444,
+        "FTUPOK": 0.0,
+        "FTYLPN": 0.395749
+      }
+    },
+    "PS": {
+      "base_fortype": "FTYLPN",
+      "fortype_codes": {
+        "FTLOHD": 0.140335,
+        "FTNOHD": 0.008246,
+        "FTOKPN": -0.030083,
+        "FTSFHP": 0.0,
+        "FTUPHD": 0.064726,
+        "FTUPOK": -0.063738,
+        "FTYLPN": 0.0
+      }
+    },
+    "AB": {
+      "base_fortype": "FTUPOK",
+      "fortype_codes": {
+        "FTLOHD": 0.139891,
+        "FTNOHD": 0.094979,
+        "FTOKPN": 0.112394,
+        "FTSFHP": 0.191476,
+        "FTUPHD": 0.098473,
+        "FTUPOK": 0.0,
+        "FTYLPN": 0.301892
+      }
+    },
+    "AS": {
+      "base_fortype": "FTLOHD",
+      "fortype_codes": {
+        "FTLOHD": 0.0,
+        "FTNOHD": 0.065051,
+        "FTOKPN": -0.006241,
+        "FTSFHP": 0.243386,
+        "FTUPHD": 0.009788,
+        "FTUPOK": -0.041769,
+        "FTYLPN": -0.049053
+      }
+    },
+    "WA": {
+      "base_fortype": "FTUPOK",
+      "fortype_codes": {
+        "FTLOHD": 0.112081,
+        "FTNOHD": 0.244086,
+        "FTOKPN": -0.042491,
+        "FTSFHP": 0.0,
+        "FTUPHD": 0.199271,
+        "FTUPOK": 0.0,
+        "FTYLPN": 0.256243
+      }
+    },
+    "BA": {
+      "base_fortype": "FTLOHD",
+      "fortype_codes": {
+        "FTLOHD": 0.0,
+        "FTNOHD": 0.003456,
+        "FTOKPN": -0.108803,
+        "FTSFHP": 0.0,
+        "FTUPHD": -0.01864,
+        "FTUPOK": -0.08551,
+        "FTYLPN": -0.27944
+      }
+    },
+    "GA": {
+      "base_fortype": "FTLOHD",
+      "fortype_codes": {
+        "FTLOHD": 0.0,
+        "FTNOHD": 0.003456,
+        "FTOKPN": -0.108803,
+        "FTSFHP": 0.0,
+        "FTUPHD": -0.01864,
+        "FTUPOK": -0.08551,
+        "FTYLPN": -0.27944
+      }
+    },
+    "HL": {
+      "base_fortype": "FTLOHD",
+      "fortype_codes": {
+        "FTLOHD": 0.0,
+        "FTNOHD": 0.0,
+        "FTOKPN": -0.228299,
+        "FTSFHP": 0.0,
+        "FTUPHD": -0.170453,
+        "FTUPOK": -0.178680,
+        "FTYLPN": -0.343244
+      }
+    },
+    "LB": {
+      "base_fortype": "FTLOHD",
+      "fortype_codes": {
+        "FTLOHD": 0.0,
+        "FTNOHD": 0.0,
+        "FTOKPN": -0.063217,
+        "FTSFHP": 0.0,
+        "FTUPHD": -0.297261,
+        "FTUPOK": -0.17868,
+        "FTYLPN": 0.065035
+      }
+    },
+    "HY": {
+      "base_fortype": "FTLOHD",
+      "fortype_codes": {
+        "FTLOHD": 0.0,
+        "FTNOHD": -0.003095,
+        "FTOKPN": -0.007689,
+        "FTSFHP": 0.0,
+        "FTUPHD": -0.082245,
+        "FTUPOK": -0.187742,
+        "FTYLPN": -0.008297
+      }
+    },
+    "BN": {
+      "base_fortype": "FTUPHD",
+      "fortype_codes": {
+        "FTLOHD": 0.163749,
+        "FTNOHD": -0.176854,
+        "FTOKPN": -0.164651,
+        "FTSFHP": -0.557302,
+        "FTUPHD": 0.0,
+        "FTUPOK": -0.156488,
+        "FTYLPN": -0.23263
+      }
+    },
+    "WN": {
+      "base_fortype": "FTUPHD",
+      "fortype_codes": {
+        "FTLOHD": 0.163749,
+        "FTNOHD": -0.176854,
+        "FTOKPN": -0.164651,
+        "FTSFHP": -0.557302,
+        "FTUPHD": 0.0,
+        "FTUPOK": -0.156488,
+        "FTYLPN": -0.23263
+      }
+    },
+    "SU": {
+      "base_fortype": "FTLOHD",
+      "fortype_codes": {
+        "FTLOHD": 0.0,
+        "FTNOHD": 0.057604,
+        "FTOKPN": -0.090836,
+        "FTSFHP": 0.491153,
+        "FTUPHD": -0.155894,
+        "FTUPOK": -0.168272,
+        "FTYLPN": 0.058458
+      }
+    },
+    "YP": {
+      "base_fortype": "FTUPHD",
+      "fortype_codes": {
+        "FTLOHD": 0.083904,
+        "FTNOHD": 0.057388,
+        "FTOKPN": -0.055234,
+        "FTSFHP": -0.499954,
+        "FTUPHD": 0.0,
+        "FTUPOK": -0.090655,
+        "FTYLPN": 0.053935
+      }
+    },
+    "MG": {
+      "base_fortype": "FTLOHD",
+      "fortype_codes": {
+        "FTLOHD": 0.0,
+        "FTNOHD": -0.326815,
+        "FTOKPN": -0.017682,
+        "FTSFHP": 0.0,
+        "FTUPHD": -0.029526,
+        "FTUPOK": -0.096994,
+        "FTYLPN": -0.031043
+      }
+    },
+    "CT": {
+      "base_fortype": "FTUPOK",
+      "fortype_codes": {
+        "FTLOHD": -0.295834,
+        "FTNOHD": 0.049636,
+        "FTOKPN": -0.353219,
+        "FTSFHP": 0.0,
+        "FTUPHD": 0.008351,
+        "FTUPOK": 0.0,
+        "FTYLPN": -0.627226
+      }
+    },
+    "MS": {
+      "base_fortype": "FTLOHD",
+      "fortype_codes": {
+        "FTLOHD": 0.0,
+        "FTNOHD": -0.153348,
+        "FTOKPN": 0.183663,
+        "FTSFHP": -0.024673,
+        "FTUPHD": 0.055907,
+        "FTUPOK": 0.109578,
+        "FTYLPN": 0.052422
+      }
+    },
+    "MV": {
+      "base_fortype": "FTLOHD",
+      "fortype_codes": {
+        "FTLOHD": 0.0,
+        "FTNOHD": -0.326815,
+        "FTOKPN": -0.017682,
+        "FTSFHP": 0.0,
+        "FTUPHD": -0.029526,
+        "FTUPOK": -0.096994,
+        "FTYLPN": -0.031043
+      }
+    },
+    "ML": {
+      "base_fortype": "FTLOHD",
+      "fortype_codes": {
+        "FTLOHD": 0.0,
+        "FTNOHD": -0.153348,
+        "FTOKPN": 0.183663,
+        "FTSFHP": -0.024673,
+        "FTUPHD": 0.055907,
+        "FTUPOK": 0.109578,
+        "FTYLPN": 0.052422
+      }
+    },
+    "AP": {
+      "base_fortype": "FTLOHD",
+      "fortype_codes": {
+        "FTLOHD": 0.0,
+        "FTNOHD": -0.357484,
+        "FTOKPN": 0.01002,
+        "FTSFHP": 0.0,
+        "FTUPHD": -0.023979,
+        "FTUPOK": -0.02495,
+        "FTYLPN": 0.272524
+      }
+    },
+    "MB": {
+      "base_fortype": "FTLOHD",
+      "fortype_codes": {
+        "FTLOHD": 0.0,
+        "FTNOHD": -0.357484,
+        "FTOKPN": 0.01002,
+        "FTSFHP": 0.0,
+        "FTUPHD": -0.023979,
+        "FTUPOK": -0.02495,
+        "FTYLPN": 0.272524
+      }
+    },
+    "WT": {
+      "base_fortype": "FTLOHD",
+      "fortype_codes": {
+        "FTLOHD": 0.0,
+        "FTNOHD": 0.0,
+        "FTOKPN": -0.203627,
+        "FTSFHP": 0.0,
+        "FTUPHD": 0.066993,
+        "FTUPOK": 0.696768,
+        "FTYLPN": 0.045531
+      }
+    },
+    "BG": {
+      "base_fortype": "FTUPOK",
+      "fortype_codes": {
+        "FTLOHD": 0.114656,
+        "FTNOHD": 0.063092,
+        "FTOKPN": 0.076702,
+        "FTSFHP": -0.447981,
+        "FTUPHD": 0.111483,
+        "FTUPOK": 0.0,
+        "FTYLPN": 0.22918
+      }
+    },
+    "TS": {
+      "base_fortype": "FTLOHD",
+      "fortype_codes": {
+        "FTLOHD": 0.0,
+        "FTNOHD": 0.580807,
+        "FTOKPN": -0.116496,
+        "FTSFHP": 0.0,
+        "FTUPHD": -0.11074,
+        "FTUPOK": -0.195302,
+        "FTYLPN": 0.006188
+      }
+    },
+    "HH": {
+      "base_fortype": "FTLOHD",
+      "fortype_codes": {
+        "FTLOHD": 0.0,
+        "FTNOHD": -0.154634,
+        "FTOKPN": -0.087145,
+        "FTSFHP": 0.0,
+        "FTUPHD": -0.071133,
+        "FTUPOK": -0.204189,
+        "FTYLPN": 0.120468
+      }
+    },
+    "SD": {
+      "base_fortype": "FTUPOK",
+      "fortype_codes": {
+        "FTLOHD": 0.076657,
+        "FTNOHD": 0.352409,
+        "FTOKPN": 0.079881,
+        "FTSFHP": -0.131538,
+        "FTUPHD": -0.023003,
+        "FTUPOK": 0.0,
+        "FTYLPN": 0.300435
+      }
+    },
+    "RA": {
+      "base_fortype": "FTLOHD",
+      "fortype_codes": {
+        "FTLOHD": 0.0,
+        "FTNOHD": -1.199357,
+        "FTOKPN": -0.022774,
+        "FTSFHP": 0.0,
+        "FTUPHD": 0.060206,
+        "FTUPOK": 0.390875,
+        "FTYLPN": -0.045807
+      }
+    },
+    "SY": {
+      "base_fortype": "FTLOHD",
+      "fortype_codes": {
+        "FTLOHD": 0.0,
+        "FTNOHD": -0.019656,
+        "FTOKPN": -0.262507,
+        "FTSFHP": 0.0,
+        "FTUPHD": -0.150643,
+        "FTUPOK": -0.161551,
+        "FTYLPN": -0.239422
+      }
+    },
+    "CW": {
+      "base_fortype": "FTLOHD",
+      "fortype_codes": {
+        "FTLOHD": 0.0,
+        "FTNOHD": 0.0,
+        "FTOKPN": -0.122639,
+        "FTSFHP": 0.0,
+        "FTUPHD": -0.227215,
+        "FTUPOK": 0.428371,
+        "FTYLPN": -0.127654
+      }
+    },
+    "BT": {
+      "base_fortype": "FTLOHD",
+      "fortype_codes": {
+        "FTLOHD": 0.0,
+        "FTNOHD": 0.0,
+        "FTOKPN": -0.122639,
+        "FTSFHP": 0.0,
+        "FTUPHD": -0.227215,
+        "FTUPOK": 0.428371,
+        "FTYLPN": -0.127654
+      }
+    },
+    "BC": {
+      "base_fortype": "FTUPOK",
+      "fortype_codes": {
+        "FTLOHD": 0.181563,
+        "FTNOHD": 0.303382,
+        "FTOKPN": 0.162524,
+        "FTSFHP": 0.0,
+        "FTUPHD": 0.146052,
+        "FTUPOK": 0.0,
+        "FTYLPN": 0.203538
+      }
+    },
+    "WO": {
+      "base_fortype": "FTUPOK",
+      "fortype_codes": {
+        "FTLOHD": 0.214921,
+        "FTNOHD": 0.196181,
+        "FTOKPN": 0.106951,
+        "FTSFHP": 0.210088,
+        "FTUPHD": 0.100081,
+        "FTUPOK": 0.0,
+        "FTYLPN": 0.154886
+      }
+    },
+    "SO": {
+      "base_fortype": "FTUPOK",
+      "fortype_codes": {
+        "FTLOHD": 0.081994,
+        "FTNOHD": 0.17408,
+        "FTOKPN": 0.073767,
+        "FTSFHP": -0.126888,
+        "FTUPHD": 0.089055,
+        "FTUPOK": 0.0,
+        "FTYLPN": 0.015718
+      }
+    },
+    "SK": {
+      "base_fortype": "FTUPOK",
+      "fortype_codes": {
+        "FTLOHD": 0.148989,
+        "FTNOHD": 0.201455,
+        "FTOKPN": 0.055742,
+        "FTSFHP": 0.0,
+        "FTUPHD": 0.06846,
+        "FTUPOK": 0.0,
+        "FTYLPN": 0.047989
+      }
+    },
+    "CB": {
+      "base_fortype": "FTLOHD",
+      "fortype_codes": {
+        "FTLOHD": 0.0,
+        "FTNOHD": 0.130043,
+        "FTOKPN": -0.065943,
+        "FTSFHP": 0.0,
+        "FTUPHD": -0.066026,
+        "FTUPOK": -0.114309,
+        "FTYLPN": -0.023093
+      }
+    },
+    "TO": {
+      "base_fortype": "FTUPOK",
+      "fortype_codes": {
+        "FTLOHD": -0.049627,
+        "FTNOHD": 0.0,
+        "FTOKPN": 0.167384,
+        "FTSFHP": 0.0,
+        "FTUPHD": 0.09929,
+        "FTUPOK": 0.0,
+        "FTYLPN": 0.184647
+      }
+    },
+    "LK": {
+      "base_fortype": "FTLOHD",
+      "fortype_codes": {
+        "FTLOHD": 0.0,
+        "FTNOHD": -0.127737,
+        "FTOKPN": 0.029504,
+        "FTSFHP": 0.0,
+        "FTUPHD": -0.053091,
+        "FTUPOK": 0.012219,
+        "FTYLPN": 0.03069
+      }
+    },
+    "OV": {
+      "base_fortype": "FTLOHD",
+      "fortype_codes": {
+        "FTLOHD": 0.0,
+        "FTNOHD": -0.924265,
+        "FTOKPN": -0.183514,
+        "FTSFHP": 0.0,
+        "FTUPHD": -0.083244,
+        "FTUPOK": -0.057771,
+        "FTYLPN": -0.076588
+      }
+    },
+    "BJ": {
+      "base_fortype": "FTUPOK",
+      "fortype_codes": {
+        "FTLOHD": -0.123167,
+        "FTNOHD": 0.0,
+        "FTOKPN": 0.000279,
+        "FTSFHP": 0.0,
+        "FTUPHD": 0.170335,
+        "FTUPOK": 0.0,
+        "FTYLPN": -0.096186
+      }
+    },
+    "SN": {
+      "base_fortype": "FTLOHD",
+      "fortype_codes": {
+        "FTLOHD": 0.0,
+        "FTNOHD": -0.28634,
+        "FTOKPN": 0.07676,
+        "FTSFHP": 0.0,
+        "FTUPHD": 0.037457,
+        "FTUPOK": 0.010126,
+        "FTYLPN": 0.088233
+      }
+    },
+    "CK": {
+      "base_fortype": "FTUPOK",
+      "fortype_codes": {
+        "FTLOHD": 0.086112,
+        "FTNOHD": 0.035396,
+        "FTOKPN": 0.021275,
+        "FTSFHP": 0.0,
+        "FTUPHD": 0.111528,
+        "FTUPOK": 0.0,
+        "FTYLPN": -0.518898
+      }
+    },
+    "WK": {
+      "base_fortype": "FTLOHD",
+      "fortype_codes": {
+        "FTLOHD": 0.0,
+        "FTNOHD": 0.044529,
+        "FTOKPN": -0.042926,
+        "FTSFHP": 0.0,
+        "FTUPHD": -0.088049,
+        "FTUPOK": -0.08591,
+        "FTYLPN": -0.068603
+      }
+    },
+    "CO": {
+      "base_fortype": "FTUPOK",
+      "fortype_codes": {
+        "FTLOHD": 0.237228,
+        "FTNOHD": 0.136033,
+        "FTOKPN": 0.0,
+        "FTSFHP": 0.0,
+        "FTUPHD": 0.0,
+        "FTUPOK": 0.0,
+        "FTYLPN": 0.053589
+      }
+    },
+    "PO": {
+      "base_fortype": "FTUPOK",
+      "fortype_codes": {
+        "FTLOHD": 0.268975,
+        "FTNOHD": 0.482744,
+        "FTOKPN": 0.042786,
+        "FTSFHP": 0.0,
+        "FTUPHD": 0.090618,
+        "FTUPOK": 0.0,
+        "FTYLPN": 0.056597
+      }
+    },
+    "BO": {
+      "base_fortype": "FTUPOK",
+      "fortype_codes": {
+        "FTLOHD": 0.049693,
+        "FTNOHD": 0.272007,
+        "FTOKPN": 0.034224,
+        "FTSFHP": -0.104624,
+        "FTUPHD": 0.071804,
+        "FTUPOK": 0.0,
+        "FTYLPN": -0.044373
+      }
+    },
+    "LO": {
+      "base_fortype": "FTLOHD",
+      "fortype_codes": {
+        "FTLOHD": 0.0,
+        "FTNOHD": 0.0,
+        "FTOKPN": 0.074099,
+        "FTSFHP": 0.0,
+        "FTUPHD": 0.061718,
+        "FTUPOK": 0.229807,
+        "FTYLPN": -0.043042
+      }
+    },
+    "BK": {
+      "base_fortype": "FTUPHD",
+      "fortype_codes": {
+        "FTLOHD": 0.138241,
+        "FTNOHD": 0.117354,
+        "FTOKPN": -0.097572,
+        "FTSFHP": 0.0,
+        "FTUPHD": 0.0,
+        "FTUPOK": -0.083039,
+        "FTYLPN": -0.046524
+      }
+    },
+    "WI": {
+      "base_fortype": "FTLOHD",
+      "fortype_codes": {
+        "FTLOHD": 0.0,
+        "FTNOHD": 0.0,
+        "FTOKPN": 0.001536,
+        "FTSFHP": 0.0,
+        "FTUPHD": 0.019648,
+        "FTUPOK": 0.165022,
+        "FTYLPN": -0.001371
+      }
+    },
+    "SS": {
+      "base_fortype": "FTUPHD",
+      "fortype_codes": {
+        "FTLOHD": -0.058475,
+        "FTNOHD": 0.013995,
+        "FTOKPN": -0.139506,
+        "FTSFHP": 0.414214,
+        "FTUPHD": 0.0,
+        "FTUPOK": -0.166983,
+        "FTYLPN": -0.018172
+      }
+    },
+    "BD": {
+      "base_fortype": "FTNOHD",
+      "fortype_codes": {
+        "FTLOHD": 0.067203,
+        "FTNOHD": 0.0,
+        "FTOKPN": 0.008236,
+        "FTSFHP": 0.0,
+        "FTUPHD": -0.033491,
+        "FTUPOK": 0.012197,
+        "FTYLPN": 0.14852
+      }
+    },
+    "EL": {
+      "base_fortype": "FTLOHD",
+      "fortype_codes": {
+        "FTLOHD": 0.0,
+        "FTNOHD": -0.005493,
+        "FTOKPN": -0.263842,
+        "FTSFHP": 0.0,
+        "FTUPHD": -0.054579,
+        "FTUPOK": -0.202033,
+        "FTYLPN": 0.071996
+      }
+    },
+    "WE": {
+      "base_fortype": "FTUPOK",
+      "fortype_codes": {
+        "FTLOHD": 0.211919,
+        "FTNOHD": 0.11261,
+        "FTOKPN": 0.174149,
+        "FTSFHP": 0.0,
+        "FTUPHD": 0.168458,
+        "FTUPOK": 0.0,
+        "FTYLPN": 0.364012
+      }
+    },
+    "AE": {
+      "base_fortype": "FTLOHD",
+      "fortype_codes": {
+        "FTLOHD": 0.0,
+        "FTNOHD": -0.221068,
+        "FTOKPN": -0.019557,
+        "FTSFHP": 0.0,
+        "FTUPHD": -0.210607,
+        "FTUPOK": -0.237209,
+        "FTYLPN": 0.137175
+      }
+    },
+    "RL": {
+      "base_fortype": "FTLOHD",
+      "fortype_codes": {
+        "FTLOHD": 0.0,
+        "FTNOHD": -0.23243,
+        "FTOKPN": -0.086137,
+        "FTSFHP": 0.0,
+        "FTUPHD": -0.073558,
+        "FTUPOK": -0.242294,
+        "FTYLPN": 0.177563
+      }
+    },
+    "OS": {
+      "base_fortype": "FTUPOK",
+      "fortype_codes": {
+        "FTLOHD": 0.128828,
+        "FTNOHD": -0.020186,
+        "FTOKPN": 0.054362,
+        "FTSFHP": 0.0,
+        "FTUPHD": 0.079239,
+        "FTUPOK": 0.0,
+        "FTYLPN": 0.144288
+      }
+    },
+    "OH": {
+      "base_fortype": "FTLOHD",
+      "fortype_codes": {
+        "FTLOHD": 0.0,
+        "FTNOHD": -0.154634,
+        "FTOKPN": -0.087145,
+        "FTSFHP": 0.0,
+        "FTUPHD": -0.071133,
+        "FTUPOK": -0.204189,
+        "FTYLPN": 0.120468
+      }
+    },
+    "OT": {
+      "base_fortype": "NONE",
+      "fortype_codes": {
+        "FTLOHD": 0.0,
+        "FTNOHD": 0.0,
+        "FTOKPN": 0.0,
+        "FTSFHP": 0.0,
+        "FTUPHD": 0.0,
+        "FTUPOK": 0.0,
+        "FTYLPN": 0.0
+      }
+    },
+    "RO": {
+      "base_fortype": "FTUPOK",
+      "fortype_codes": {
+        "FTLOHD": 0.103731,
+        "FTNOHD": 0.207951,
+        "FTOKPN": 0.030761,
+        "FTSFHP": -0.23819,
+        "FTUPHD": 0.096751,
+        "FTUPOK": 0.0,
+        "FTYLPN": 0.0
+      }
+    },
+    "HA": {
+      "base_fortype": "FTUPOK",
+      "fortype_codes": {
+        "FTLOHD": 0.0,
+        "FTNOHD": -0.063207,
+        "FTOKPN": 0.0,
+        "FTSFHP": 0.0,
+        "FTUPHD": -0.111645,
+        "FTUPOK": 0.0,
+        "FTYLPN": 0.0
+      }
+    },
+    "QS": {
+      "base_fortype": "FTUPOK",
+      "fortype_codes": {
+        "FTLOHD": 0.0,
+        "FTNOHD": 0.0,
+        "FTOKPN": 0.0,
+        "FTSFHP": 0.0,
+        "FTUPHD": 0.0,
+        "FTUPOK": 0.0,
+        "FTYLPN": 0.0
+      }
+    }
+  },
+  "notes": {
+    "base_fortype": "The default forest type group for each species",
+    "fortype_codes": "Adjustment coefficients for each forest type group",
+    "usage": "Add the appropriate fortype_code value to the base growth equation based on the forest type group"
+  }
+}
