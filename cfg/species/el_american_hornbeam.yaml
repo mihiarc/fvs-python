@@ -3,14 +3,14 @@ metadata:
   fia_code: 391
   scientific_name: Carpinus caroliniana
   common_name: american hornbeam
-  valid_site_species: true
+  valid_site_species: false
 site_index:
   min: 35
   max: 90
   site_index_group: 1
-  height_growth_equation: 'NC-128: 391'
+  height_growth_equation: 'NC-128: 972/68'
 density:
-  sdi_max: 400
+  sdi_max: 282
 height_diameter:
   model: curtis_arney
   curtis_arney:

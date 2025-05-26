@@ -1,0 +1,109 @@
+{
+  "metadata": {
+    "title": "Crown Competition Factor (CCF) for FVS Southern Variant",
+    "description": "Crown competition factor calculation methods, equations, and coefficients for individual tree and stand-level CCF",
+    "source": "FVS Southern Variant Documentation - Section 4.5",
+    "equations": {
+      "4.5.1": "CCFt = 0.001803 * OCWt^2 (for DBH > 0.1), CCFt = 0.001 (for DBH ≤ 0.1)"
+    },
+    "variable_definitions": {
+      "CCFt": "Crown competition factor for an individual tree",
+      "OCWt": "Open-grown crown width for an individual tree (feet)",
+      "DBH": "Tree diameter at breast height (inches)",
+      "CCF": "Stand crown competition factor (sum of individual tree CCFt values)"
+    },
+    "methodology": {
+      "description": "The SN variant uses crown competition factor (CCF) as a predictor variable in some growth relationships. Crown competition factor (Krajicek and others 1961) is a relative measurement of stand density that is based on tree diameters.",
+      "individual_tree_ccf": "Individual tree CCFt values estimate the percentage of an acre that would be covered by the tree's crown if the tree were open-grown.",
+      "stand_ccf": "Stand CCF is the summation of individual tree (CCFt) values.",
+      "theoretical_maximum": "A stand CCF value of 100 theoretically indicates that tree crowns will just touch in an unthinned, evenly spaced stand.",
+      "calculation_basis": "Crown competition factor for an individual tree is calculated using equation 4.5.1, and is based on crown width of open-grown trees."
+    }
+  },
+  "calculation_methods": {
+    "individual_tree_ccf": {
+      "equation": "4.5.1",
+      "conditions": [
+        {
+          "condition": "DBH > 0.1 inches",
+          "formula": "CCFt = 0.001803 * OCWt^2",
+          "description": "Standard calculation for trees with DBH greater than 0.1 inches"
+        },
+        {
+          "condition": "DBH ≤ 0.1 inches",
+          "formula": "CCFt = 0.001",
+          "description": "Fixed value for very small trees with DBH of 0.1 inches or less"
+        }
+      ],
+      "coefficient": {
+        "value": 0.001803,
+        "description": "Conversion factor to calculate crown competition factor from open-grown crown width squared",
+        "units": "acre percentage per square foot"
+      }
+    },
+    "stand_ccf": {
+      "formula": "CCF = Σ CCFt",
+      "description": "Stand crown competition factor is the sum of all individual tree CCFt values in the stand",
+      "interpretation": {
+        "ccf_100": "Theoretical point where tree crowns just touch in an unthinned, evenly spaced stand",
+        "ccf_greater_100": "Indicates crown overlap and competition",
+        "ccf_less_100": "Indicates gaps between tree crowns"
+      }
+    }
+  },
+  "dependencies": {
+    "open_grown_crown_width": {
+      "source": "Section 4.4 - Crown Width equations",
+      "description": "OCWt values are calculated using open-grown crown width equations 4.4.1 through 4.4.5",
+      "reference_file": "cfg/sn_crown_width_coefficients.json"
+    },
+    "diameter_at_breast_height": {
+      "source": "Tree measurement data",
+      "description": "DBH values from field measurements or growth projections",
+      "units": "inches"
+    }
+  },
+  "applications": {
+    "growth_modeling": {
+      "description": "CCF is used as a predictor variable in some growth relationships within the FVS Southern variant",
+      "usage": "Density-dependent growth equations incorporate CCF to account for competition effects"
+    },
+    "stand_density_assessment": {
+      "description": "CCF provides a relative measurement of stand density based on tree diameters and crown dimensions",
+      "advantages": [
+        "Accounts for species differences in crown size",
+        "Reflects actual space occupation by tree crowns",
+        "Useful for mixed-species stands"
+      ]
+    },
+    "silvicultural_planning": {
+      "description": "CCF values help guide thinning decisions and stand management",
+      "guidelines": {
+        "low_density": "CCF < 100 - May indicate understocking",
+        "optimal_density": "CCF 100-200 - Typical range for managed stands",
+        "high_density": "CCF > 200 - May indicate overstocking and need for thinning"
+      }
+    }
+  },
+  "references": {
+    "primary": "Krajicek, J.E.; Brinkman, K.A.; Gingrich, S.F. 1961. Crown competition—a measure of density. Forest Science 7(1): 35-42.",
+    "fvs_documentation": "Dixon, Gary E. 2002. Essential FVS: A User's Guide to the Forest Vegetation Simulator. Internal Rep. Fort Collins, CO: U.S. Department of Agriculture, Forest Service, Forest Management Service Center.",
+    "southern_variant": "FVS Southern Variant Documentation - Section 4.5"
+  },
+  "implementation_notes": {
+    "precision": "CCF calculations should maintain sufficient precision for small tree contributions",
+    "units": "Ensure OCWt is in feet and DBH is in inches for correct CCF calculation",
+    "validation": "Stand CCF values should be validated against expected ranges for forest type and management objectives",
+    "small_trees": "The fixed CCF value of 0.001 for very small trees (DBH ≤ 0.1) prevents division by zero and provides minimal contribution"
+  },
+  "example_calculation": {
+    "scenario": "Individual tree with DBH = 10 inches and OCW = 15 feet",
+    "steps": [
+      "1. Check DBH condition: 10 > 0.1, so use standard formula",
+      "2. Apply equation 4.5.1: CCFt = 0.001803 * 15^2",
+      "3. Calculate: CCFt = 0.001803 * 225 = 0.406",
+      "4. Result: This tree contributes 0.406% of an acre in crown coverage"
+    ],
+    "interpretation": "A 10-inch DBH tree with 15-foot crown width occupies approximately 0.4% of an acre if open-grown"
+  }
+} 

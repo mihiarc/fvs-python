@@ -3,14 +3,14 @@ metadata:
   fia_code: 401
   scientific_name: Castanea dentata
   common_name: american chestnut
-  valid_site_species: true
+  valid_site_species: false
 site_index:
   min: 30
   max: 90
   site_index_group: 3
-  height_growth_equation: 'NC-128: 401'
+  height_growth_equation: 'NC-128: 543/29'
 density:
-  sdi_max: 450
+  sdi_max: 492
 height_diameter:
   model: curtis_arney
   curtis_arney:

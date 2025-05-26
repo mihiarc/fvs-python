@@ -3,14 +3,14 @@ metadata:
   fia_code: 544
   scientific_name: Fraxinus pennsylvanica
   common_name: green ash
-  valid_site_species: true
+  valid_site_species: false
 site_index:
   min: 35
   max: 105
   site_index_group: 3
-  height_growth_equation: 'NC-128: 544'
+  height_growth_equation: 'NC-128: 544/30'
 density:
-  sdi_max: 450
+  sdi_max: 414
 height_diameter:
   model: curtis_arney
   curtis_arney:

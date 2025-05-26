@@ -3,14 +3,14 @@ metadata:
   fia_code: 500
   scientific_name: Crataegus mexicana
   common_name: hawthorn
-  valid_site_species: true
+  valid_site_species: false
 site_index:
   min: 15
   max: 65
   site_index_group: 3
-  height_growth_equation: 'NC-128: 500'
+  height_growth_equation: 'NC-128: 068/73'
 density:
-  sdi_max: 450
+  sdi_max: 430
 height_diameter:
   model: curtis_arney
   curtis_arney:

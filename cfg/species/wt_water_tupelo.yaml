@@ -3,14 +3,14 @@ metadata:
   fia_code: 692
   scientific_name: Nyssa aquatica
   common_name: water tupelo
-  valid_site_species: true
+  valid_site_species: false
 site_index:
   min: 30
   max: 105
   site_index_group: 3
-  height_growth_equation: 'NC-128: 692'
+  height_growth_equation: 'NC-128: 691/41'
 density:
-  sdi_max: 450
+  sdi_max: 726
 height_diameter:
   model: curtis_arney
   curtis_arney:

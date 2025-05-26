@@ -3,14 +3,14 @@ metadata:
   fia_code: 602
   scientific_name: Juglans nigra
   common_name: walnut
-  valid_site_species: true
+  valid_site_species: false
 site_index:
   min: 35
   max: 85
   site_index_group: 3
-  height_growth_equation: 'NC-128: 602'
+  height_growth_equation: 'NC-128: 602/31'
 density:
-  sdi_max: 450
+  sdi_max: 283
 height_diameter:
   model: curtis_arney
   curtis_arney:

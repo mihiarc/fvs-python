@@ -3,14 +3,14 @@ metadata:
   fia_code: 71
   scientific_name: Larix laricina
   common_name: tamarack
-  valid_site_species: true
+  valid_site_species: false
 site_index:
   min: 35
   max: 70
   site_index_group: 1
-  height_growth_equation: 'NC-128: 71'
+  height_growth_equation: 'NC-128: 068/73'
 density:
-  sdi_max: 400
+  sdi_max: 398
 height_diameter:
   model: curtis_arney
   curtis_arney:

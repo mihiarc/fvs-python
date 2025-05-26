@@ -3,14 +3,14 @@ metadata:
   fia_code: 999
   scientific_name: Tree species
   common_name: other tree
-  valid_site_species: true
+  valid_site_species: false
 site_index:
   min: 15
   max: 55
   site_index_group: 3
-  height_growth_equation: 'NC-128: 999'
+  height_growth_equation: 'NC-128: 068/73'
 density:
-  sdi_max: 450
+  sdi_max: 421
 height_diameter:
   model: curtis_arney
   curtis_arney:

@@ -8,9 +8,9 @@ site_index:
   min: 25
   max: 115
   site_index_group: 3
-  height_growth_equation: 'NC-128: 316'
+  height_growth_equation: 'NC-128: Upland Oak/52'
 density:
-  sdi_max: 450
+  sdi_max: 370
 height_diameter:
   model: curtis_arney
   curtis_arney:

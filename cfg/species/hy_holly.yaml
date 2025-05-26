@@ -3,14 +3,14 @@ metadata:
   fia_code: 591
   scientific_name: Ilex opaca
   common_name: holly
-  valid_site_species: true
+  valid_site_species: false
 site_index:
   min: 35
   max: 70
   site_index_group: 3
-  height_growth_equation: 'NC-128: 591'
+  height_growth_equation: 'NC-128: 531/26'
 density:
-  sdi_max: 450
+  sdi_max: 155
 height_diameter:
   model: curtis_arney
   curtis_arney:

@@ -3,14 +3,14 @@ metadata:
   fia_code: 131
   scientific_name: Pinus virginiana
   common_name: virginia pine
-  valid_site_species: true
+  valid_site_species: false
 site_index:
   min: 35
   max: 75
   site_index_group: 1
-  height_growth_equation: 'NC-128: 131'
+  height_growth_equation: 'NC-128: 802/52'
 density:
-  sdi_max: 400
+  sdi_max: 336
 height_diameter:
   model: curtis_arney
   curtis_arney:

@@ -3,14 +3,14 @@ metadata:
   fia_code: 620
   scientific_name: Magnolia species
   common_name: magnolia vine
-  valid_site_species: true
+  valid_site_species: false
 site_index:
   min: 15
   max: 75
   site_index_group: 3
-  height_growth_equation: 'NC-128: 620'
+  height_growth_equation: 'NC-128: 694/42'
 density:
-  sdi_max: 450
+  sdi_max: 492
 height_diameter:
   model: curtis_arney
   curtis_arney:

@@ -3,14 +3,14 @@ metadata:
   fia_code: 531
   scientific_name: Fagus grandifolia
   common_name: american beech
-  valid_site_species: true
+  valid_site_species: false
 site_index:
   min: 25
   max: 85
   site_index_group: 3
-  height_growth_equation: 'NC-128: 531'
+  height_growth_equation: 'NC-128: 068/73'
 density:
-  sdi_max: 450
+  sdi_max: 311
 height_diameter:
   model: curtis_arney
   curtis_arney:

@@ -4,14 +4,14 @@ metadata:
   plants_symbol: FAGR
   scientific_name: Fagus grandifolia
   common_name: american beech
-  valid_site_species: true
+  valid_site_species: false
 site_index:
   min: 35
   max: 70
   site_index_group: 5
-  height_growth_equation: 'NC-128: 531'
+  height_growth_equation: 'NC-128: 316/16'
 density:
-  sdi_max: 480
+  sdi_max: 344
 height_diameter:
   model: curtis_arney
   curtis_arney:

@@ -3,14 +3,14 @@ metadata:
   fia_code: 920
   scientific_name: Salix species
   common_name: willow
-  valid_site_species: true
+  valid_site_species: false
 site_index:
   min: 15
   max: 110
   site_index_group: 3
-  height_growth_equation: 'NC-128: 920'
+  height_growth_equation: 'NC-128: 901/65'
 density:
-  sdi_max: 450
+  sdi_max: 447
 height_diameter:
   model: curtis_arney
   curtis_arney:

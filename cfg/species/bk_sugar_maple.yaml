@@ -3,14 +3,14 @@ metadata:
   fia_code: 318
   scientific_name: Acer saccharum
   common_name: sugar maple
-  valid_site_species: true
+  valid_site_species: false
 site_index:
   min: 25
   max: 95
   site_index_group: 3
-  height_growth_equation: 'NC-128: 318'
+  height_growth_equation: 'NC-128: 901/65'
 density:
-  sdi_max: 450
+  sdi_max: 343
 height_diameter:
   model: curtis_arney
   curtis_arney:

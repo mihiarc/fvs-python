@@ -8,9 +8,9 @@ site_index:
   min: 40
   max: 125
   site_index_group: 3
-  height_growth_equation: 'NC-128: 826'
+  height_growth_equation: 'NC-128: 742/45'
 density:
-  sdi_max: 450
+  sdi_max: 648
 height_diameter:
   model: curtis_arney
   curtis_arney:

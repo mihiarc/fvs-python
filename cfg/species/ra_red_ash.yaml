@@ -3,14 +3,14 @@ metadata:
   fia_code: 544
   scientific_name: Fraxinus pennsylvanica
   common_name: red ash
-  valid_site_species: true
+  valid_site_species: false
 site_index:
   min: 15
   max: 60
   site_index_group: 3
-  height_growth_equation: 'NC-128: 544'
+  height_growth_equation: 'NC-128: 068/73'
 density:
-  sdi_max: 450
+  sdi_max: 492
 height_diameter:
   model: curtis_arney
   curtis_arney:

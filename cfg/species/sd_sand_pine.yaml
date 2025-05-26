@@ -3,14 +3,14 @@ metadata:
   fia_code: 107
   scientific_name: Pinus clausa
   common_name: sand pine
-  valid_site_species: true
+  valid_site_species: false
 site_index:
   min: 15
   max: 70
   site_index_group: 1
-  height_growth_equation: 'NC-128: 107'
+  height_growth_equation: 'NC-128: 068/73'
 density:
-  sdi_max: 400
+  sdi_max: 164
 height_diameter:
   model: curtis_arney
   curtis_arney:

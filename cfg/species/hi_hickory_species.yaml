@@ -3,14 +3,14 @@ metadata:
   fia_code: 400
   scientific_name: Carya species
   common_name: hickory species
-  valid_site_species: true
+  valid_site_species: false
 site_index:
   min: 25
   max: 85
   site_index_group: 3
-  height_growth_equation: 'NC-128: 400'
+  height_growth_equation: 'NC-128: 400/25'
 density:
-  sdi_max: 450
+  sdi_max: 276
 height_diameter:
   model: curtis_arney
   curtis_arney:

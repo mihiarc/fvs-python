@@ -1,0 +1,879 @@
+{
+  "metadata": {
+    "title": "Small Tree Height Growth for FVS Southern Variant",
+    "description": "Small tree growth model using Chapman-Richards functional form with NC-128 coefficients and weighting methodology",
+    "source": "FVS Southern Variant Documentation - Section 4.6.1",
+    "threshold_diameter": 3.0,
+    "threshold_description": "Trees smaller than 3.0 inches DBH are considered 'small trees'",
+    "model_type": "Height growth driven (height growth predicted first, then diameter growth)",
+    "equations": {
+      "4.6.1.1": "POTHTG = POTHT(future) - POTHT(current)",
+      "4.6.1.2": "XWT = (DBH - Xmin) / (Xmax - Xmin)",
+      "4.6.1.3": "Estimated growth = [(1 - XWT) * STGE] + [XWT * LTGE]",
+      "chapman_richards": "POTHT = c1 * SI^c2 * (1 - exp(-c3 * AGET))^(c4 * SI^c5)",
+      "age_calculation": "AGET = 1/c3 * ln(1 - (HT / (c1 * SI^c2))^(1 / (c4 * SI^c5)))"
+    },
+    "variable_definitions": {
+      "POTHTG": "Periodic potential height growth (5-year)",
+      "POTHT": "Predicted tree height for current and future height growth",
+      "SI": "Species site index",
+      "AGET": "Tree age",
+      "HT": "Tree height in feet",
+      "c1_c5": "Species-specific coefficients from NC-128",
+      "XWT": "Weight applied to growth estimates for model transition",
+      "DBH": "Tree diameter at breast height",
+      "Xmin": "Minimum DBH in diameter range (set to 1.0 inches)",
+      "Xmax": "Maximum DBH in diameter range (set to 3.0 inches)",
+      "STGE": "Growth estimate from small-tree growth model",
+      "LTGE": "Growth estimate from large-tree growth model"
+    }
+  },
+  "model_methodology": {
+    "height_growth_calculation": "Uses Chapman-Richards nonlinear functional form from GTR-NC-128 (Carmean and others 1989)",
+    "linear_function": "Fills in height growth curves from 0 at age 0 to lower end of height growth curve",
+    "random_error": "Small random error added to height growth estimate",
+    "adjustments": [
+      "Cycle length adjustment",
+      "User defined small-tree height growth adjustments", 
+      "Small tree height increment calibration from input data"
+    ],
+    "diameter_growth": "For trees > 4.5 feet tall, calculated as difference of predicted diameters at start and end of projection period, adjusted for bark ratio",
+    "diameter_growth_zero": "Diameter growth is zero for trees < 4.5 feet tall"
+  },
+  "weighting_methodology": {
+    "purpose": "Smooth transition between small-tree and large-tree growth models",
+    "diameter_range": {
+      "xmin": 1.0,
+      "xmax": 3.0,
+      "units": "inches DBH"
+    },
+    "weighting_logic": {
+      "closer_to_xmin": "More weight towards small-tree growth model",
+      "closer_to_xmax": "More weight towards large-tree growth model",
+      "outside_range": "Use only small-tree or large-tree model"
+    }
+  },
+  "nc128_height_growth_coefficients": {
+    "FR": {
+      "fia_code": "012",
+      "page_number": "70",
+      "c1": 2.077,
+      "c2": 0.9303,
+      "c3": -0.0285,
+      "c4": 2.8937,
+      "c5": -0.1414
+    },
+    "JU": {
+      "fia_code": "068",
+      "page_number": "73",
+      "c1": 0.9276,
+      "c2": 1.0591,
+      "c3": -0.0424,
+      "c4": 0.3529,
+      "c5": 0.3114
+    },
+    "PI": {
+      "fia_code": "097",
+      "page_number": "88",
+      "c1": 1.3307,
+      "c2": 1.0442,
+      "c3": -0.0496,
+      "c4": 3.5829,
+      "c5": 0.0945
+    },
+    "PU": {
+      "fia_code": "107",
+      "page_number": "92",
+      "c1": 1.266,
+      "c2": 1.0034,
+      "c3": -0.0365,
+      "c4": 1.5515,
+      "c5": -0.0221
+    },
+    "SP": {
+      "fia_code": "110",
+      "page_number": "93",
+      "c1": 1.4232,
+      "c2": 0.9989,
+      "c3": -0.0285,
+      "c4": 1.2156,
+      "c5": 0.0088
+    },
+    "SA": {
+      "fia_code": "111",
+      "page_number": "99",
+      "c1": 1.1557,
+      "c2": 1.0031,
+      "c3": -0.0408,
+      "c4": 0.9807,
+      "c5": 0.0314
+    },
+    "SR": {
+      "fia_code": "097",
+      "page_number": "88",
+      "c1": 1.3307,
+      "c2": 1.0442,
+      "c3": -0.0496,
+      "c4": 3.5829,
+      "c5": 0.0945
+    },
+    "LL": {
+      "fia_code": "107",
+      "page_number": "92",
+      "c1": 1.421,
+      "c2": 0.9947,
+      "c3": -0.0269,
+      "c4": 1.1344,
+      "c5": -0.0109
+    },
+    "TM": {
+      "fia_code": "068",
+      "page_number": "73",
+      "c1": 0.9276,
+      "c2": 1.0591,
+      "c3": -0.0424,
+      "c4": 0.3529,
+      "c5": 0.3114
+    },
+    "PP": {
+      "fia_code": "132",
+      "page_number": "139",
+      "c1": 1.1204,
+      "c2": 0.9984,
+      "c3": -0.0597,
+      "c4": 2.4448,
+      "c5": -0.0284
+    },
+    "PD": {
+      "fia_code": "128",
+      "page_number": "117",
+      "c1": 1.1266,
+      "c2": 1.0051,
+      "c3": -0.0367,
+      "c4": 0.678,
+      "c5": 0.0404
+    },
+    "WP": {
+      "fia_code": "129",
+      "page_number": "119",
+      "c1": 3.2425,
+      "c2": 0.798,
+      "c3": -0.0435,
+      "c4": 52.0549,
+      "c5": -0.7064
+    },
+    "LP": {
+      "fia_code": "131",
+      "page_number": "125",
+      "c1": 1.1421,
+      "c2": 1.0042,
+      "c3": -0.0374,
+      "c4": 0.7632,
+      "c5": 0.0358
+    },
+    "VP": {
+      "fia_code": "132",
+      "page_number": "139",
+      "c1": 1.1204,
+      "c2": 0.9984,
+      "c3": -0.0597,
+      "c4": 2.4448,
+      "c5": -0.0284
+    },
+    "BY": {
+      "fia_code": "611",
+      "page_number": "36",
+      "c1": 1.0902,
+      "c2": 1.0298,
+      "c3": -0.0354,
+      "c4": 0.7011,
+      "c5": 0.1178
+    },
+    "PC": {
+      "fia_code": "611",
+      "page_number": "36",
+      "c1": 1.0902,
+      "c2": 1.0298,
+      "c3": -0.0354,
+      "c4": 0.7011,
+      "c5": 0.1178
+    },
+    "HM": {
+      "fia_code": "261",
+      "page_number": "142",
+      "c1": 2.1493,
+      "c2": 0.9979,
+      "c3": -0.0175,
+      "c4": 1.4086,
+      "c5": -0.0008
+    },
+    "FM": {
+      "fia_code": "317",
+      "page_number": "19",
+      "c1": 1.0645,
+      "c2": 0.9918,
+      "c3": -0.0812,
+      "c4": 1.5754,
+      "c5": -0.0272
+    },
+    "BE": {
+      "fia_code": "316",
+      "page_number": "16",
+      "c1": 2.9435,
+      "c2": 0.9132,
+      "c3": -0.0141,
+      "c4": 1.658,
+      "c5": -0.1095
+    },
+    "RM": {
+      "fia_code": "316",
+      "page_number": "16",
+      "c1": 2.9435,
+      "c2": 0.9132,
+      "c3": -0.0141,
+      "c4": 1.658,
+      "c5": -0.1095
+    },
+    "SV": {
+      "fia_code": "317",
+      "page_number": "19",
+      "c1": 1.0645,
+      "c2": 0.9918,
+      "c3": -0.0812,
+      "c4": 1.5754,
+      "c5": -0.0272
+    },
+    "SM": {
+      "fia_code": "318",
+      "page_number": "18",
+      "c1": 6.1308,
+      "c2": 0.6904,
+      "c3": -0.0195,
+      "c4": 10.1563,
+      "c5": -0.5330
+    },
+    "BU": {
+      "fia_code": "318",
+      "page_number": "18",
+      "c1": 6.1308,
+      "c2": 0.6904,
+      "c3": -0.0195,
+      "c4": 10.1563,
+      "c5": -0.5330
+    },
+    "BB": {
+      "fia_code": "371",
+      "page_number": "21",
+      "c1": 6.0522,
+      "c2": 0.6768,
+      "c3": -0.0217,
+      "c4": 15.4232,
+      "c5": -0.6354
+    },
+    "SB": {
+      "fia_code": "371",
+      "page_number": "21",
+      "c1": 6.0522,
+      "c2": 0.6768,
+      "c3": -0.0217,
+      "c4": 15.4232,
+      "c5": -0.6354
+    },
+    "AH": {
+      "fia_code": "068",
+      "page_number": "73",
+      "c1": 0.9276,
+      "c2": 1.0591,
+      "c3": -0.0424,
+      "c4": 0.3529,
+      "c5": 0.3114
+    },
+    "HI": {
+      "fia_code": "400",
+      "page_number": "25",
+      "c1": 1.8326,
+      "c2": 1.0015,
+      "c3": -0.0207,
+      "c4": 1.408,
+      "c5": -0.0005
+    },
+    "CA": {
+      "fia_code": "543",
+      "page_number": "29",
+      "c1": 4.2286,
+      "c2": 0.7857,
+      "c3": -0.0178,
+      "c4": 4.6219,
+      "c5": -0.3591
+    },
+    "HB": {
+      "fia_code": "068",
+      "page_number": "73",
+      "c1": 0.9276,
+      "c2": 1.0591,
+      "c3": -0.0424,
+      "c4": 0.3529,
+      "c5": 0.3114
+    },
+    "RD": {
+      "fia_code": "068",
+      "page_number": "73",
+      "c1": 0.9276,
+      "c2": 1.0591,
+      "c3": -0.0424,
+      "c4": 0.3529,
+      "c5": 0.3114
+    },
+    "DW": {
+      "fia_code": "068",
+      "page_number": "73",
+      "c1": 0.9276,
+      "c2": 1.0591,
+      "c3": -0.0424,
+      "c4": 0.3529,
+      "c5": 0.3114
+    },
+    "PS": {
+      "fia_code": "068",
+      "page_number": "73",
+      "c1": 0.9276,
+      "c2": 1.0591,
+      "c3": -0.0424,
+      "c4": 0.3529,
+      "c5": 0.3114
+    },
+    "AB": {
+      "fia_code": "531",
+      "page_number": "26",
+      "c1": 29.73,
+      "c2": 0.3631,
+      "c3": -0.0127,
+      "c4": 16.7616,
+      "c5": -0.6804
+    },
+    "AS": {
+      "fia_code": "544",
+      "page_number": "30",
+      "c1": 1.6505,
+      "c2": 0.9096,
+      "c3": -0.0644,
+      "c4": 125.7045,
+      "c5": -0.8908
+    },
+    "WA": {
+      "fia_code": "541",
+      "page_number": "28",
+      "c1": 4.1492,
+      "c2": 0.7531,
+      "c3": -0.0269,
+      "c4": 14.5384,
+      "c5": -0.5811
+    },
+    "BA": {
+      "fia_code": "543",
+      "page_number": "29",
+      "c1": 4.2286,
+      "c2": 0.7857,
+      "c3": -0.0178,
+      "c4": 4.6219,
+      "c5": -0.3591
+    },
+    "GA": {
+      "fia_code": "544",
+      "page_number": "30",
+      "c1": 1.6505,
+      "c2": 0.9096,
+      "c3": -0.0644,
+      "c4": 125.7045,
+      "c5": -0.8908
+    },
+    "HL": {
+      "fia_code": "901",
+      "page_number": "65",
+      "c1": 0.968,
+      "c2": 1.0301,
+      "c3": -0.0468,
+      "c4": 0.1639,
+      "c5": 0.4127
+    },
+    "LB": {
+      "fia_code": "043",
+      "page_number": "72",
+      "c1": 1.5341,
+      "c2": 1.0013,
+      "c3": -0.0208,
+      "c4": 0.9986,
+      "c5": -0.0012
+    },
+    "HA": {
+      "fia_code": "068",
+      "page_number": "73",
+      "c1": 0.9276,
+      "c2": 1.0591,
+      "c3": -0.0424,
+      "c4": 0.3529,
+      "c5": 0.3114
+    },
+    "HY": {
+      "fia_code": "531",
+      "page_number": "26",
+      "c1": 29.73,
+      "c2": 0.3631,
+      "c3": -0.0127,
+      "c4": 16.7616,
+      "c5": -0.6804
+    },
+    "BN": {
+      "fia_code": "602",
+      "page_number": "31",
+      "c1": 1.2898,
+      "c2": 0.9982,
+      "c3": -0.0289,
+      "c4": 0.8546,
+      "c5": 0.0171
+    },
+    "WN": {
+      "fia_code": "602",
+      "page_number": "31",
+      "c1": 1.2898,
+      "c2": 0.9982,
+      "c3": -0.0289,
+      "c4": 0.8546,
+      "c5": 0.0171
+    },
+    "SU": {
+      "fia_code": "611",
+      "page_number": "36",
+      "c1": 1.0902,
+      "c2": 1.0298,
+      "c3": -0.0354,
+      "c4": 0.7011,
+      "c5": 0.1178
+    },
+    "YP": {
+      "mountain": {
+        "fia_code": "621",
+        "page_number": "39",
+        "c1": 1.2673,
+        "c2": 1.0,
+        "c3": -0.0331,
+        "c4": 1.1149,
+        "c5": 0.0001
+      },
+      "piedmont": {
+        "fia_code": "621",
+        "page_number": "38",
+        "c1": 1.1798,
+        "c2": 1.0,
+        "c3": -0.0339,
+        "c4": 0.8117,
+        "c5": -0.0001
+      }
+    },
+    "MG": {
+      "fia_code": "694",
+      "page_number": "42",
+      "c1": 1.3213,
+      "c2": 0.9995,
+      "c3": -0.0254,
+      "c4": 0.8549,
+      "c5": -0.0016
+    },
+    "CT": {
+      "fia_code": "802",
+      "page_number": "52",
+      "c1": 1.2866,
+      "c2": 0.9962,
+      "c3": -0.0355,
+      "c4": 1.4485,
+      "c5": -0.0316
+    },
+    "MS": {
+      "fia_code": "694",
+      "page_number": "42",
+      "c1": 1.3213,
+      "c2": 0.9995,
+      "c3": -0.0254,
+      "c4": 0.8549,
+      "c5": -0.0016
+    },
+    "MV": {
+      "fia_code": "694",
+      "page_number": "42",
+      "c1": 1.3213,
+      "c2": 0.9995,
+      "c3": -0.0254,
+      "c4": 0.8549,
+      "c5": -0.0016
+    },
+    "ML": {
+      "fia_code": "694",
+      "page_number": "42",
+      "c1": 1.3213,
+      "c2": 0.9995,
+      "c3": -0.0254,
+      "c4": 0.8549,
+      "c5": -0.0016
+    },
+    "AP": {
+      "fia_code": "068",
+      "page_number": "73",
+      "c1": 0.9276,
+      "c2": 1.0591,
+      "c3": -0.0424,
+      "c4": 0.3529,
+      "c5": 0.3114
+    },
+    "MB": {
+      "fia_code": "068",
+      "page_number": "73",
+      "c1": 0.9276,
+      "c2": 1.0591,
+      "c3": -0.0424,
+      "c4": 0.3529,
+      "c5": 0.3114
+    },
+    "WT": {
+      "fia_code": "691",
+      "page_number": "41",
+      "c1": 1.2721,
+      "c2": 0.9995,
+      "c3": -0.0256,
+      "c4": 0.7447,
+      "c5": -0.0019
+    },
+    "BG": {
+      "fia_code": "694",
+      "page_number": "42",
+      "c1": 1.3213,
+      "c2": 0.9995,
+      "c3": -0.0254,
+      "c4": 0.8549,
+      "c5": -0.0016
+    },
+    "TS": {
+      "fia_code": "694",
+      "page_number": "42",
+      "c1": 1.3213,
+      "c2": 0.9995,
+      "c3": -0.0254,
+      "c4": 0.8549,
+      "c5": -0.0016
+    },
+    "HH": {
+      "fia_code": "068",
+      "page_number": "73",
+      "c1": 0.9276,
+      "c2": 1.0591,
+      "c3": -0.0424,
+      "c4": 0.3529,
+      "c5": 0.3114
+    },
+    "SD": {
+      "fia_code": "068",
+      "page_number": "73",
+      "c1": 0.9276,
+      "c2": 1.0591,
+      "c3": -0.0424,
+      "c4": 0.3529,
+      "c5": 0.3114
+    },
+    "RA": {
+      "fia_code": "068",
+      "page_number": "73",
+      "c1": 0.9276,
+      "c2": 1.0591,
+      "c3": -0.0424,
+      "c4": 0.3529,
+      "c5": 0.3114
+    },
+    "SY": {
+      "fia_code": "621",
+      "page_number": "39",
+      "c1": 1.2673,
+      "c2": 1.0,
+      "c3": -0.0331,
+      "c4": 1.1149,
+      "c5": 0.0001
+    },
+    "CW": {
+      "fia_code": "742",
+      "page_number": "45",
+      "c1": 1.2834,
+      "c2": 0.9571,
+      "c3": -0.068,
+      "c4": 100.0,
+      "c5": -0.9223
+    },
+    "BT": {
+      "fia_code": "743",
+      "page_number": "47",
+      "c1": 5.2188,
+      "c2": 0.6855,
+      "c3": -0.0301,
+      "c4": 50.0071,
+      "c5": -0.8695
+    },
+    "BC": {
+      "fia_code": "762",
+      "page_number": "50",
+      "c1": 7.1846,
+      "c2": 0.6781,
+      "c3": -0.0222,
+      "c4": 13.9186,
+      "c5": -0.5268
+    },
+    "WO": {
+      "fia_code": "Upland Oak",
+      "page_number": "52",
+      "c1": 1.2866,
+      "c2": 0.9962,
+      "c3": -0.0355,
+      "c4": 1.4485,
+      "c5": -0.0316
+    },
+    "SO": {
+      "fia_code": "Upland Oak",
+      "page_number": "52",
+      "c1": 1.2866,
+      "c2": 0.9962,
+      "c3": -0.0355,
+      "c4": 1.4485,
+      "c5": -0.0316
+    },
+    "SK": {
+      "fia_code": "Upland Oak",
+      "page_number": "52",
+      "c1": 1.2866,
+      "c2": 0.9962,
+      "c3": -0.0355,
+      "c4": 1.4485,
+      "c5": -0.0316
+    },
+    "CB": {
+      "fia_code": "813",
+      "page_number": "58",
+      "c1": 1.0945,
+      "c2": 0.9938,
+      "c3": -0.0755,
+      "c4": 2.5601,
+      "c5": 0.0114
+    },
+    "TO": {
+      "fia_code": "068",
+      "page_number": "73",
+      "c1": 0.9276,
+      "c2": 1.0591,
+      "c3": -0.0424,
+      "c4": 0.3529,
+      "c5": 0.3114
+    },
+    "LK": {
+      "fia_code": "068",
+      "page_number": "73",
+      "c1": 0.9276,
+      "c2": 1.0591,
+      "c3": -0.0424,
+      "c4": 0.3529,
+      "c5": 0.3114
+    },
+    "OV": {
+      "fia_code": "828",
+      "page_number": "60",
+      "c1": 1.3295,
+      "c2": 0.9565,
+      "c3": -0.0668,
+      "c4": 16.0085,
+      "c5": -0.4157
+    },
+    "BJ": {
+      "fia_code": "068",
+      "page_number": "73",
+      "c1": 0.9276,
+      "c2": 1.0591,
+      "c3": -0.0424,
+      "c4": 0.3529,
+      "c5": 0.3114
+    },
+    "SN": {
+      "fia_code": "827",
+      "page_number": "59",
+      "c1": 1.3466,
+      "c2": 0.959,
+      "c3": -0.0574,
+      "c4": 8.9538,
+      "c5": -0.3454
+    },
+    "CK": {
+      "fia_code": "802",
+      "page_number": "52",
+      "c1": 1.2866,
+      "c2": 0.9962,
+      "c3": -0.0355,
+      "c4": 1.4485,
+      "c5": -0.0316
+    },
+    "WK": {
+      "fia_code": "827",
+      "page_number": "59",
+      "c1": 1.3466,
+      "c2": 0.959,
+      "c3": -0.0574,
+      "c4": 8.9538,
+      "c5": -0.3454
+    },
+    "CO": {
+      "fia_code": "Upland Oak",
+      "page_number": "52",
+      "c1": 1.2866,
+      "c2": 0.9962,
+      "c3": -0.0355,
+      "c4": 1.4485,
+      "c5": -0.0316
+    },
+    "RO": {
+      "fia_code": "Upland Oak",
+      "page_number": "52",
+      "c1": 1.2866,
+      "c2": 0.9962,
+      "c3": -0.0355,
+      "c4": 1.4485,
+      "c5": -0.0316
+    },
+    "QS": {
+      "fia_code": "813",
+      "page_number": "58",
+      "c1": 1.0945,
+      "c2": 0.9938,
+      "c3": -0.0755,
+      "c4": 2.5601,
+      "c5": 0.0114
+    },
+    "PO": {
+      "fia_code": "068",
+      "page_number": "73",
+      "c1": 0.9276,
+      "c2": 1.0591,
+      "c3": -0.0424,
+      "c4": 0.3529,
+      "c5": 0.3114
+    },
+    "BO": {
+      "fia_code": "Upland Oak",
+      "page_number": "52",
+      "c1": 1.2866,
+      "c2": 0.9962,
+      "c3": -0.0355,
+      "c4": 1.4485,
+      "c5": -0.0316
+    },
+    "LO": {
+      "fia_code": "827",
+      "page_number": "59",
+      "c1": 1.3466,
+      "c2": 0.959,
+      "c3": -0.0574,
+      "c4": 8.9538,
+      "c5": -0.3454
+    },
+    "BK": {
+      "fia_code": "901",
+      "page_number": "65",
+      "c1": 0.968,
+      "c2": 1.0301,
+      "c3": -0.0468,
+      "c4": 0.1639,
+      "c5": 0.4127
+    },
+    "WI": {
+      "fia_code": "901",
+      "page_number": "65",
+      "c1": 0.968,
+      "c2": 1.0301,
+      "c3": -0.0468,
+      "c4": 0.1639,
+      "c5": 0.4127
+    },
+    "SS": {
+      "fia_code": "068",
+      "page_number": "73",
+      "c1": 0.9276,
+      "c2": 1.0591,
+      "c3": -0.0424,
+      "c4": 0.3529,
+      "c5": 0.3114
+    },
+    "BD": {
+      "fia_code": "951",
+      "page_number": "66",
+      "c1": 4.7633,
+      "c2": 0.7576,
+      "c3": -0.0194,
+      "c4": 6.511,
+      "c5": -0.4156
+    },
+    "EL": {
+      "fia_code": "972",
+      "page_number": "68",
+      "c1": 6.4362,
+      "c2": 0.6827,
+      "c3": -0.0194,
+      "c4": 10.9767,
+      "c5": -0.5477
+    },
+    "WE": {
+      "fia_code": "972",
+      "page_number": "68",
+      "c1": 6.4362,
+      "c2": 0.6827,
+      "c3": -0.0194,
+      "c4": 10.9767,
+      "c5": -0.5477
+    },
+    "AE": {
+      "fia_code": "972",
+      "page_number": "68",
+      "c1": 6.4362,
+      "c2": 0.6827,
+      "c3": -0.0194,
+      "c4": 10.9767,
+      "c5": -0.5477
+    },
+    "RL": {
+      "fia_code": "972",
+      "page_number": "68",
+      "c1": 6.4362,
+      "c2": 0.6827,
+      "c3": -0.0194,
+      "c4": 10.9767,
+      "c5": -0.5477
+    },
+    "OS": {
+      "fia_code": "068",
+      "page_number": "73",
+      "c1": 0.9276,
+      "c2": 1.0591,
+      "c3": -0.0424,
+      "c4": 0.3529,
+      "c5": 0.3114
+    },
+    "OH": {
+      "fia_code": "068",
+      "page_number": "73",
+      "c1": 0.9276,
+      "c2": 1.0591,
+      "c3": -0.0424,
+      "c4": 0.3529,
+      "c5": 0.3114
+    },
+    "OT": {
+      "fia_code": "068",
+      "page_number": "73",
+      "c1": 0.9276,
+      "c2": 1.0591,
+      "c3": -0.0424,
+      "c4": 0.3529,
+      "c5": 0.3114
+    }
+  }
+} 

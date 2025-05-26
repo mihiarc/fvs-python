@@ -3,14 +3,14 @@ metadata:
   fia_code: 571
   scientific_name: Gordonia lasianthus
   common_name: loblolly bay
-  valid_site_species: true
+  valid_site_species: false
 site_index:
   min: 15
   max: 50
   site_index_group: 3
-  height_growth_equation: 'NC-128: 571'
+  height_growth_equation: 'NC-128: 043/72'
 density:
-  sdi_max: 450
+  sdi_max: 492
 height_diameter:
   model: curtis_arney
   curtis_arney:
