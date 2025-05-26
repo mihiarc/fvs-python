@@ -156,11 +156,13 @@
   },
   {
     "id": 52,
+    "title": "Growth Relationships",
     "text": "This chapter describes the functional relationships used to fill in missing tree data and calculate incremental growth. In FVS, trees are grown in either the small tree sub-model or the large tree sub-model depending on the diameter.",
     "page_numbers": []
   },
   {
     "id": 53,
+    "title": "Height-diameter Relationships",
     "text": "Height-diameter relationships in FVS are primarily used to estimate tree heights missing in the input data, and occasionally to estimate diameter growth on trees smaller than a given threshold diameter. In the SN variant, the model will dub in heights by one of two methods. By default, the SN variant will use the Curtis-Arney functional form as shown in equation {4.1.1} (Curtis 1967, Arney 1985). FVS can switch to a logistic height-diameter equation {4.1.2} (Wykoff, et.al 1982) that may be calibrated to the input data; however, the default in the SN variant is to use equation {4.1.1}.\nFVS will not automatically use equation {4.1.2} even if you have enough height values in the input data. To override this default, the user must use the NOHTDREG keyword and change field 2 to a 1. Coefficients for the height-diameter equations are given in table 4.1.1. Tree records eligible for calibrating the height-diameter curve must have diameters greater than 3 inches.\n{4.1.1} Curtis-Arney equation\n<!-- formula-not-decoded -->\n< 3.0': = ((4.5 + P2 * exp( P3 * 3.0^ P4) - 4.51) * ( -Dbw ) / (3 Dbw )) + 4.51\n{4.1.2}Wykoff functional form\n<!-- formula-not-decoded -->\nwhere:\nHT\nis tree height\nDBH\nis tree diameter at breast height\nDbw\nis bud width diameter at 4.51 feet shown in table 4.1.1\nB1 - B2\nare species-specific coefficients shown in table 4.1.1\nP2 - P4\nare species-specific coefficients shown in table 4.1.2",
     "page_numbers": []
   },

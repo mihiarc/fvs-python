@@ -47,4 +47,42 @@ crown_ratio:
     a: 4.6903
     b0: -19.5613
     b1: 1.2928
-    c: 3.3715 
+    c: 3.3715
+
+# Large tree diameter growth model parameters
+# Equation form: ln(DDS) = b1 + (b2 * ln(DBH)) + (b3 * DBH^2) + (b4 * ln(CR)) + (b5 * RELHT) + (b6 * SI) + 
+#                          (b7 * BA) + (b8 * PBAL) + (b9 * SLOPE) + (b10 * cos(ASP) * SLOPE) + 
+#                          (b11 * sin(ASP) * SLOPE) + FORTYPE + ECOUNIT + PLANT
+# 
+# COEFFICIENTS FROM SOUTHERN VARIANT SOURCE OF TRUTH (archive/data/archive/southern_variant_tables/large_tree_growth_parameters.csv)
+# WO = White Oak (Quercus alba)
+diameter_growth:
+  model: "ln_dds"  # Natural log of the periodic change in squared inside-bark diameter
+  coefficients:
+    # Coefficients for WO (White Oak)
+    b1: -1.608339   # Intercept
+    b2: 1.468589    # ln(DBH) coefficient
+    b3: -0.000778   # DBH^2 coefficient
+    b4: 0.139456    # ln(CR) coefficient
+    b5: 0.358369    # RELHT coefficient
+    b6: 0.004530    # SI coefficient
+    b7: -0.002807   # BA coefficient
+    b8: -0.002269   # PBAL coefficient
+    b9: -0.223273   # SLOPE coefficient
+    b10: 0.008526   # cos(ASP)*SLOPE coefficient
+    b11: -0.032889  # sin(ASP)*SLOPE coefficient
+  
+  # DBH bounding function values from diameter_bounding_limits.csv
+  # WO: DBH LOW = 998.0, DBH HI = 999.0 (no bounding function applied)
+  dbh_bounds:
+    lower_limit: 998.0  # No diameter bounding function
+    upper_limit: 999.0  # No diameter bounding function
+
+# Volume specifications
+volume:
+  pulpwood:
+    min_dbh: 6      # Minimum DBH in inches
+    top_diameter: 4 # Top diameter outside bark in inches
+  sawtimber:
+    min_dbh: 10     # Default for hardwoods
+    top_diameter: 7 # Default for hardwoods 

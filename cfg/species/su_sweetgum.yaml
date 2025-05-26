@@ -47,4 +47,42 @@ crown_ratio:
     a: 4.1493
     b0: -9.8204
     b1: 1.1069
-    c: 3.0293 
+    c: 3.0293
+
+# Large tree diameter growth model parameters
+# Equation form: ln(DDS) = b1 + (b2 * ln(DBH)) + (b3 * DBH^2) + (b4 * ln(CR)) + (b5 * RELHT) + (b6 * SI) + 
+#                          (b7 * BA) + (b8 * PBAL) + (b9 * SLOPE) + (b10 * cos(ASP) * SLOPE) + 
+#                          (b11 * sin(ASP) * SLOPE) + FORTYPE + ECOUNIT + PLANT
+# 
+# COEFFICIENTS FROM SOUTHERN VARIANT SOURCE OF TRUTH (archive/data/archive/southern_variant_tables/large_tree_growth_parameters.csv)
+# SU = Sweetgum (Liquidambar styraciflua)
+diameter_growth:
+  model: "ln_dds"  # Natural log of the periodic change in squared inside-bark diameter
+  coefficients:
+    # Coefficients for SU (Sweetgum)
+    b1: -1.324147   # Intercept
+    b2: 1.395884    # ln(DBH) coefficient
+    b3: -0.000490   # DBH^2 coefficient
+    b4: 0.145539    # ln(CR) coefficient
+    b5: 0.256765    # RELHT coefficient
+    b6: 0.001993    # SI coefficient
+    b7: -0.002978   # BA coefficient
+    b8: -0.001940   # PBAL coefficient
+    b9: -0.502977   # SLOPE coefficient
+    b10: 0.141477   # cos(ASP)*SLOPE coefficient
+    b11: 0.003549   # sin(ASP)*SLOPE coefficient
+  
+  # DBH bounding function values from diameter_bounding_limits.csv
+  # SU: DBH LOW = 39.6, DBH HI = 60.0 (bounding function applied)
+  dbh_bounds:
+    lower_limit: 39.6   # Diameter bounding function lower limit
+    upper_limit: 60.0   # Diameter bounding function upper limit
+
+# Volume specifications
+volume:
+  pulpwood:
+    min_dbh: 6      # Minimum DBH in inches
+    top_diameter: 4 # Top diameter outside bark in inches
+  sawtimber:
+    min_dbh: 10     # Default for hardwoods
+    top_diameter: 7 # Default for hardwoods 
