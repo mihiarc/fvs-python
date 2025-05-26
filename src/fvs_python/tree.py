@@ -208,51 +208,32 @@ class Tree:
             relsdi: Relative stand density index (0-12)
             competition_factor: Competition factor (0-1)
         """
-        # Get crown ratio parameters
-        p = self.species_params['crown_ratio']
+        from .crown_ratio import create_crown_ratio_model
         
-        # Get the equation type
-        equation_type = p['equation']
+        # Create crown ratio model for this species
+        cr_model = create_crown_ratio_model(self.species)
         
-        # Calculate average crown ratio based on stand density using appropriate equation
-        if equation_type == "4.3.1.3":
-            acr = math.exp(p['d0'] + (p['d1'] * math.log(max(1.0, relsdi))) + (p['d2'] * relsdi))
-        elif equation_type == "4.3.1.4":
-            acr = math.exp(p['d0'] + (p['d1'] * math.log(max(1.0, relsdi))))
-        else:
-            # Default fallback
-            acr = math.exp(3.8284 + (-0.2234 * math.log(max(1.0, relsdi))) + (0.0172 * relsdi))
-        
-        acr = max(0.2, min(0.85, acr))
-        
-        # Get Weibull parameters
-        weibull_params = p['weibull']
-        location = weibull_params['a'] / 100.0
-        scale = max(0.03, (weibull_params['b0'] + weibull_params['b1'] * acr) / 100.0)
-        shape = max(2.0, weibull_params['c'])
-        
-        # Calculate density-dependent scaling factor
-        scale_factor = 1.0 - 0.7 * competition_factor
+        # Calculate CCF from competition factor (rough approximation)
+        ccf = 100.0 + 100.0 * competition_factor
         
         try:
-            # Calculate new crown ratio using Weibull distribution
-            x = max(0.001, min(0.999, rank))  # Bound rank to avoid numerical issues
-            new_cr = weibull_min.ppf(x, shape, loc=location * scale_factor, scale=scale * scale_factor)
+            # Predict new crown ratio using the dedicated crown ratio model
+            new_cr = cr_model.predict_individual_crown_ratio(rank, relsdi, ccf)
             
             # Apply age-related reduction
             age_factor = 1.0 - 0.003 * self.age  # 0.3% reduction per year
             new_cr *= max(0.5, age_factor)  # Cap age reduction at 50%
             
             # Ensure reasonable bounds
-            self.crown_ratio = max(0.2, min(0.85, new_cr))
-        except:
-            # Fallback to simpler update if Weibull calculation fails
+            self.crown_ratio = max(0.05, min(0.95, new_cr))
+        except Exception:
+            # Fallback to simpler update if crown ratio calculation fails
             reduction = (
                 0.15 * competition_factor +  # Competition effect
                 0.003 * self.age +          # Age effect
                 0.1 * (1.0 - rank)          # Size effect
             )
-            self.crown_ratio = max(0.2, min(0.85, 
+            self.crown_ratio = max(0.05, min(0.95, 
                 self.crown_ratio * (1.0 - min(0.3, reduction))))
     
     def _update_dbh_from_height(self):

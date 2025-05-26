@@ -22,18 +22,18 @@ height_diameter:
     b1: 4.4819
     b2: -4.5314
 bark_ratio:
-  b1: -0.45
-  b2: 0.9
+  b1: -0.34316
+  b2: 0.93964
 crown_ratio:
-  equation: 4.3.1.6
-  d0: 50.0
-  d1: -16.0
-  d2: null
+  equation: 4.3.1.5
+  d0: 38.26
+  d1: null
+  d2: -0.77
   weibull:
-    a: 4.0
-    b0: -6.0
-    b1: 1.0
-    c: 2.8
+    a: 4.0098
+    b0: -12.7054
+    b1: 1.2224
+    c: 2.74
 diameter_growth:
   model: ln_dds
   coefficients:

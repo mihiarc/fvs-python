@@ -724,11 +724,5 @@
       "scientific_name": "",
       "common_name": "other"
     }
-  ],
-  "notes": [
-    "Set based on the USDA Forest Service NRM TAXA lists and the USDA Plants database.",
-    "Other categories use FIA codes and NRM TAXA codes that best match the other category.",
-    "Either the FVS sequence number or species code must be used to specify a species in FVS keywords and Event Monitor functions.",
-    "FIA codes or PLANTS symbols are only recognized during data input and may not be used in FVS keywords."
   ]
 } 
