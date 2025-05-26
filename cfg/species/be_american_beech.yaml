@@ -1,0 +1,61 @@
+metadata:
+  code: BE
+  fia_code: 531
+  plants_symbol: FAGR
+  scientific_name: Fagus grandifolia
+  common_name: american beech
+  valid_site_species: true
+site_index:
+  min: 35
+  max: 70
+  site_index_group: 5
+  height_growth_equation: 'NC-128: 531'
+density:
+  sdi_max: 480
+height_diameter:
+  model: curtis_arney
+  curtis_arney:
+    p2: 287.9445676
+    p3: 3.27674704
+    p4: -0.26617485
+    dbw: 0.2
+  wykoff:
+    b1: 4.2378
+    b2: -4.108
+bark_ratio:
+  b1: -0.32
+  b2: 0.96
+crown_ratio:
+  equation: 4.3.1.6
+  d0: 52.0
+  d1: -18.5
+  d2: null
+  weibull:
+    a: 4.3
+    b0: -9.0
+    b1: 1.12
+    c: 3.2
+diameter_growth:
+  model: ln_dds
+  coefficients:
+    b1: -0.871047
+    b2: 1.217898
+    b3: -0.000105
+    b4: 0.240101
+    b5: 0.071213
+    b6: -2.2e-05
+    b7: -0.001242
+    b8: -0.000826
+    b9: -0.613177
+    b10: 0.315909
+    b11: -0.237088
+  dbh_bounds:
+    lower_limit: 26.7
+    upper_limit: 60.0
+volume:
+  pulpwood:
+    min_dbh: 6
+    top_diameter: 4
+  sawtimber:
+    min_dbh: 10
+    top_diameter: 7

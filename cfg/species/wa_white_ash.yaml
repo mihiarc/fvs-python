@@ -1,0 +1,60 @@
+metadata:
+  code: WA
+  fia_code: 541
+  scientific_name: Fraxinus americana
+  common_name: white ash
+  valid_site_species: true
+site_index:
+  min: 35
+  max: 95
+  site_index_group: 3
+  height_growth_equation: 'NC-128: 541'
+density:
+  sdi_max: 450
+height_diameter:
+  model: curtis_arney
+  curtis_arney:
+    p2: 91.35276617
+    p3: 6.99605268
+    p4: -1.22937669
+    dbw: 0.2
+  wykoff:
+    b1: 4.5959
+    b2: -6.4497
+bark_ratio:
+  b1: -0.45
+  b2: 0.9
+crown_ratio:
+  equation: 4.3.1.6
+  d0: 50.0
+  d1: -16.0
+  d2: null
+  weibull:
+    a: 4.0
+    b0: -6.0
+    b1: 1.0
+    c: 2.8
+diameter_growth:
+  model: ln_dds
+  coefficients:
+    b1: -1.315283
+    b2: 1.216264
+    b3: -8.0e-05
+    b4: 0.087907
+    b5: 0.487191
+    b6: 0.003424
+    b7: -0.000807
+    b8: -0.001262
+    b9: 0.018297
+    b10: -0.001091
+    b11: -0.021565
+  dbh_bounds:
+    lower_limit: 33.4
+    upper_limit: 84.0
+volume:
+  pulpwood:
+    min_dbh: 6
+    top_diameter: 4
+  sawtimber:
+    min_dbh: 10
+    top_diameter: 7

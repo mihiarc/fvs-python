@@ -1,0 +1,60 @@
+metadata:
+  code: PC
+  fia_code: 222
+  scientific_name: Taxodium ascendens
+  common_name: pond cypress
+  valid_site_species: true
+site_index:
+  min: 30
+  max: 120
+  site_index_group: 1
+  height_growth_equation: 'NC-128: 222'
+density:
+  sdi_max: 400
+height_diameter:
+  model: curtis_arney
+  curtis_arney:
+    p2: 162.6505825
+    p3: 3.20796415
+    p4: -0.47880203
+    dbw: 0.2
+  wykoff:
+    b1: 4.4603
+    b2: -5.0577
+bark_ratio:
+  b1: -0.45
+  b2: 0.9
+crown_ratio:
+  equation: 4.3.1.6
+  d0: 50.0
+  d1: -16.0
+  d2: null
+  weibull:
+    a: 4.0
+    b0: -6.0
+    b1: 1.0
+    c: 2.8
+diameter_growth:
+  model: ln_dds
+  coefficients:
+    b1: -4.224977
+    b2: 1.831739
+    b3: -0.000595
+    b4: 0.446234
+    b5: -0.125847
+    b6: 0.005975
+    b7: -0.000191
+    b8: -0.0006
+    b9: 2.356739
+    b10: -8.639114
+    b11: 5.615465
+  dbh_bounds:
+    lower_limit: 998.0
+    upper_limit: 999.0
+volume:
+  pulpwood:
+    min_dbh: 6
+    top_diameter: 4
+  sawtimber:
+    min_dbh: 10
+    top_diameter: 7

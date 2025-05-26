@@ -1,0 +1,60 @@
+metadata:
+  code: EL
+  fia_code: 391
+  scientific_name: Carpinus caroliniana
+  common_name: american hornbeam
+  valid_site_species: true
+site_index:
+  min: 35
+  max: 90
+  site_index_group: 1
+  height_growth_equation: 'NC-128: 391'
+density:
+  sdi_max: 400
+height_diameter:
+  model: curtis_arney
+  curtis_arney:
+    p2: 1005.80672
+    p3: 4.6473994
+    p4: -0.20336143
+    dbw: 0.1
+  wykoff:
+    b1: 4.3744
+    b2: -4.5257
+bark_ratio:
+  b1: -0.45
+  b2: 0.9
+crown_ratio:
+  equation: 4.3.1.6
+  d0: 50.0
+  d1: -16.0
+  d2: null
+  weibull:
+    a: 4.0
+    b0: -6.0
+    b1: 1.0
+    c: 2.8
+diameter_growth:
+  model: ln_dds
+  coefficients:
+    b1: -2.356235
+    b2: 1.479429
+    b3: -0.000517
+    b4: 0.425367
+    b5: -0.083383
+    b6: 0.002767
+    b7: -0.003132
+    b8: -0.001352
+    b9: -1.000956
+    b10: -0.064524
+    b11: -0.146557
+  dbh_bounds:
+    lower_limit: 31.4
+    upper_limit: 38.0
+volume:
+  pulpwood:
+    min_dbh: 6
+    top_diameter: 4
+  sawtimber:
+    min_dbh: 10
+    top_diameter: 7

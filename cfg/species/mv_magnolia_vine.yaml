@@ -1,0 +1,60 @@
+metadata:
+  code: MV
+  fia_code: 620
+  scientific_name: Magnolia species
+  common_name: magnolia vine
+  valid_site_species: true
+site_index:
+  min: 15
+  max: 75
+  site_index_group: 3
+  height_growth_equation: 'NC-128: 620'
+density:
+  sdi_max: 450
+height_diameter:
+  model: curtis_arney
+  curtis_arney:
+    p2: 184.1931837
+    p3: 2.84569124
+    p4: -0.36952511
+    dbw: 0.2
+  wykoff:
+    b1: 4.3609
+    b2: -4.1423
+bark_ratio:
+  b1: -0.45
+  b2: 0.9
+crown_ratio:
+  equation: 4.3.1.6
+  d0: 50.0
+  d1: -16.0
+  d2: null
+  weibull:
+    a: 4.0
+    b0: -6.0
+    b1: 1.0
+    c: 2.8
+diameter_growth:
+  model: ln_dds
+  coefficients:
+    b1: -2.516823
+    b2: 1.454173
+    b3: -0.000925
+    b4: 0.252335
+    b5: 0.243666
+    b6: 0.007223
+    b7: -0.001259
+    b8: -0.001111
+    b9: -0.025555
+    b10: 0.149606
+    b11: 0.032438
+  dbh_bounds:
+    lower_limit: 32.5
+    upper_limit: 43.0
+volume:
+  pulpwood:
+    min_dbh: 6
+    top_diameter: 4
+  sawtimber:
+    min_dbh: 10
+    top_diameter: 7

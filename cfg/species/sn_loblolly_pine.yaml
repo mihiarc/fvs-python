@@ -1,0 +1,60 @@
+metadata:
+  code: SN
+  fia_code: 131
+  scientific_name: Pinus taeda
+  common_name: loblolly pine
+  valid_site_species: true
+site_index:
+  min: 35
+  max: 95
+  site_index_group: 1
+  height_growth_equation: 'NC-128: 131'
+density:
+  sdi_max: 400
+height_diameter:
+  model: curtis_arney
+  curtis_arney:
+    p2: 281.3413276
+    p3: 3.51695826
+    p4: -0.3336282
+    dbw: 0.2
+  wykoff:
+    b1: 4.6135
+    b2: -5.7613
+bark_ratio:
+  b1: -0.45
+  b2: 0.9
+crown_ratio:
+  equation: 4.3.1.6
+  d0: 50.0
+  d1: -16.0
+  d2: null
+  weibull:
+    a: 4.0
+    b0: -6.0
+    b1: 1.0
+    c: 2.8
+diameter_growth:
+  model: ln_dds
+  coefficients:
+    b1: -1.321662
+    b2: 1.640507
+    b3: -0.000285
+    b4: 0.038193
+    b5: 0.086499
+    b6: 0.005844
+    b7: -0.004171
+    b8: -0.001962
+    b9: -1.251051
+    b10: -0.342161
+    b11: 0.077775
+  dbh_bounds:
+    lower_limit: 47.2
+    upper_limit: 108.0
+volume:
+  pulpwood:
+    min_dbh: 6
+    top_diameter: 4
+  sawtimber:
+    min_dbh: 10
+    top_diameter: 7

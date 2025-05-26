@@ -1,0 +1,61 @@
+metadata:
+  code: VP
+  fia_code: 131
+  plants_symbol: PIVI2
+  scientific_name: Pinus virginiana
+  common_name: virginia pine
+  valid_site_species: true
+site_index:
+  min: 35
+  max: 95
+  site_index_group: 1
+  height_growth_equation: 'NC-128: 131'
+density:
+  sdi_max: 400
+height_diameter:
+  model: curtis_arney
+  curtis_arney:
+    p2: 926.1802712
+    p3: 4.46209203
+    p4: -0.20053974
+    dbw: 0.5
+  wykoff:
+    b1: 4.4718
+    b2: -5.0078
+bark_ratio:
+  b1: -0.48
+  b2: 0.9
+crown_ratio:
+  equation: 4.3.1.6
+  d0: 48.0
+  d1: -16.5
+  d2: null
+  weibull:
+    a: 3.8
+    b0: -5.5
+    b1: 0.98
+    c: 2.6
+diameter_growth:
+  model: ln_dds
+  coefficients:
+    b1: -2.600803
+    b2: 1.525435
+    b3: -0.003519
+    b4: 0.615731
+    b5: 0.059646
+    b6: 0.001033
+    b7: -0.002304
+    b8: -0.002716
+    b9: -0.217771
+    b10: 0.018819
+    b11: -0.052142
+  dbh_bounds:
+    lower_limit: 998.0
+    upper_limit: 999.0
+volume:
+  pulpwood:
+    min_dbh: 6
+    top_diameter: 4
+  sawtimber:
+    min_dbh: 10
+    top_diameter: 7

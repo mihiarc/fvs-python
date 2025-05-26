@@ -1,88 +1,61 @@
-# Sweetgum (Liquidambar styraciflua) Configuration
-# Common hardwood species in the southern US
-
 metadata:
   code: SU
   fia_code: 611
   plants_symbol: LIST2
   scientific_name: Liquidambar styraciflua
   common_name: sweetgum
-  valid_site_species: true  # Valid for site index calculation
-
-# Site index parameters
+  valid_site_species: true
 site_index:
   min: 40
   max: 120
-  site_index_group: 3  # Group assignment for site index transformations
-  height_growth_equation: "NC-128: 611"  # Reference to site index curve
-
-# Stand density parameters
+  site_index_group: 3
+  height_growth_equation: 'NC-128: 611'
 density:
-  sdi_max: 465  # Maximum stand density index
-
-# Height-diameter relationship
+  sdi_max: 465
 height_diameter:
-  model: "curtis_arney"  # Default model to use
+  model: curtis_arney
   curtis_arney:
-    p2: 195.0254064
-    p3: 4.5764723
-    p4: -0.66343866
-    dbw: 0.5  # Diameter breakpoint for small trees
+    p2: 290.90548
+    p3: 3.6239536
+    p4: -0.3720123
+    dbw: 0.2
   wykoff:
-    b1: 4.6461
-    b2: -7.3657
-    
-# Bark ratio parameters
+    b1: 4.592
+    b2: -5.1719
 bark_ratio:
-  b1: -0.39900
+  b1: -0.399
   b2: 0.95042
-  
-# Crown ratio parameters
 crown_ratio:
-  equation: "4.3.1.6"  # Which equation form to use
+  equation: 4.3.1.6
   d0: 48.6583
   d1: -17.5043
-  d2: null  # Not used in this equation type
+  d2: null
   weibull:
     a: 4.1493
     b0: -9.8204
     b1: 1.1069
     c: 3.0293
-
-# Large tree diameter growth model parameters
-# Equation form: ln(DDS) = b1 + (b2 * ln(DBH)) + (b3 * DBH^2) + (b4 * ln(CR)) + (b5 * RELHT) + (b6 * SI) + 
-#                          (b7 * BA) + (b8 * PBAL) + (b9 * SLOPE) + (b10 * cos(ASP) * SLOPE) + 
-#                          (b11 * sin(ASP) * SLOPE) + FORTYPE + ECOUNIT + PLANT
-# 
-# COEFFICIENTS FROM SOUTHERN VARIANT SOURCE OF TRUTH (archive/data/archive/southern_variant_tables/large_tree_growth_parameters.csv)
-# SU = Sweetgum (Liquidambar styraciflua)
 diameter_growth:
-  model: "ln_dds"  # Natural log of the periodic change in squared inside-bark diameter
+  model: ln_dds
   coefficients:
-    # Coefficients for SU (Sweetgum)
-    b1: -1.324147   # Intercept
-    b2: 1.395884    # ln(DBH) coefficient
-    b3: -0.000490   # DBH^2 coefficient
-    b4: 0.145539    # ln(CR) coefficient
-    b5: 0.256765    # RELHT coefficient
-    b6: 0.001993    # SI coefficient
-    b7: -0.002978   # BA coefficient
-    b8: -0.001940   # PBAL coefficient
-    b9: -0.502977   # SLOPE coefficient
-    b10: 0.141477   # cos(ASP)*SLOPE coefficient
-    b11: 0.003549   # sin(ASP)*SLOPE coefficient
-  
-  # DBH bounding function values from diameter_bounding_limits.csv
-  # SU: DBH LOW = 39.6, DBH HI = 60.0 (bounding function applied)
+    b1: -1.324147
+    b2: 1.395884
+    b3: -0.00049
+    b4: 0.145539
+    b5: 0.256765
+    b6: 0.001993
+    b7: -0.002978
+    b8: -0.00194
+    b9: -0.502977
+    b10: 0.141477
+    b11: 0.003549
   dbh_bounds:
-    lower_limit: 39.6   # Diameter bounding function lower limit
-    upper_limit: 60.0   # Diameter bounding function upper limit
-
-# Volume specifications
+    lower_limit: 39.6
+    upper_limit: 60.0
 volume:
   pulpwood:
-    min_dbh: 6      # Minimum DBH in inches
-    top_diameter: 4 # Top diameter outside bark in inches
+    min_dbh: 6
+    top_diameter: 4
   sawtimber:
-    min_dbh: 10     # Default for hardwoods
-    top_diameter: 7 # Default for hardwoods 
+    min_dbh: 10
+    top_diameter: 7

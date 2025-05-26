@@ -1,0 +1,60 @@
+metadata:
+  code: AE
+  fia_code: 971
+  scientific_name: Ulmus americana
+  common_name: american elm
+  valid_site_species: true
+site_index:
+  min: 35
+  max: 90
+  site_index_group: 3
+  height_growth_equation: 'NC-128: 971'
+density:
+  sdi_max: 450
+height_diameter:
+  model: curtis_arney
+  curtis_arney:
+    p2: 418.5941897
+    p3: 3.17038578
+    p4: -0.18964025
+    dbw: 0.1
+  wykoff:
+    b1: 4.6008
+    b2: -7.2732
+bark_ratio:
+  b1: -0.45
+  b2: 0.9
+crown_ratio:
+  equation: 4.3.1.6
+  d0: 50.0
+  d1: -16.0
+  d2: null
+  weibull:
+    a: 4.0
+    b0: -6.0
+    b1: 1.0
+    c: 2.8
+diameter_growth:
+  model: ln_dds
+  coefficients:
+    b1: -0.510736
+    b2: 1.164789
+    b3: 0.0
+    b4: 0.127893
+    b5: 0.516517
+    b6: 0.00045
+    b7: -0.003114
+    b8: -0.001524
+    b9: -0.446461
+    b10: 0.228712
+    b11: 0.069806
+  dbh_bounds:
+    lower_limit: 46.7
+    upper_limit: 130.0
+volume:
+  pulpwood:
+    min_dbh: 6
+    top_diameter: 4
+  sawtimber:
+    min_dbh: 10
+    top_diameter: 7

@@ -1,0 +1,60 @@
+metadata:
+  code: OT
+  fia_code: 999
+  scientific_name: Tree species
+  common_name: other tree
+  valid_site_species: true
+site_index:
+  min: 15
+  max: 55
+  site_index_group: 3
+  height_growth_equation: 'NC-128: 999'
+density:
+  sdi_max: 450
+height_diameter:
+  model: curtis_arney
+  curtis_arney:
+    p2: 31021.35552
+    p3: 8.3958757
+    p4: -0.10372075
+    dbw: 0.2
+  wykoff:
+    b1: 3.9089
+    b2: -3.0149
+bark_ratio:
+  b1: -0.45
+  b2: 0.9
+crown_ratio:
+  equation: 4.3.1.6
+  d0: 50.0
+  d1: -16.0
+  d2: null
+  weibull:
+    a: 4.0
+    b0: -6.0
+    b1: 1.0
+    c: 2.8
+diameter_growth:
+  model: ln_dds
+  coefficients:
+    b1: -1645961.0
+    b2: 1.447657
+    b3: -0.002158
+    b4: 0.241038
+    b5: 0.719652
+    b6: -0.00325
+    b7: 1.0e-06
+    b8: -0.002468
+    b9: -1.080004
+    b10: 0.112883
+    b11: 0.158354
+  dbh_bounds:
+    lower_limit: 20.5
+    upper_limit: 25.0
+volume:
+  pulpwood:
+    min_dbh: 6
+    top_diameter: 4
+  sawtimber:
+    min_dbh: 10
+    top_diameter: 7

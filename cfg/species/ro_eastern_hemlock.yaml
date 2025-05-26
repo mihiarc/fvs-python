@@ -1,0 +1,60 @@
+metadata:
+  code: RO
+  fia_code: 261
+  scientific_name: Tsuga canadensis
+  common_name: eastern hemlock
+  valid_site_species: true
+site_index:
+  min: 25
+  max: 115
+  site_index_group: 1
+  height_growth_equation: 'NC-128: 261'
+density:
+  sdi_max: 400
+height_diameter:
+  model: curtis_arney
+  curtis_arney:
+    p2: 700.0636452
+    p3: 4.10607389
+    p4: -0.21392785
+    dbw: 0.2
+  wykoff:
+    b1: 4.5202
+    b2: -4.8896
+bark_ratio:
+  b1: -0.45
+  b2: 0.9
+crown_ratio:
+  equation: 4.3.1.6
+  d0: 50.0
+  d1: -16.0
+  d2: null
+  weibull:
+    a: 4.0
+    b0: -6.0
+    b1: 1.0
+    c: 2.8
+diameter_growth:
+  model: ln_dds
+  coefficients:
+    b1: -2.732646
+    b2: 1.49945
+    b3: -0.000729
+    b4: 0.344764
+    b5: 0.466082
+    b6: 0.004632
+    b7: -0.000908
+    b8: -0.001131
+    b9: -0.174932
+    b10: -0.042528
+    b11: 0.110336
+  dbh_bounds:
+    lower_limit: 998.0
+    upper_limit: 999.0
+volume:
+  pulpwood:
+    min_dbh: 6
+    top_diameter: 4
+  sawtimber:
+    min_dbh: 10
+    top_diameter: 7

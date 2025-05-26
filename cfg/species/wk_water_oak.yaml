@@ -1,0 +1,60 @@
+metadata:
+  code: WK
+  fia_code: 818
+  scientific_name: Quercus nigra
+  common_name: water oak
+  valid_site_species: true
+site_index:
+  min: 30
+  max: 115
+  site_index_group: 3
+  height_growth_equation: 'NC-128: 818'
+density:
+  sdi_max: 450
+height_diameter:
+  model: curtis_arney
+  curtis_arney:
+    p2: 470.0617193
+    p3: 3.78892643
+    p4: -0.25123824
+    dbw: 0.1
+  wykoff:
+    b1: 4.5577
+    b2: -4.9595
+bark_ratio:
+  b1: -0.45
+  b2: 0.9
+crown_ratio:
+  equation: 4.3.1.6
+  d0: 50.0
+  d1: -16.0
+  d2: null
+  weibull:
+    a: 4.0
+    b0: -6.0
+    b1: 1.0
+    c: 2.8
+diameter_growth:
+  model: ln_dds
+  coefficients:
+    b1: -0.845477
+    b2: 1.488444
+    b3: -0.000286
+    b4: 0.053292
+    b5: 0.130856
+    b6: 0.00533
+    b7: -0.003479
+    b8: -0.001641
+    b9: -0.151128
+    b10: 0.073469
+    b11: -0.165679
+  dbh_bounds:
+    lower_limit: 47.6
+    upper_limit: 72.0
+volume:
+  pulpwood:
+    min_dbh: 6
+    top_diameter: 4
+  sawtimber:
+    min_dbh: 10
+    top_diameter: 7

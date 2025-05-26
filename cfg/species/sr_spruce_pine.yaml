@@ -1,0 +1,60 @@
+metadata:
+  code: SR
+  fia_code: 115
+  scientific_name: Pinus glabra
+  common_name: spruce pine
+  valid_site_species: true
+site_index:
+  min: 45
+  max: 90
+  site_index_group: 1
+  height_growth_equation: 'NC-128: 115'
+density:
+  sdi_max: 400
+height_diameter:
+  model: curtis_arney
+  curtis_arney:
+    p2: 333.3145742
+    p3: 4.13108244
+    p4: -0.37092539
+    dbw: 0.5
+  wykoff:
+    b1: 4.7258
+    b2: -6.7703
+bark_ratio:
+  b1: -0.45
+  b2: 0.9
+crown_ratio:
+  equation: 4.3.1.6
+  d0: 50.0
+  d1: -16.0
+  d2: null
+  weibull:
+    a: 4.0
+    b0: -6.0
+    b1: 1.0
+    c: 2.8
+diameter_growth:
+  model: ln_dds
+  coefficients:
+    b1: -2.431165
+    b2: 1.691731
+    b3: -0.000945
+    b4: 0.588558
+    b5: -0.326169
+    b6: 0.000109
+    b7: -0.001847
+    b8: -0.001394
+    b9: -0.324278
+    b10: 0.526867
+    b11: 0.009866
+  dbh_bounds:
+    lower_limit: 32.6
+    upper_limit: 48.0
+volume:
+  pulpwood:
+    min_dbh: 6
+    top_diameter: 4
+  sawtimber:
+    min_dbh: 10
+    top_diameter: 7

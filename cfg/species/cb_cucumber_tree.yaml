@@ -1,0 +1,60 @@
+metadata:
+  code: CB
+  fia_code: 621
+  scientific_name: Magnolia acuminata
+  common_name: cucumber tree
+  valid_site_species: true
+site_index:
+  min: 30
+  max: 125
+  site_index_group: 3
+  height_growth_equation: 'NC-128: 621'
+density:
+  sdi_max: 450
+height_diameter:
+  model: curtis_arney
+  curtis_arney:
+    p2: 182.6306309
+    p3: 3.12897883
+    p4: -0.46391125
+    dbw: 0.1
+  wykoff:
+    b1: 4.7342
+    b2: -6.2674
+bark_ratio:
+  b1: -0.45
+  b2: 0.9
+crown_ratio:
+  equation: 4.3.1.6
+  d0: 50.0
+  d1: -16.0
+  d2: null
+  weibull:
+    a: 4.0
+    b0: -6.0
+    b1: 1.0
+    c: 2.8
+diameter_growth:
+  model: ln_dds
+  coefficients:
+    b1: -0.295485
+    b2: 1.239946
+    b3: -0.000163
+    b4: 0.020622
+    b5: 0.431515
+    b6: 0.00383
+    b7: -0.002257
+    b8: -0.001826
+    b9: -0.105862
+    b10: 0.191286
+    b11: -0.324254
+  dbh_bounds:
+    lower_limit: 46.2
+    upper_limit: 84.0
+volume:
+  pulpwood:
+    min_dbh: 6
+    top_diameter: 4
+  sawtimber:
+    min_dbh: 10
+    top_diameter: 7

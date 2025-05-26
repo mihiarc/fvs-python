@@ -1,0 +1,60 @@
+metadata:
+  code: RL
+  fia_code: 972
+  scientific_name: Ulmus rubra
+  common_name: red elm
+  valid_site_species: true
+site_index:
+  min: 35
+  max: 90
+  site_index_group: 3
+  height_growth_equation: 'NC-128: 972'
+density:
+  sdi_max: 450
+height_diameter:
+  model: curtis_arney
+  curtis_arney:
+    p2: 1337.547184
+    p3: 4.48953501
+    p4: -0.14749529
+    dbw: 0.1
+  wykoff:
+    b1: 4.6238
+    b2: -7.4847
+bark_ratio:
+  b1: -0.45
+  b2: 0.9
+crown_ratio:
+  equation: 4.3.1.6
+  d0: 50.0
+  d1: -16.0
+  d2: null
+  weibull:
+    a: 4.0
+    b0: -6.0
+    b1: 1.0
+    c: 2.8
+diameter_growth:
+  model: ln_dds
+  coefficients:
+    b1: -0.229212
+    b2: 1.060275
+    b3: 0.0
+    b4: 0.116801
+    b5: 0.430393
+    b6: -0.001806
+    b7: -0.00133
+    b8: -0.002098
+    b9: 0.158824
+    b10: -0.216082
+    b11: 0.037837
+  dbh_bounds:
+    lower_limit: 35.8
+    upper_limit: 80.0
+volume:
+  pulpwood:
+    min_dbh: 6
+    top_diameter: 4
+  sawtimber:
+    min_dbh: 10
+    top_diameter: 7

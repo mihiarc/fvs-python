@@ -1,0 +1,60 @@
+metadata:
+  code: JU
+  fia_code: 68
+  scientific_name: Juniperus virginiana
+  common_name: eastern juniper
+  valid_site_species: true
+site_index:
+  min: 15
+  max: 70
+  site_index_group: 1
+  height_growth_equation: 'NC-128: 68'
+density:
+  sdi_max: 400
+height_diameter:
+  model: curtis_arney
+  curtis_arney:
+    p2: 212.7932729
+    p3: 3.47154903
+    p4: -0.3258523
+    dbw: 0.3
+  wykoff:
+    b1: 4.0374
+    b2: -4.2964
+bark_ratio:
+  b1: -0.45
+  b2: 0.9
+crown_ratio:
+  equation: 4.3.1.6
+  d0: 50.0
+  d1: -16.0
+  d2: null
+  weibull:
+    a: 4.0
+    b0: -6.0
+    b1: 1.0
+    c: 2.8
+diameter_growth:
+  model: ln_dds
+  coefficients:
+    b1: -1.864431
+    b2: 1.403065
+    b3: -0.001237
+    b4: 0.273616
+    b5: 0.177408
+    b6: -0.000374
+    b7: -0.00362
+    b8: -0.00189
+    b9: -0.231988
+    b10: 0.077542
+    b11: -0.025792
+  dbh_bounds:
+    lower_limit: 998.0
+    upper_limit: 999.0
+volume:
+  pulpwood:
+    min_dbh: 6
+    top_diameter: 4
+  sawtimber:
+    min_dbh: 10
+    top_diameter: 7

@@ -1,0 +1,60 @@
+metadata:
+  code: AP
+  fia_code: 762
+  scientific_name: Prunus americana
+  common_name: american plum
+  valid_site_species: true
+site_index:
+  min: 15
+  max: 40
+  site_index_group: 3
+  height_growth_equation: 'NC-128: 762'
+density:
+  sdi_max: 450
+height_diameter:
+  model: curtis_arney
+  curtis_arney:
+    p2: 574.0200612
+    p3: 3.86373895
+    p4: -0.16318776
+    dbw: 0.2
+  wykoff:
+    b1: 3.9678
+    b2: -3.251
+bark_ratio:
+  b1: -0.45
+  b2: 0.9
+crown_ratio:
+  equation: 4.3.1.6
+  d0: 50.0
+  d1: -16.0
+  d2: null
+  weibull:
+    a: 4.0
+    b0: -6.0
+    b1: 1.0
+    c: 2.8
+diameter_growth:
+  model: ln_dds
+  coefficients:
+    b1: -1.746231
+    b2: 1.234133
+    b3: -1.7e-05
+    b4: 0.285511
+    b5: 0.180572
+    b6: 0.002596
+    b7: -0.001709
+    b8: -9.9e-05
+    b9: -0.872861
+    b10: -0.078948
+    b11: -0.023609
+  dbh_bounds:
+    lower_limit: 21.2
+    upper_limit: 22.0
+volume:
+  pulpwood:
+    min_dbh: 6
+    top_diameter: 4
+  sawtimber:
+    min_dbh: 10
+    top_diameter: 7

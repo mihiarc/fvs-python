@@ -1,0 +1,60 @@
+metadata:
+  code: LO
+  fia_code: 317
+  scientific_name: Acer saccharinum
+  common_name: silver maple
+  valid_site_species: true
+site_index:
+  min: 30
+  max: 65
+  site_index_group: 3
+  height_growth_equation: 'NC-128: 317'
+density:
+  sdi_max: 450
+height_diameter:
+  model: curtis_arney
+  curtis_arney:
+    p2: 153.9588254
+    p3: 3.11348786
+    p4: -0.38947124
+    dbw: 0.2
+  wykoff:
+    b1: 4.2959
+    b2: -5.3332
+bark_ratio:
+  b1: -0.45
+  b2: 0.9
+crown_ratio:
+  equation: 4.3.1.6
+  d0: 50.0
+  d1: -16.0
+  d2: null
+  weibull:
+    a: 4.0
+    b0: -6.0
+    b1: 1.0
+    c: 2.8
+diameter_growth:
+  model: ln_dds
+  coefficients:
+    b1: -3.64066
+    b2: 1.448503
+    b3: -0.00021
+    b4: 0.549199
+    b5: 0.073672
+    b6: 0.009377
+    b7: -0.003217
+    b8: -0.000779
+    b9: -0.099727
+    b10: -0.1742
+    b11: -0.102828
+  dbh_bounds:
+    lower_limit: 58.8
+    upper_limit: 69.0
+volume:
+  pulpwood:
+    min_dbh: 6
+    top_diameter: 4
+  sawtimber:
+    min_dbh: 10
+    top_diameter: 7

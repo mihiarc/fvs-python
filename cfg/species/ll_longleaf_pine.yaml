@@ -1,0 +1,61 @@
+metadata:
+  code: LL
+  fia_code: 121
+  plants_symbol: PIPA2
+  scientific_name: Pinus palustris
+  common_name: longleaf pine
+  valid_site_species: true
+site_index:
+  min: 45
+  max: 125
+  site_index_group: 1
+  height_growth_equation: 'NC-128: 121'
+density:
+  sdi_max: 350
+height_diameter:
+  model: curtis_arney
+  curtis_arney:
+    p2: 98.56082813
+    p3: 3.89930709
+    p4: -0.86730393
+    dbw: 0.5
+  wykoff:
+    b1: 4.5991
+    b2: -5.9111
+bark_ratio:
+  b1: -0.52
+  b2: 0.89
+crown_ratio:
+  equation: 4.3.1.6
+  d0: 45.0
+  d1: -14.5
+  d2: null
+  weibull:
+    a: 3.7
+    b0: -4.8
+    b1: 0.95
+    c: 2.9
+diameter_growth:
+  model: ln_dds
+  coefficients:
+    b1: -1.331052
+    b2: 1.098112
+    b3: -0.001834
+    b4: 0.184512
+    b5: 0.388018
+    b6: 0.008774
+    b7: -0.002182
+    b8: -0.002898
+    b9: 0.225213
+    b10: 0.086883
+    b11: 0.107445
+  dbh_bounds:
+    lower_limit: 998.0
+    upper_limit: 999.0
+volume:
+  pulpwood:
+    min_dbh: 6
+    top_diameter: 4
+  sawtimber:
+    min_dbh: 10
+    top_diameter: 7

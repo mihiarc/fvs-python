@@ -1,0 +1,60 @@
+metadata:
+  code: PU
+  fia_code: 129
+  scientific_name: Pinus serotina
+  common_name: pond pine
+  valid_site_species: true
+site_index:
+  min: 35
+  max: 100
+  site_index_group: 1
+  height_growth_equation: 'NC-128: 129'
+density:
+  sdi_max: 400
+height_diameter:
+  model: curtis_arney
+  curtis_arney:
+    p2: 3919.995225
+    p3: 6.87312726
+    p4: -0.19063343
+    dbw: 0.5
+  wykoff:
+    b1: 4.2899
+    b2: -4.1019
+bark_ratio:
+  b1: -0.45
+  b2: 0.9
+crown_ratio:
+  equation: 4.3.1.6
+  d0: 50.0
+  d1: -16.0
+  d2: null
+  weibull:
+    a: 4.0
+    b0: -6.0
+    b1: 1.0
+    c: 2.8
+diameter_growth:
+  model: ln_dds
+  coefficients:
+    b1: -3.791466
+    b2: 1.796179
+    b3: -0.005109
+    b4: 0.902185
+    b5: 1.0e-06
+    b6: -0.002009
+    b7: -0.005287
+    b8: -0.003203
+    b9: 0.501409
+    b10: -1.788107
+    b11: -1.231519
+  dbh_bounds:
+    lower_limit: 18.9
+    upper_limit: 24.0
+volume:
+  pulpwood:
+    min_dbh: 6
+    top_diameter: 4
+  sawtimber:
+    min_dbh: 10
+    top_diameter: 7

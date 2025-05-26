@@ -1,0 +1,60 @@
+metadata:
+  code: RD
+  fia_code: 471
+  scientific_name: Cercis canadensis
+  common_name: redbud
+  valid_site_species: true
+site_index:
+  min: 35
+  max: 85
+  site_index_group: 3
+  height_growth_equation: 'NC-128: 471'
+density:
+  sdi_max: 450
+height_diameter:
+  model: curtis_arney
+  curtis_arney:
+    p2: 103.1767713
+    p3: 2.21695491
+    p4: -0.3596216
+    dbw: 0.2
+  wykoff:
+    b1: 3.7512
+    b2: -2.5539
+bark_ratio:
+  b1: -0.45
+  b2: 0.9
+crown_ratio:
+  equation: 4.3.1.6
+  d0: 50.0
+  d1: -16.0
+  d2: null
+  weibull:
+    a: 4.0
+    b0: -6.0
+    b1: 1.0
+    c: 2.8
+diameter_growth:
+  model: ln_dds
+  coefficients:
+    b1: -1.062539
+    b2: 1.17405
+    b3: 0.0
+    b4: 0.239942
+    b5: 0.411945
+    b6: -0.005893
+    b7: -0.001141
+    b8: -0.002822
+    b9: -0.391784
+    b10: 0.039121
+    b11: -0.03835
+  dbh_bounds:
+    lower_limit: 11.3
+    upper_limit: 13.4
+volume:
+  pulpwood:
+    min_dbh: 6
+    top_diameter: 4
+  sawtimber:
+    min_dbh: 10
+    top_diameter: 7

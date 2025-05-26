@@ -1,0 +1,60 @@
+metadata:
+  code: QS
+  fia_code: 491
+  scientific_name: Cornus florida
+  common_name: flowering dogwood
+  valid_site_species: true
+site_index:
+  min: 15
+  max: 125
+  site_index_group: 3
+  height_growth_equation: 'NC-128: 491'
+density:
+  sdi_max: 450
+height_diameter:
+  model: curtis_arney
+  curtis_arney:
+    p2: 215.0009406
+    p3: 3.14204012
+    p4: -0.39067352
+    dbw: 0.1
+  wykoff:
+    b1: 4.6106
+    b2: -5.438
+bark_ratio:
+  b1: -0.45
+  b2: 0.9
+crown_ratio:
+  equation: 4.3.1.6
+  d0: 50.0
+  d1: -16.0
+  d2: null
+  weibull:
+    a: 4.0
+    b0: -6.0
+    b1: 1.0
+    c: 2.8
+diameter_growth:
+  model: ln_dds
+  coefficients:
+    b1: -0.328678
+    b2: 1.282494
+    b3: -0.000351
+    b4: 0.071625
+    b5: 0.4556
+    b6: -0.001173
+    b7: -0.000482
+    b8: -0.002125
+    b9: -0.692617
+    b10: 0.176391
+    b11: 0.069174
+  dbh_bounds:
+    lower_limit: 40.6
+    upper_limit: 96.0
+volume:
+  pulpwood:
+    min_dbh: 6
+    top_diameter: 4
+  sawtimber:
+    min_dbh: 10
+    top_diameter: 7

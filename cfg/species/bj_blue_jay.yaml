@@ -1,0 +1,60 @@
+metadata:
+  code: BJ
+  fia_code: 999
+  scientific_name: Cyanocitta cristata
+  common_name: blue jay
+  valid_site_species: true
+site_index:
+  min: 25
+  max: 65
+  site_index_group: 3
+  height_growth_equation: 'NC-128: 999'
+density:
+  sdi_max: 450
+height_diameter:
+  model: curtis_arney
+  curtis_arney:
+    p2: 157.4828626
+    p3: 3.38919504
+    p4: -0.39151499
+    dbw: 0.2
+  wykoff:
+    b1: 3.9191
+    b2: -4.3503
+bark_ratio:
+  b1: -0.45
+  b2: 0.9
+crown_ratio:
+  equation: 4.3.1.6
+  d0: 50.0
+  d1: -16.0
+  d2: null
+  weibull:
+    a: 4.0
+    b0: -6.0
+    b1: 1.0
+    c: 2.8
+diameter_growth:
+  model: ln_dds
+  coefficients:
+    b1: -1.948938
+    b2: 1.611438
+    b3: -0.000844
+    b4: 0.135696
+    b5: 0.056739
+    b6: 0.00274
+    b7: -0.003558
+    b8: -0.001825
+    b9: -0.071837
+    b10: -0.147407
+    b11: 0.241882
+  dbh_bounds:
+    lower_limit: 22.7
+    upper_limit: 27.0
+volume:
+  pulpwood:
+    min_dbh: 6
+    top_diameter: 4
+  sawtimber:
+    min_dbh: 10
+    top_diameter: 7

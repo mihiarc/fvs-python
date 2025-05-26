@@ -1,0 +1,60 @@
+metadata:
+  code: WI
+  fia_code: 920
+  scientific_name: Salix species
+  common_name: willow
+  valid_site_species: true
+site_index:
+  min: 15
+  max: 110
+  site_index_group: 3
+  height_growth_equation: 'NC-128: 920'
+density:
+  sdi_max: 450
+height_diameter:
+  model: curtis_arney
+  curtis_arney:
+    p2: 408.2772475
+    p3: 3.81808285
+    p4: -0.27210505
+    dbw: 0.1
+  wykoff:
+    b1: 4.4911
+    b2: -5.7928
+bark_ratio:
+  b1: -0.45
+  b2: 0.9
+crown_ratio:
+  equation: 4.3.1.6
+  d0: 50.0
+  d1: -16.0
+  d2: null
+  weibull:
+    a: 4.0
+    b0: -6.0
+    b1: 1.0
+    c: 2.8
+diameter_growth:
+  model: ln_dds
+  coefficients:
+    b1: -1.109398
+    b2: 1.187096
+    b3: 0.0
+    b4: 0.202056
+    b5: 0.093966
+    b6: 0.006303
+    b7: 1.0e-06
+    b8: -0.001075
+    b9: -0.135482
+    b10: -0.083002
+    b11: 0.059529
+  dbh_bounds:
+    lower_limit: 38.8
+    upper_limit: 60.0
+volume:
+  pulpwood:
+    min_dbh: 6
+    top_diameter: 4
+  sawtimber:
+    min_dbh: 10
+    top_diameter: 7

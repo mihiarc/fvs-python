@@ -1,0 +1,60 @@
+metadata:
+  code: RA
+  fia_code: 544
+  scientific_name: Fraxinus pennsylvanica
+  common_name: red ash
+  valid_site_species: true
+site_index:
+  min: 15
+  max: 60
+  site_index_group: 3
+  height_growth_equation: 'NC-128: 544'
+density:
+  sdi_max: 450
+height_diameter:
+  model: curtis_arney
+  curtis_arney:
+    p2: 257.0532628
+    p3: 3.4047448
+    p4: -0.30291274
+    dbw: 0.2
+  wykoff:
+    b1: 4.0965
+    b2: -3.925
+bark_ratio:
+  b1: -0.45
+  b2: 0.9
+crown_ratio:
+  equation: 4.3.1.6
+  d0: 50.0
+  d1: -16.0
+  d2: null
+  weibull:
+    a: 4.0
+    b0: -6.0
+    b1: 1.0
+    c: 2.8
+diameter_growth:
+  model: ln_dds
+  coefficients:
+    b1: -2.096616
+    b2: 1.254708
+    b3: 0.0
+    b4: 0.344067
+    b5: 0.176829
+    b6: 0.002656
+    b7: -0.002625
+    b8: -0.000811
+    b9: -1.762191
+    b10: 1.202555
+    b11: 0.383865
+  dbh_bounds:
+    lower_limit: 19.2
+    upper_limit: 36.0
+volume:
+  pulpwood:
+    min_dbh: 6
+    top_diameter: 4
+  sawtimber:
+    min_dbh: 10
+    top_diameter: 7

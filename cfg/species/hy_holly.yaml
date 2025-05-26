@@ -1,0 +1,60 @@
+metadata:
+  code: HY
+  fia_code: 591
+  scientific_name: Ilex opaca
+  common_name: holly
+  valid_site_species: true
+site_index:
+  min: 35
+  max: 70
+  site_index_group: 3
+  height_growth_equation: 'NC-128: 591'
+density:
+  sdi_max: 450
+height_diameter:
+  model: curtis_arney
+  curtis_arney:
+    p2: 1467.643523
+    p3: 5.33438509
+    p4: -0.17395792
+    dbw: 0.1
+  wykoff:
+    b1: 4.0151
+    b2: -4.3314
+bark_ratio:
+  b1: -0.45
+  b2: 0.9
+crown_ratio:
+  equation: 4.3.1.6
+  d0: 50.0
+  d1: -16.0
+  d2: null
+  weibull:
+    a: 4.0
+    b0: -6.0
+    b1: 1.0
+    c: 2.8
+diameter_growth:
+  model: ln_dds
+  coefficients:
+    b1: -1.981934
+    b2: 1.456263
+    b3: -0.002061
+    b4: 0.215249
+    b5: -0.414064
+    b6: 0.00424
+    b7: -0.003096
+    b8: -0.000394
+    b9: -0.303627
+    b10: 0.210525
+    b11: -0.159362
+  dbh_bounds:
+    lower_limit: 998.0
+    upper_limit: 999.0
+volume:
+  pulpwood:
+    min_dbh: 6
+    top_diameter: 4
+  sawtimber:
+    min_dbh: 10
+    top_diameter: 7

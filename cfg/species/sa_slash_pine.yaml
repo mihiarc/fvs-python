@@ -1,96 +1,68 @@
-# Slash Pine (Pinus elliottii) Configuration
-# Major southern pine species commonly used in plantations
-
 metadata:
   code: SA
   fia_code: 111
   plants_symbol: PIEL
   scientific_name: Pinus elliottii
   common_name: slash pine
-  valid_site_species: true  # Valid for site index calculation
-
-# Site index parameters
+  valid_site_species: true
 site_index:
   min: 35
   max: 105
-  site_index_group: 1  # Group assignment for site index transformations
-  height_growth_equation: "NC-128: 111/99"  # Reference to site index curve
-
-# Stand density parameters
+  site_index_group: 1
+  height_growth_equation: 'NC-128: 111/99'
 density:
-  sdi_max: 385  # Maximum stand density index
-
-# Height-diameter relationship
+  sdi_max: 385
 height_diameter:
-  model: "curtis_arney"  # Default model to use
+  model: curtis_arney
   curtis_arney:
     p2: 1087.101439
     p3: 5.10450596
     p4: -0.24284896
-    dbw: 0.5  # Diameter breakpoint for small trees
-  # Special Fort Bragg Military Reservation parameters
+    dbw: 0.5
   fort_bragg:
     p2: 110.3
-    p3: 7.0670
-    p4: -1.0420
+    p3: 7.067
+    p4: -1.042
     dbw: 0.5
   wykoff:
     b1: 4.6561
     b2: -6.2258
     fort_bragg_b1: 4.787
     fort_bragg_b2: -8.015
-    
-# Bark ratio parameters
 bark_ratio:
   b1: -0.55073
   b2: 0.91887
-  
-# Crown ratio parameters
 crown_ratio:
-  equation: "4.3.1.6"  # Which equation form to use
+  equation: 4.3.1.6
   d0: 42.8255
   d1: -15.0135
-  d2: null  # Not used in this equation type
+  d2: null
   weibull:
-    a: 3.8940
+    a: 3.894
     b0: -4.7342
     b1: 0.9786
     c: 2.9082
-
-# Large tree diameter growth model parameters
-# Equation form: ln(DDS) = b1 + (b2 * ln(DBH)) + (b3 * DBH^2) + (b4 * ln(CR)) + (b5 * RELHT) + (b6 * SI) + 
-#                          (b7 * BA) + (b8 * PBAL) + (b9 * SLOPE) + (b10 * cos(ASP) * SLOPE) + 
-#                          (b11 * sin(ASP) * SLOPE) + FORTYPE + ECOUNIT + PLANT
-# 
-# COEFFICIENTS FROM SOUTHERN VARIANT SOURCE OF TRUTH (archive/data/archive/southern_variant_tables/large_tree_growth_parameters.csv)
-# SA = Slash Pine (Pinus elliottii)
 diameter_growth:
-  model: "ln_dds"  # Natural log of the periodic change in squared inside-bark diameter
+  model: ln_dds
   coefficients:
-    # Coefficients for SA (Slash Pine)
-    b1: -1.641698   # Intercept
-    b2: 1.461093    # ln(DBH) coefficient
-    b3: -0.002530   # DBH^2 coefficient
-    b4: 0.265872    # ln(CR) coefficient
-    b5: 0.069104    # RELHT coefficient
-    b6: 0.006851    # SI coefficient
-    b7: -0.002939   # BA coefficient
-    b8: -0.004873   # PBAL coefficient
-    b9: -0.018479   # SLOPE coefficient
-    b10: -0.193157  # cos(ASP)*SLOPE coefficient
-    b11: -0.251016  # sin(ASP)*SLOPE coefficient
-  
-  # DBH bounding function values from diameter_bounding_limits.csv
-  # SA: DBH LOW = 998.0, DBH HI = 999.0 (no bounding function applied)
+    b1: -1.641698
+    b2: 1.461093
+    b3: -0.00253
+    b4: 0.265872
+    b5: 0.069104
+    b6: 0.006851
+    b7: -0.002939
+    b8: -0.004873
+    b9: -0.018479
+    b10: -0.193157
+    b11: -0.251016
   dbh_bounds:
-    lower_limit: 998.0  # No diameter bounding function
-    upper_limit: 999.0  # No diameter bounding function
-
-# Volume specifications
+    lower_limit: 998.0
+    upper_limit: 999.0
 volume:
   pulpwood:
-    min_dbh: 6      # Minimum DBH in inches
-    top_diameter: 4 # Top diameter outside bark in inches
+    min_dbh: 6
+    top_diameter: 4
   sawtimber:
-    min_dbh: 10     # Default for softwoods
-    top_diameter: 7 # Default for softwoods 
+    min_dbh: 10
+    top_diameter: 7

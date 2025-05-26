@@ -1,94 +1,65 @@
-# Loblolly Pine (Pinus taeda) Configuration
-# One of the most important commercial pine species in the Southern US
-
 metadata:
   code: LP
   fia_code: 131
   plants_symbol: PITA
   scientific_name: Pinus taeda
   common_name: loblolly pine
-  valid_site_species: true  # Valid for site index calculation
-
-# Site index parameters
+  valid_site_species: true
 site_index:
   min: 40
   max: 125
-  site_index_group: 4  # Group assignment for site index transformations
-  height_growth_equation: "NC-128: 131/125"  # Reference to site index curve
-
-# Stand density parameters
+  site_index_group: 4
+  height_growth_equation: 'NC-128: 131/125'
 density:
-  sdi_max: 480  # Maximum stand density index
-
-# Height-diameter relationship
+  sdi_max: 480
 height_diameter:
-  model: "curtis_arney"  # Default model to use
+  model: curtis_arney
   curtis_arney:
     p2: 243.860648
     p3: 4.28460566
     p4: -0.47130185
-    dbw: 0.5  # Diameter breakpoint for small trees
+    dbw: 0.5
   wykoff:
     b1: 4.6897
     b2: -6.8801
-    
-# Bark ratio parameters
 bark_ratio:
-  b1: -0.48140
+  b1: -0.4814
   b2: 0.91413
-  
-# Crown ratio parameters
 crown_ratio:
-  equation: "4.3.1.3"  # Which equation form to use
+  equation: 4.3.1.3
   d0: 3.8284
   d1: -0.2234
   d2: 0.0172
   weibull:
     a: 4.9701
-    b0: -14.6680
+    b0: -14.668
     b1: 1.3196
     c: 2.8517
-
-# Large tree diameter growth model parameters
-# Equation form: ln(DDS) = b1 + (b2 * ln(DBH)) + (b3 * DBH^2) + (b4 * ln(CR)) + (b5 * RELHT) + (b6 * SI) + 
-#                          (b7 * BA) + (b8 * PBAL) + (b9 * SLOPE) + (b10 * cos(ASP) * SLOPE) + 
-#                          (b11 * sin(ASP) * SLOPE) + FORTYPE + ECOUNIT + PLANT
-# 
-# COEFFICIENTS FROM SOUTHERN VARIANT SOURCE OF TRUTH (docs/sn_variant/01_diameter_growth_models.md)
-# Table 4.7.1.1 - Coefficients (b1-b6) for Diameter Increment Model
-# Table 4.7.1.2 - Coefficients (b7-b11) for Non-Categorical Variables
 diameter_growth:
-  model: "ln_dds"  # Natural log of the periodic change in squared inside-bark diameter
+  model: ln_dds
   coefficients:
-    # Table 4.7.1.1 coefficients for LP (Loblolly Pine)
-    b1: -1.321662   # Intercept
-    b2: 1.640507    # ln(DBH) coefficient
-    b3: -0.000285   # DBH^2 coefficient
-    b4: 0.038193    # ln(CR) coefficient
-    b5: 0.086499    # RELHT coefficient
-    b6: 0.005844    # SI coefficient
-    # Table 4.7.1.2 coefficients for LP (Loblolly Pine)
-    b7: -0.003408   # BA coefficient
-    b8: -0.004184   # PBAL coefficient
-    b9: -0.759347   # SLOPE coefficient
-    b10: 0.185360   # cos(ASP)*SLOPE coefficient
-    b11: -0.072842  # sin(ASP)*SLOPE coefficient
-  
-  # DBH bounding function values from Table 4.7.1.8
-  # LP: DBH LOW = 998.0, DBH HI = 999.0 (no bounding function applied)
+    b1: -1.321662
+    b2: 1.640507
+    b3: -0.000285
+    b4: 0.038193
+    b5: 0.086499
+    b6: 0.005844
+    b7: -0.003408
+    b8: -0.004184
+    b9: -0.759347
+    b10: 0.18536
+    b11: -0.072842
   dbh_bounds:
-    lower_limit: 998.0  # No diameter bounding function
-    upper_limit: 999.0  # No diameter bounding function
-  
-  # Special case for Fort Bragg Military Reservation (location code 701)
+    lower_limit: 998.0
+    upper_limit: 999.0
   fort_bragg:
-    equation: "DG = (DBH * BRATIO) * ((-0.3428 * (-0.1741 - EXP(-0.1328 * DBH))) + (0.1145 * CR) - (0.0001682 * BA) - (0.00003978 * PBA) - (0.159400 * (PCT^-0.1299)) + (0.0006204 * SI) + (0.02474 * HREL))"
-
-# Volume specifications
+    equation: DG = (DBH * BRATIO) * ((-0.3428 * (-0.1741 - EXP(-0.1328 * DBH))) +
+      (0.1145 * CR) - (0.0001682 * BA) - (0.00003978 * PBA) - (0.159400 * (PCT^-0.1299))
+      + (0.0006204 * SI) + (0.02474 * HREL))
 volume:
   pulpwood:
-    min_dbh: 6      # Minimum DBH in inches
-    top_diameter: 4 # Top diameter outside bark in inches
+    min_dbh: 6
+    top_diameter: 4
   sawtimber:
-    min_dbh: 10     # Default for softwoods
-    top_diameter: 7 # Default for softwoods 
+    min_dbh: 10
+    top_diameter: 7

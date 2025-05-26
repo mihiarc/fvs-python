@@ -1,0 +1,60 @@
+metadata:
+  code: DW
+  fia_code: 491
+  scientific_name: Cornus florida
+  common_name: dogwood
+  valid_site_species: true
+site_index:
+  min: 15
+  max: 45
+  site_index_group: 3
+  height_growth_equation: 'NC-128: 491'
+density:
+  sdi_max: 450
+height_diameter:
+  model: curtis_arney
+  curtis_arney:
+    p2: 863.0501053
+    p3: 4.38560239
+    p4: -0.14812185
+    dbw: 0.1
+  wykoff:
+    b1: 3.7301
+    b2: -2.7758
+bark_ratio:
+  b1: -0.45
+  b2: 0.9
+crown_ratio:
+  equation: 4.3.1.6
+  d0: 50.0
+  d1: -16.0
+  d2: null
+  weibull:
+    a: 4.0
+    b0: -6.0
+    b1: 1.0
+    c: 2.8
+diameter_growth:
+  model: ln_dds
+  coefficients:
+    b1: -2.540719
+    b2: 1.293125
+    b3: -0.000856
+    b4: 0.368481
+    b5: -0.611245
+    b6: 0.004257
+    b7: -0.003144
+    b8: -0.001235
+    b9: -0.282662
+    b10: -0.084011
+    b11: 0.104748
+  dbh_bounds:
+    lower_limit: 9.7
+    upper_limit: 12.0
+volume:
+  pulpwood:
+    min_dbh: 6
+    top_diameter: 4
+  sawtimber:
+    min_dbh: 10
+    top_diameter: 7

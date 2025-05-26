@@ -1,0 +1,61 @@
+metadata:
+  code: BY
+  fia_code: 221
+  plants_symbol: TADI2
+  scientific_name: Taxodium distichum
+  common_name: bald cypress
+  valid_site_species: true
+site_index:
+  min: 30
+  max: 120
+  site_index_group: 2
+  height_growth_equation: 'NC-128: 221'
+density:
+  sdi_max: 300
+height_diameter:
+  model: curtis_arney
+  curtis_arney:
+    p2: 119.5749091
+    p3: 4.13535453
+    p4: -0.79625456
+    dbw: 0.2
+  wykoff:
+    b1: 4.6171
+    b2: -6.2684
+bark_ratio:
+  b1: -0.35
+  b2: 0.88
+crown_ratio:
+  equation: 4.3.1.6
+  d0: 55.0
+  d1: -18.0
+  d2: null
+  weibull:
+    a: 4.2
+    b0: -6.5
+    b1: 1.05
+    c: 3.1
+diameter_growth:
+  model: ln_dds
+  coefficients:
+    b1: -1.73569
+    b2: 1.505649
+    b3: -5.4e-05
+    b4: 0.132441
+    b5: -0.119572
+    b6: 0.003996
+    b7: -0.000502
+    b8: -0.000768
+    b9: -0.560585
+    b10: -0.42814
+    b11: -0.739509
+  dbh_bounds:
+    lower_limit: 79.8
+    upper_limit: 144.0
+volume:
+  pulpwood:
+    min_dbh: 6
+    top_diameter: 4
+  sawtimber:
+    min_dbh: 10
+    top_diameter: 7

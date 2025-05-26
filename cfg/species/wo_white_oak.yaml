@@ -1,88 +1,61 @@
-# White Oak (Quercus alba) Configuration
-# Important hardwood species in the Southern US
-
 metadata:
   code: WO
   fia_code: 802
   plants_symbol: QUAL
   scientific_name: Quercus alba
   common_name: white oak
-  valid_site_species: true  # Valid for site index calculation
-
-# Site index parameters
+  valid_site_species: true
 site_index:
   min: 25
   max: 115
-  site_index_group: 9  # Group assignment for site index transformations
-  height_growth_equation: "NC-128: Upland Oak/52"  # Reference to site index curve
-
-# Stand density parameters
+  site_index_group: 9
+  height_growth_equation: 'NC-128: Upland Oak/52'
 density:
-  sdi_max: 361  # Maximum stand density index
-
-# Height-diameter relationship
+  sdi_max: 361
 height_diameter:
-  model: "curtis_arney"  # Default model to use
+  model: curtis_arney
   curtis_arney:
     p2: 170.1330787
     p3: 3.27815866
     p4: -0.48744214
-    dbw: 0.2  # Diameter breakpoint for small trees
+    dbw: 0.2
   wykoff:
     b1: 4.5463
     b2: -5.2287
-    
-# Bark ratio parameters
 bark_ratio:
   b1: -0.24096
   b2: 0.93789
-  
-# Crown ratio parameters
 crown_ratio:
-  equation: "4.3.1.6"  # Which equation form to use
+  equation: 4.3.1.6
   d0: 48.2
   d1: -0.01
-  d2: null  # Not used in this equation
+  d2: null
   weibull:
     a: 4.6903
     b0: -19.5613
     b1: 1.2928
     c: 3.3715
-
-# Large tree diameter growth model parameters
-# Equation form: ln(DDS) = b1 + (b2 * ln(DBH)) + (b3 * DBH^2) + (b4 * ln(CR)) + (b5 * RELHT) + (b6 * SI) + 
-#                          (b7 * BA) + (b8 * PBAL) + (b9 * SLOPE) + (b10 * cos(ASP) * SLOPE) + 
-#                          (b11 * sin(ASP) * SLOPE) + FORTYPE + ECOUNIT + PLANT
-# 
-# COEFFICIENTS FROM SOUTHERN VARIANT SOURCE OF TRUTH (archive/data/archive/southern_variant_tables/large_tree_growth_parameters.csv)
-# WO = White Oak (Quercus alba)
 diameter_growth:
-  model: "ln_dds"  # Natural log of the periodic change in squared inside-bark diameter
+  model: ln_dds
   coefficients:
-    # Coefficients for WO (White Oak)
-    b1: -1.608339   # Intercept
-    b2: 1.468589    # ln(DBH) coefficient
-    b3: -0.000778   # DBH^2 coefficient
-    b4: 0.139456    # ln(CR) coefficient
-    b5: 0.358369    # RELHT coefficient
-    b6: 0.004530    # SI coefficient
-    b7: -0.002807   # BA coefficient
-    b8: -0.002269   # PBAL coefficient
-    b9: -0.223273   # SLOPE coefficient
-    b10: 0.008526   # cos(ASP)*SLOPE coefficient
-    b11: -0.032889  # sin(ASP)*SLOPE coefficient
-  
-  # DBH bounding function values from diameter_bounding_limits.csv
-  # WO: DBH LOW = 998.0, DBH HI = 999.0 (no bounding function applied)
+    b1: -1.608339
+    b2: 1.468589
+    b3: -0.000778
+    b4: 0.139456
+    b5: 0.358369
+    b6: 0.00453
+    b7: -0.002807
+    b8: -0.002269
+    b9: -0.223273
+    b10: 0.008526
+    b11: -0.032889
   dbh_bounds:
-    lower_limit: 998.0  # No diameter bounding function
-    upper_limit: 999.0  # No diameter bounding function
-
-# Volume specifications
+    lower_limit: 998.0
+    upper_limit: 999.0
 volume:
   pulpwood:
-    min_dbh: 6      # Minimum DBH in inches
-    top_diameter: 4 # Top diameter outside bark in inches
+    min_dbh: 6
+    top_diameter: 4
   sawtimber:
-    min_dbh: 10     # Default for hardwoods
-    top_diameter: 7 # Default for hardwoods 
+    min_dbh: 10
+    top_diameter: 7

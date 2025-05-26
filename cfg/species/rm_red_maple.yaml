@@ -1,0 +1,61 @@
+metadata:
+  code: RM
+  fia_code: 316
+  plants_symbol: ACRU
+  scientific_name: Acer rubrum
+  common_name: red maple
+  valid_site_species: true
+site_index:
+  min: 35
+  max: 85
+  site_index_group: 4
+  height_growth_equation: 'NC-128: 316'
+density:
+  sdi_max: 450
+height_diameter:
+  model: curtis_arney
+  curtis_arney:
+    p2: 268.5564351
+    p3: 3.11432843
+    p4: -0.29411156
+    dbw: 0.2
+  wykoff:
+    b1: 4.3379
+    b2: -3.8214
+bark_ratio:
+  b1: -0.38
+  b2: 0.94
+crown_ratio:
+  equation: 4.3.1.6
+  d0: 50.0
+  d1: -17.0
+  d2: null
+  weibull:
+    a: 4.0
+    b0: -8.5
+    b1: 1.08
+    c: 3.0
+diameter_growth:
+  model: ln_dds
+  coefficients:
+    b1: -2.260482
+    b2: 1.449834
+    b3: -0.000931
+    b4: 0.361311
+    b5: 0.282436
+    b6: 0.003444
+    b7: -0.002133
+    b8: -0.001383
+    b9: -0.097604
+    b10: -0.069753
+    b11: 0.094162
+  dbh_bounds:
+    lower_limit: 998.0
+    upper_limit: 999.0
+volume:
+  pulpwood:
+    min_dbh: 6
+    top_diameter: 4
+  sawtimber:
+    min_dbh: 10
+    top_diameter: 7
