@@ -256,47 +256,37 @@ class Tree:
                 self.crown_ratio * (1.0 - min(0.3, reduction))))
     
     def _update_dbh_from_height(self):
-        """Update DBH based on height using Curtis-Arney equation."""
-        # Get height-diameter parameters
-        hd_params = self.species_params['height_diameter']
-        model = hd_params['model']
-        p = hd_params['curtis_arney']
+        """Update DBH based on height using height-diameter model."""
+        from .height_diameter import create_height_diameter_model
+        
+        # Create height-diameter model for this species
+        hd_model = create_height_diameter_model(self.species)
         
         # Store original DBH to ensure we don't decrease it
         original_dbh = self.dbh
         
         if self.height <= 4.5:
-            self.dbh = max(original_dbh, p['dbw'])  # Set to minimum DBH, but never decrease
+            dbw = hd_model.hd_params['curtis_arney']['dbw']
+            self.dbh = max(original_dbh, dbw)  # Set to minimum DBH, but never decrease
         else:
-            # Solve Curtis-Arney equation for DBH numerically
-            target_height = self.height
-            dbh = self.dbh  # Start with current DBH
-            
-            for _ in range(5):
-                height_calc = self._curtis_arney_height(dbh)
-                if abs(height_calc - target_height) < 0.01:
-                    break
-                dbh *= (target_height / height_calc)**0.5
+            # Solve for DBH given target height
+            dbh = hd_model.solve_dbh_from_height(
+                target_height=self.height,
+                initial_dbh=self.dbh
+            )
             
             # Ensure DBH never decreases
             self.dbh = max(original_dbh, dbh)
     
     def _update_height_from_dbh(self):
-        """Update height based on DBH using Curtis-Arney equation."""
-        self.height = self._curtis_arney_height(self.dbh)
-    
-    def _curtis_arney_height(self, dbh):
-        """Calculate height using Curtis-Arney equation."""
-        # Get Curtis-Arney parameters
-        p = self.species_params['height_diameter']['curtis_arney']
+        """Update height based on DBH using height-diameter model."""
+        from .height_diameter import create_height_diameter_model
         
-        if dbh < 3.0:
-            # Linear interpolation for small trees
-            h3 = 4.5 + p['p2'] * math.exp(-p['p3'] * 3.0**p['p4'])
-            return 4.5 + (h3 - 4.5) * (dbh - p['dbw']) / (3.0 - p['dbw'])
-        else:
-            # Standard Curtis-Arney equation
-            return 4.5 + p['p2'] * math.exp(-p['p3'] * dbh**p['p4'])
+        # Create height-diameter model for this species
+        hd_model = create_height_diameter_model(self.species)
+        
+        # Use the default model specified in configuration
+        self.height = hd_model.predict_height(self.dbh)
     
     def get_volume(self):
         """Calculate tree volume in cubic feet."""
