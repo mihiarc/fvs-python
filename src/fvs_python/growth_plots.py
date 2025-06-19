@@ -1,8 +1,25 @@
 """
 Visualization functions for growth trajectories and stand metrics.
+Provides comprehensive plotting capabilities for FVS-Python results.
 """
 import matplotlib.pyplot as plt
+import matplotlib.patches as patches
 import numpy as np
+import pandas as pd
+import seaborn as sns
+from typing import List, Dict, Optional, Union, Tuple
+from pathlib import Path
+
+# Set default style
+try:
+    plt.style.use('seaborn-v0_8')
+except OSError:
+    try:
+        plt.style.use('seaborn')
+    except OSError:
+        plt.style.use('default')
+        
+sns.set_palette("husl")
 
 def plot_stand_trajectories(metrics_over_time, save_path=None):
     """Plot key stand metrics over time.
@@ -52,11 +69,139 @@ def plot_stand_trajectories(metrics_over_time, save_path=None):
     plt.tight_layout()
     
     if save_path:
-        plt.savefig(save_path)
+        plt.savefig(save_path, dpi=300, bbox_inches='tight')
     else:
         plt.show()
     
     plt.close()
+
+
+def plot_yield_table_comparison(yield_table: pd.DataFrame, 
+                               metric: str = 'volume',
+                               save_path: Optional[Path] = None) -> None:
+    """Plot yield table comparison across site indices and densities.
+    
+    Args:
+        yield_table: DataFrame with yield table results
+        metric: Metric to plot ('volume', 'mean_dbh', 'mean_height', 'basal_area')
+        save_path: Optional path to save the plot
+    """
+    fig, axes = plt.subplots(1, 2, figsize=(15, 6))
+    fig.suptitle(f'Yield Table Comparison - {metric.title()}', fontsize=16)
+    
+    # Plot by site index
+    site_indices = sorted(yield_table['site_index'].unique())
+    colors = plt.cm.viridis(np.linspace(0, 1, len(site_indices)))
+    
+    for i, si in enumerate(site_indices):
+        si_data = yield_table[yield_table['site_index'] == si]
+        axes[0].plot(si_data['age'], si_data[metric], 
+                    color=colors[i], linewidth=2, label=f'SI {si}')
+    
+    axes[0].set_xlabel('Age (years)')
+    axes[0].set_ylabel(metric.replace('_', ' ').title())
+    axes[0].set_title('By Site Index')
+    axes[0].legend()
+    axes[0].grid(True, alpha=0.3)
+    
+    # Plot by density
+    densities = sorted(yield_table['initial_tpa'].unique())
+    colors = plt.cm.plasma(np.linspace(0, 1, len(densities)))
+    
+    for i, density in enumerate(densities):
+        density_data = yield_table[yield_table['initial_tpa'] == density]
+        axes[1].plot(density_data['age'], density_data[metric],
+                    color=colors[i], linewidth=2, label=f'{density} TPA')
+    
+    axes[1].set_xlabel('Age (years)')
+    axes[1].set_ylabel(metric.replace('_', ' ').title())
+    axes[1].set_title('By Initial Density')
+    axes[1].legend()
+    axes[1].grid(True, alpha=0.3)
+    
+    plt.tight_layout()
+    
+    if save_path:
+        plt.savefig(save_path, dpi=300, bbox_inches='tight')
+    else:
+        plt.show()
+    
+    plt.close()
+
+
+def plot_scenario_comparison(comparison_df: pd.DataFrame,
+                           metrics: List[str] = ['volume', 'mean_dbh', 'basal_area'],
+                           save_path: Optional[Path] = None) -> None:
+    """Plot comparison of multiple management scenarios.
+    
+    Args:
+        comparison_df: DataFrame with scenario comparison results
+        metrics: List of metrics to plot
+        save_path: Optional path to save the plot
+    """
+    n_metrics = len(metrics)
+    fig, axes = plt.subplots(1, n_metrics, figsize=(5 * n_metrics, 6))
+    if n_metrics == 1:
+        axes = [axes]
+    
+    fig.suptitle('Management Scenario Comparison', fontsize=16)
+    
+    scenarios = comparison_df['scenario'].unique()
+    colors = sns.color_palette('Set1', len(scenarios))
+    
+    for i, metric in enumerate(metrics):
+        for j, scenario in enumerate(scenarios):
+            scenario_data = comparison_df[comparison_df['scenario'] == scenario]
+            axes[i].plot(scenario_data['age'], scenario_data[metric],
+                        color=colors[j], linewidth=2.5, label=scenario)
+        
+        axes[i].set_xlabel('Age (years)')
+        axes[i].set_ylabel(metric.replace('_', ' ').title())
+        axes[i].set_title(f'{metric.replace("_", " ").title()} Comparison')
+        axes[i].legend()
+        axes[i].grid(True, alpha=0.3)
+    
+    plt.tight_layout()
+    
+    if save_path:
+        plt.savefig(save_path, dpi=300, bbox_inches='tight')
+    else:
+        plt.show()
+    
+    plt.close()
+
+
+def save_all_plots(metrics_over_time: List[Dict],
+                   stand_obj=None,
+                   output_dir: Path = Path('./plots'),
+                   prefix: str = 'fvs') -> None:
+    """Save all available plots to files.
+    
+    Args:
+        metrics_over_time: List of dictionaries containing stand metrics
+        stand_obj: Optional Stand object for additional plots
+        output_dir: Directory to save plots
+        prefix: Prefix for plot filenames
+    """
+    output_dir.mkdir(exist_ok=True, parents=True)
+    
+    # Main trajectory plot
+    plot_stand_trajectories(metrics_over_time, 
+                           save_path=output_dir / f'{prefix}_trajectories.png')
+    
+    # Mortality patterns
+    plot_mortality_patterns(metrics_over_time,
+                          save_path=output_dir / f'{prefix}_mortality.png')
+    
+    # Stand-specific plots if available
+    if stand_obj:
+        plot_size_distributions(stand_obj,
+                              save_path=output_dir / f'{prefix}_size_distributions.png')
+        
+        plot_competition_effects(stand_obj,
+                                save_path=output_dir / f'{prefix}_competition.png')
+    
+    print(f"All plots saved to {output_dir}")
 
 def plot_size_distributions(stand, save_path=None):
     """Plot current DBH and height distributions.
@@ -93,11 +238,139 @@ def plot_size_distributions(stand, save_path=None):
     plt.tight_layout()
     
     if save_path:
-        plt.savefig(save_path)
+        plt.savefig(save_path, dpi=300, bbox_inches='tight')
     else:
         plt.show()
     
     plt.close()
+
+
+def plot_yield_table_comparison(yield_table: pd.DataFrame, 
+                               metric: str = 'volume',
+                               save_path: Optional[Path] = None) -> None:
+    """Plot yield table comparison across site indices and densities.
+    
+    Args:
+        yield_table: DataFrame with yield table results
+        metric: Metric to plot ('volume', 'mean_dbh', 'mean_height', 'basal_area')
+        save_path: Optional path to save the plot
+    """
+    fig, axes = plt.subplots(1, 2, figsize=(15, 6))
+    fig.suptitle(f'Yield Table Comparison - {metric.title()}', fontsize=16)
+    
+    # Plot by site index
+    site_indices = sorted(yield_table['site_index'].unique())
+    colors = plt.cm.viridis(np.linspace(0, 1, len(site_indices)))
+    
+    for i, si in enumerate(site_indices):
+        si_data = yield_table[yield_table['site_index'] == si]
+        axes[0].plot(si_data['age'], si_data[metric], 
+                    color=colors[i], linewidth=2, label=f'SI {si}')
+    
+    axes[0].set_xlabel('Age (years)')
+    axes[0].set_ylabel(metric.replace('_', ' ').title())
+    axes[0].set_title('By Site Index')
+    axes[0].legend()
+    axes[0].grid(True, alpha=0.3)
+    
+    # Plot by density
+    densities = sorted(yield_table['initial_tpa'].unique())
+    colors = plt.cm.plasma(np.linspace(0, 1, len(densities)))
+    
+    for i, density in enumerate(densities):
+        density_data = yield_table[yield_table['initial_tpa'] == density]
+        axes[1].plot(density_data['age'], density_data[metric],
+                    color=colors[i], linewidth=2, label=f'{density} TPA')
+    
+    axes[1].set_xlabel('Age (years)')
+    axes[1].set_ylabel(metric.replace('_', ' ').title())
+    axes[1].set_title('By Initial Density')
+    axes[1].legend()
+    axes[1].grid(True, alpha=0.3)
+    
+    plt.tight_layout()
+    
+    if save_path:
+        plt.savefig(save_path, dpi=300, bbox_inches='tight')
+    else:
+        plt.show()
+    
+    plt.close()
+
+
+def plot_scenario_comparison(comparison_df: pd.DataFrame,
+                           metrics: List[str] = ['volume', 'mean_dbh', 'basal_area'],
+                           save_path: Optional[Path] = None) -> None:
+    """Plot comparison of multiple management scenarios.
+    
+    Args:
+        comparison_df: DataFrame with scenario comparison results
+        metrics: List of metrics to plot
+        save_path: Optional path to save the plot
+    """
+    n_metrics = len(metrics)
+    fig, axes = plt.subplots(1, n_metrics, figsize=(5 * n_metrics, 6))
+    if n_metrics == 1:
+        axes = [axes]
+    
+    fig.suptitle('Management Scenario Comparison', fontsize=16)
+    
+    scenarios = comparison_df['scenario'].unique()
+    colors = sns.color_palette('Set1', len(scenarios))
+    
+    for i, metric in enumerate(metrics):
+        for j, scenario in enumerate(scenarios):
+            scenario_data = comparison_df[comparison_df['scenario'] == scenario]
+            axes[i].plot(scenario_data['age'], scenario_data[metric],
+                        color=colors[j], linewidth=2.5, label=scenario)
+        
+        axes[i].set_xlabel('Age (years)')
+        axes[i].set_ylabel(metric.replace('_', ' ').title())
+        axes[i].set_title(f'{metric.replace("_", " ").title()} Comparison')
+        axes[i].legend()
+        axes[i].grid(True, alpha=0.3)
+    
+    plt.tight_layout()
+    
+    if save_path:
+        plt.savefig(save_path, dpi=300, bbox_inches='tight')
+    else:
+        plt.show()
+    
+    plt.close()
+
+
+def save_all_plots(metrics_over_time: List[Dict],
+                   stand_obj=None,
+                   output_dir: Path = Path('./plots'),
+                   prefix: str = 'fvs') -> None:
+    """Save all available plots to files.
+    
+    Args:
+        metrics_over_time: List of dictionaries containing stand metrics
+        stand_obj: Optional Stand object for additional plots
+        output_dir: Directory to save plots
+        prefix: Prefix for plot filenames
+    """
+    output_dir.mkdir(exist_ok=True, parents=True)
+    
+    # Main trajectory plot
+    plot_stand_trajectories(metrics_over_time, 
+                           save_path=output_dir / f'{prefix}_trajectories.png')
+    
+    # Mortality patterns
+    plot_mortality_patterns(metrics_over_time,
+                          save_path=output_dir / f'{prefix}_mortality.png')
+    
+    # Stand-specific plots if available
+    if stand_obj:
+        plot_size_distributions(stand_obj,
+                              save_path=output_dir / f'{prefix}_size_distributions.png')
+        
+        plot_competition_effects(stand_obj,
+                                save_path=output_dir / f'{prefix}_competition.png')
+    
+    print(f"All plots saved to {output_dir}")
 
 def plot_mortality_patterns(metrics_over_time, save_path=None):
     """Plot mortality patterns over time.
@@ -171,8 +444,136 @@ def plot_competition_effects(stand, save_path=None):
     plt.tight_layout()
     
     if save_path:
-        plt.savefig(save_path)
+        plt.savefig(save_path, dpi=300, bbox_inches='tight')
     else:
         plt.show()
     
-    plt.close() 
+    plt.close()
+
+
+def plot_yield_table_comparison(yield_table: pd.DataFrame, 
+                               metric: str = 'volume',
+                               save_path: Optional[Path] = None) -> None:
+    """Plot yield table comparison across site indices and densities.
+    
+    Args:
+        yield_table: DataFrame with yield table results
+        metric: Metric to plot ('volume', 'mean_dbh', 'mean_height', 'basal_area')
+        save_path: Optional path to save the plot
+    """
+    fig, axes = plt.subplots(1, 2, figsize=(15, 6))
+    fig.suptitle(f'Yield Table Comparison - {metric.title()}', fontsize=16)
+    
+    # Plot by site index
+    site_indices = sorted(yield_table['site_index'].unique())
+    colors = plt.cm.viridis(np.linspace(0, 1, len(site_indices)))
+    
+    for i, si in enumerate(site_indices):
+        si_data = yield_table[yield_table['site_index'] == si]
+        axes[0].plot(si_data['age'], si_data[metric], 
+                    color=colors[i], linewidth=2, label=f'SI {si}')
+    
+    axes[0].set_xlabel('Age (years)')
+    axes[0].set_ylabel(metric.replace('_', ' ').title())
+    axes[0].set_title('By Site Index')
+    axes[0].legend()
+    axes[0].grid(True, alpha=0.3)
+    
+    # Plot by density
+    densities = sorted(yield_table['initial_tpa'].unique())
+    colors = plt.cm.plasma(np.linspace(0, 1, len(densities)))
+    
+    for i, density in enumerate(densities):
+        density_data = yield_table[yield_table['initial_tpa'] == density]
+        axes[1].plot(density_data['age'], density_data[metric],
+                    color=colors[i], linewidth=2, label=f'{density} TPA')
+    
+    axes[1].set_xlabel('Age (years)')
+    axes[1].set_ylabel(metric.replace('_', ' ').title())
+    axes[1].set_title('By Initial Density')
+    axes[1].legend()
+    axes[1].grid(True, alpha=0.3)
+    
+    plt.tight_layout()
+    
+    if save_path:
+        plt.savefig(save_path, dpi=300, bbox_inches='tight')
+    else:
+        plt.show()
+    
+    plt.close()
+
+
+def plot_scenario_comparison(comparison_df: pd.DataFrame,
+                           metrics: List[str] = ['volume', 'mean_dbh', 'basal_area'],
+                           save_path: Optional[Path] = None) -> None:
+    """Plot comparison of multiple management scenarios.
+    
+    Args:
+        comparison_df: DataFrame with scenario comparison results
+        metrics: List of metrics to plot
+        save_path: Optional path to save the plot
+    """
+    n_metrics = len(metrics)
+    fig, axes = plt.subplots(1, n_metrics, figsize=(5 * n_metrics, 6))
+    if n_metrics == 1:
+        axes = [axes]
+    
+    fig.suptitle('Management Scenario Comparison', fontsize=16)
+    
+    scenarios = comparison_df['scenario'].unique()
+    colors = sns.color_palette('Set1', len(scenarios))
+    
+    for i, metric in enumerate(metrics):
+        for j, scenario in enumerate(scenarios):
+            scenario_data = comparison_df[comparison_df['scenario'] == scenario]
+            axes[i].plot(scenario_data['age'], scenario_data[metric],
+                        color=colors[j], linewidth=2.5, label=scenario)
+        
+        axes[i].set_xlabel('Age (years)')
+        axes[i].set_ylabel(metric.replace('_', ' ').title())
+        axes[i].set_title(f'{metric.replace("_", " ").title()} Comparison')
+        axes[i].legend()
+        axes[i].grid(True, alpha=0.3)
+    
+    plt.tight_layout()
+    
+    if save_path:
+        plt.savefig(save_path, dpi=300, bbox_inches='tight')
+    else:
+        plt.show()
+    
+    plt.close()
+
+
+def save_all_plots(metrics_over_time: List[Dict],
+                   stand_obj=None,
+                   output_dir: Path = Path('./plots'),
+                   prefix: str = 'fvs') -> None:
+    """Save all available plots to files.
+    
+    Args:
+        metrics_over_time: List of dictionaries containing stand metrics
+        stand_obj: Optional Stand object for additional plots
+        output_dir: Directory to save plots
+        prefix: Prefix for plot filenames
+    """
+    output_dir.mkdir(exist_ok=True, parents=True)
+    
+    # Main trajectory plot
+    plot_stand_trajectories(metrics_over_time, 
+                           save_path=output_dir / f'{prefix}_trajectories.png')
+    
+    # Mortality patterns
+    plot_mortality_patterns(metrics_over_time,
+                          save_path=output_dir / f'{prefix}_mortality.png')
+    
+    # Stand-specific plots if available
+    if stand_obj:
+        plot_size_distributions(stand_obj,
+                              save_path=output_dir / f'{prefix}_size_distributions.png')
+        
+        plot_competition_effects(stand_obj,
+                                save_path=output_dir / f'{prefix}_competition.png')
+    
+    print(f"All plots saved to {output_dir}") 

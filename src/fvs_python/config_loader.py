@@ -6,6 +6,7 @@ import yaml
 from pathlib import Path
 from typing import Dict, Any, Union
 import sys
+from .exceptions import ConfigurationError
 
 # Handle TOML imports for different Python versions
 if sys.version_info >= (3, 11):
@@ -48,27 +49,40 @@ class ConfigLoader:
             Dictionary containing configuration data
             
         Raises:
-            ValueError: If file format is not supported
             FileNotFoundError: If file doesn't exist
+            ConfigurationError: If file format is not supported or parsing fails
         """
+        from .exceptions import FileNotFoundError as FVSFileNotFoundError, ConfigurationError, InvalidDataError
+        
         if not file_path.exists():
-            raise FileNotFoundError(f"Configuration file not found: {file_path}")
+            raise FVSFileNotFoundError(str(file_path), "configuration file")
         
         suffix = file_path.suffix.lower()
         
-        if suffix in ['.yaml', '.yml']:
-            with open(file_path, 'r', encoding='utf-8') as f:
-                return yaml.safe_load(f)
-        elif suffix == '.toml':
-            if tomllib is None:
-                raise ImportError(
-                    "TOML support requires 'tomli' package for Python < 3.11. "
-                    "Install with: pip install tomli"
-                )
-            with open(file_path, 'rb') as f:
-                return tomllib.load(f)
-        else:
-            raise ValueError(f"Unsupported configuration file format: {suffix}")
+        try:
+            if suffix in ['.yaml', '.yml']:
+                with open(file_path, 'r', encoding='utf-8') as f:
+                    data = yaml.safe_load(f)
+                    if data is None:
+                        raise InvalidDataError("YAML file", "file is empty or contains only comments")
+                    return data
+            elif suffix == '.toml':
+                if tomllib is None:
+                    raise ImportError(
+                        "TOML support requires 'tomli' package for Python < 3.11. "
+                        "Install with: pip install tomli"
+                    )
+                with open(file_path, 'rb') as f:
+                    return tomllib.load(f)
+            else:
+                raise ConfigurationError(f"Unsupported configuration file format: {suffix}. "
+                                       f"Supported formats: .yaml, .yml, .toml")
+        except yaml.YAMLError as e:
+            raise InvalidDataError("YAML configuration", f"parsing error: {str(e)}") from e
+        except Exception as e:
+            if isinstance(e, (FVSFileNotFoundError, ConfigurationError, InvalidDataError)):
+                raise
+            raise ConfigurationError(f"Failed to load configuration from {file_path}: {str(e)}") from e
     
     def _save_config_file(self, data: Dict[str, Any], file_path: Path) -> None:
         """Save configuration to YAML or TOML file.
@@ -136,14 +150,27 @@ class ConfigLoader:
             
         Returns:
             Dictionary containing species-specific parameters
+            
+        Raises:
+            SpeciesNotFoundError: If species code is not found
+            ConfigurationError: If species file cannot be loaded
         """
+        from .exceptions import SpeciesNotFoundError
+        
         if species_code not in self.species_config['species']:
-            raise ValueError(f"Unknown species code: {species_code}")
+            raise SpeciesNotFoundError(species_code)
         
-        species_info = self.species_config['species'][species_code]
-        species_file = self.cfg_dir / species_info['file']
-        
-        return self._load_config_file(species_file)
+        try:
+            species_info = self.species_config['species'][species_code]
+            species_file = self.cfg_dir / species_info['file']
+            
+            return self._load_config_file(species_file)
+        except Exception as e:
+            if isinstance(e, SpeciesNotFoundError):
+                raise
+            raise ConfigurationError(
+                f"Failed to load configuration for species '{species_code}': {str(e)}"
+            ) from e
     
     def get_stand_params(self, species_code: str = 'LP') -> Dict[str, Any]:
         """Get parameters needed for Stand class in the legacy format.

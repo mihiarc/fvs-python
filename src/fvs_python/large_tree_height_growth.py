@@ -24,21 +24,21 @@ class LargeTreeHeightGrowthModel:
     
     def _load_parameters(self):
         """Load large tree height growth parameters from configuration."""
-        # Load height growth methodology from the main JSON file
-        height_growth_file = Path(__file__).parent.parent.parent / "cfg" / "sn_large_tree_height_growth.json"
+        from .config_loader import get_config_loader
         
-        if height_growth_file.exists():
-            with open(height_growth_file, 'r') as f:
-                self.methodology = json.load(f)
-        else:
+        try:
+            loader = get_config_loader()
+            
+            # Load height growth methodology from the main JSON file
+            height_growth_file = loader.cfg_dir / "sn_large_tree_height_growth.json"
+            self.methodology = loader._load_config_file(height_growth_file)
+        except Exception:
             self._load_fallback_methodology()
         
-        # Load diameter growth coefficients (used for potential height growth calculation)
-        coefficients_file = Path(__file__).parent.parent.parent / "cfg" / "sn_large_tree_height_growth_coefficients.json"
-        
-        if coefficients_file.exists():
-            with open(coefficients_file, 'r') as f:
-                coeff_data = json.load(f)
+        try:
+            # Load diameter growth coefficients (used for potential height growth calculation)
+            coefficients_file = loader.cfg_dir / "sn_large_tree_height_growth_coefficients.json"
+            coeff_data = loader._load_config_file(coefficients_file)
             
             if self.species_code in coeff_data['coefficients']:
                 self.diameter_coefficients = coeff_data['coefficients'][self.species_code]
@@ -48,7 +48,7 @@ class LargeTreeHeightGrowthModel:
                 
             self.equation_info = coeff_data['equation']
             self.variable_definitions = coeff_data['variable_definitions']
-        else:
+        except Exception:
             self._load_fallback_coefficients()
         
         # Load shade tolerance parameters
@@ -141,22 +141,21 @@ class LargeTreeHeightGrowthModel:
     
     def _load_site_index_ranges(self):
         """Load site index ranges and validation from configuration."""
+        from .config_loader import get_config_loader
+        
         try:
-            site_index_file = Path(__file__).parent.parent.parent / "cfg" / "sn_relative_site_index.json"
-            if site_index_file.exists():
-                with open(site_index_file, 'r') as f:
-                    site_data = json.load(f)
-                
-                # Get species-specific site index range
-                species_ranges = site_data.get('species_site_index_ranges', {})
-                if self.species_code in species_ranges:
-                    self.site_index_range = species_ranges[self.species_code]
-                else:
-                    # Default range for LP
-                    self.site_index_range = {"si_min": 40, "si_max": 125}
+            loader = get_config_loader()
+            site_index_file = loader.cfg_dir / "sn_relative_site_index.json"
+            site_data = loader._load_config_file(site_index_file)
+            
+            # Get species-specific site index range
+            species_ranges = site_data.get('species_site_index_ranges', {})
+            if self.species_code in species_ranges:
+                self.site_index_range = species_ranges[self.species_code]
             else:
+                # Default range for LP
                 self.site_index_range = {"si_min": 40, "si_max": 125}
-        except:
+        except Exception:
             self.site_index_range = {"si_min": 40, "si_max": 125}
     
     def _validate_site_index(self, site_index: float) -> float:
@@ -288,12 +287,13 @@ class LargeTreeHeightGrowthModel:
         Returns:
             Dictionary with Chapman-Richards coefficients
         """
-        # Try to load from small tree height growth configuration
-        small_tree_file = Path(__file__).parent.parent.parent / "cfg" / "sn_small_tree_height_growth.json"
+        from .config_loader import get_config_loader
         
-        if small_tree_file.exists():
-            with open(small_tree_file, 'r') as f:
-                small_tree_data = json.load(f)
+        try:
+            # Try to load from small tree height growth configuration
+            loader = get_config_loader()
+            small_tree_file = loader.cfg_dir / "sn_small_tree_height_growth.json"
+            small_tree_data = loader._load_config_file(small_tree_file)
             
             if 'nc128_height_growth_coefficients' in small_tree_data:
                 coeffs = small_tree_data['nc128_height_growth_coefficients']
@@ -302,6 +302,8 @@ class LargeTreeHeightGrowthModel:
                 else:
                     # Fallback to LP if species not found
                     return coeffs.get('LP', self._get_fallback_small_tree_coefficients())
+        except Exception:
+            pass
         
         # Fallback coefficients if file not available
         return self._get_fallback_small_tree_coefficients()

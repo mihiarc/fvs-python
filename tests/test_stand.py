@@ -21,12 +21,12 @@ STANDARD_TPA = 500  # Trees per acre for a typical plantation
 LOW_TPA = 300      # Low density plantation
 HIGH_TPA = 700     # High density plantation
 
-@pytest.fixture
+@pytest.fixture(scope="function")
 def young_stand():
     """Create a young 1-acre stand for testing."""
     return Stand.initialize_planted(trees_per_acre=STANDARD_TPA)
 
-@pytest.fixture
+@pytest.fixture(scope="function")
 def mature_stand():
     """Create a mature 1-acre stand by growing for 25 years."""
     stand = Stand.initialize_planted(trees_per_acre=STANDARD_TPA)
@@ -36,9 +36,14 @@ def mature_stand():
 def collect_stand_metrics(stand, years):
     """Collect stand metrics over specified years."""
     metrics = []
-    for _ in range(years + 1):
+    # Collect initial metrics
+    metrics.append(stand.get_metrics())
+    
+    # Grow in 5-year increments (FVS standard)
+    for year in range(5, years + 1, 5):
+        stand.grow(years=5)
         metrics.append(stand.get_metrics())
-        stand.grow(years=1)
+    
     return metrics
 
 def test_stand_initialization():
@@ -61,14 +66,14 @@ def test_stand_initialization():
     assert metrics['volume'] >= 0
 
 def test_stand_growth(young_stand):
-    """Test 1-acre stand growth over 5 years."""
-    # Collect metrics for 5 years
-    metrics = collect_stand_metrics(young_stand, 5)
+    """Test 1-acre stand growth over 10 years (2 growth periods)."""
+    # Collect metrics for 10 years (age 0, 5, 10)
+    metrics = collect_stand_metrics(young_stand, 10)
     
     # Create visualization and get base64 data
     plot_base64 = plot_long_term_stand_growth(
         metrics,
-        'Young Stand Development (1 acre, 5 years)',
+        'Young Stand Development (1 acre, 10 years)',
         stand_test_dir / 'young_stand_growth.png'
     )
     
@@ -80,8 +85,13 @@ def test_stand_growth(young_stand):
         plot_base64
     )
     
-    # Run assertions
-    assert metrics[-1]['age'] == 5
+    # Run assertions - we should have 3 data points: age 0, 5, 10
+    assert len(metrics) == 3
+    assert metrics[0]['age'] == 0
+    assert metrics[1]['age'] == 5
+    assert metrics[2]['age'] == 10
+    
+    # Growth should be positive
     assert metrics[-1]['mean_dbh'] > metrics[0]['mean_dbh']
     assert metrics[-1]['mean_height'] > metrics[0]['mean_height']
     assert metrics[-1]['volume'] > metrics[0]['volume']
@@ -90,9 +100,9 @@ def test_stand_growth(young_stand):
     dbh_growth = [m['mean_dbh'] for m in metrics]
     height_growth = [m['mean_height'] for m in metrics]
     
-    # Early growth should be positive
-    assert dbh_growth[1] > dbh_growth[0]  # Just check for positive growth
-    assert height_growth[1] > height_growth[0]
+    # Growth should be positive between periods
+    assert dbh_growth[1] > dbh_growth[0]  # Age 0 to 5
+    assert height_growth[1] > height_growth[0]  # Age 0 to 5
 
 def test_mortality_effects():
     """Test mortality over time with different initial densities in 1 acre."""
@@ -132,8 +142,9 @@ def test_mortality_effects():
         # But not too much
         assert metrics[-1]['tpa'] > 0.3 * metrics[0]['tpa']  # Relaxed from 0.5
         # Higher mortality in early years
-        early_mortality = metrics[5]['tpa'] - metrics[0]['tpa']
-        late_mortality = metrics[-1]['tpa'] - metrics[-6]['tpa']
+        # For 20 years with 5-year increments: ages 0, 5, 10, 15, 20 (indices 0-4)
+        early_mortality = metrics[1]['tpa'] - metrics[0]['tpa']  # Age 0 to 5
+        late_mortality = metrics[-1]['tpa'] - metrics[-2]['tpa']  # Age 15 to 20
         assert abs(early_mortality) > abs(late_mortality)
 
 def test_competition_effects(mature_stand):
@@ -212,19 +223,30 @@ def test_long_term_growth():
         mortality = [metrics[i]['tpa'] - metrics[i+1]['tpa'] 
                     for i in range(len(metrics)-1)]
         
+        # For 40 years with 5-year increments: 9 data points (ages 0,5,10,15,20,25,30,35,40)
+        # So growth arrays have 8 elements (indices 0-7)
+        n_periods = len(metrics) - 1  # Number of growth periods
+        early_periods = min(4, n_periods // 2)  # First half or 4 periods, whichever is smaller
+        late_periods = min(4, n_periods // 2)   # Last half or 4 periods, whichever is smaller
+        
         # Height growth should slow with age - more lenient
-        assert max(height_growth[:10]) > 0.8 * max(height_growth[-10:])  # Was direct comparison
+        if n_periods >= 4:
+            assert max(height_growth[:early_periods]) > 0.8 * max(height_growth[-late_periods:])
         
         # DBH growth should be more consistent - much more lenient
-        assert 0.2 < min(dbh_growth[-10:]) / max(dbh_growth[:10]) < 2.0  # Was 0.5-1.5
+        if n_periods >= 4:
+            assert 0.2 < min(dbh_growth[-late_periods:]) / max(dbh_growth[:early_periods]) < 2.0
         
         # Volume growth should peak in middle years - more lenient check
-        mid_point = len(volume_growth) // 2
-        assert sum(volume_growth[mid_point-5:mid_point+5]) > \
-               0.8 * sum(volume_growth[:10])  # Added 0.8 factor
+        mid_point = n_periods // 2
+        mid_range = min(2, mid_point)  # Use smaller range for safety
+        if n_periods >= 6:
+            assert sum(volume_growth[mid_point-mid_range:mid_point+mid_range]) > \
+                   0.8 * sum(volume_growth[:early_periods])
         
         # Mortality should be highest in early years - more lenient
-        assert sum(mortality[:10]) > 0.8 * sum(mortality[-10:])  # Added 0.8 factor
+        if n_periods >= 4:
+            assert sum(mortality[:early_periods]) > 0.8 * sum(mortality[-late_periods:])
 
 def test_invalid_stand_initialization():
     """Test handling of invalid stand initialization."""
@@ -270,10 +292,11 @@ def test_25_year_survival():
     assert 150 <= final_tpa <= 400  # Was 300-375
     
     # Calculate mortality by 5-year periods
+    # For 25 years: ages 0, 5, 10, 15, 20, 25 (6 data points, indices 0-5)
     period_mortality = []
-    for i in range(0, 25, 5):
+    for i in range(len(metrics) - 1):  # Compare consecutive periods
         period_start = metrics[i]['tpa']
-        period_end = metrics[i+5]['tpa']
+        period_end = metrics[i+1]['tpa']
         period_mortality.append(period_start - period_end)
     
     # Early mortality should be highest

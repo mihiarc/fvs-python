@@ -25,12 +25,14 @@ class CrownRatioModel:
     
     def _load_parameters(self):
         """Load crown ratio parameters from configuration."""
-        # Load crown ratio coefficients from the extracted JSON file
-        crown_ratio_file = Path(__file__).parent.parent.parent / "cfg" / "sn_crown_ratio_coefficients.json"
+        from .config_loader import get_config_loader
         
-        if crown_ratio_file.exists():
-            with open(crown_ratio_file, 'r') as f:
-                crown_data = json.load(f)
+        try:
+            loader = get_config_loader()
+            crown_ratio_file = loader.cfg_dir / "sn_crown_ratio_coefficients.json"
+            
+            # Use config loader to load the file
+            crown_data = loader._load_config_file(crown_ratio_file)
             
             if self.species_code in crown_data['species_coefficients']:
                 self.coefficients = crown_data['species_coefficients'][self.species_code]
@@ -39,8 +41,8 @@ class CrownRatioModel:
                 # Fallback to default LP parameters if species not found
                 self.coefficients = crown_data['species_coefficients']['LP']
                 self.equations = crown_data['equations']
-        else:
-            # Fallback parameters if file not found
+        except Exception:
+            # Fallback parameters if file not found or loading fails
             self._load_fallback_parameters()
     
     def _load_fallback_parameters(self):

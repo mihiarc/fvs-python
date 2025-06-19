@@ -8,41 +8,61 @@ import sys
 from pathlib import Path
 from typing import Optional
 
-from .main import main as run_simulation
+from .simulation_engine import SimulationEngine
+from .logging_config import setup_logging, get_logger
 from .config_loader import convert_yaml_to_toml, get_config_loader
 
 
 def create_parser() -> argparse.ArgumentParser:
     """Create the command-line argument parser."""
     parser = argparse.ArgumentParser(
-        prog="fvs-simulate",
+        prog="fvs-python",
         description="FVS-Python: Southern Yellow Pine Growth Simulator",
         formatter_class=argparse.RawDescriptionHelpFormatter,
         epilog="""
 Examples:
   # Run a basic simulation
-  fvs-simulate run
+  fvs-python simulate --species LP --tpa 500 --site-index 70 --years 30
 
-  # Run simulation with custom parameters
-  fvs-simulate run --years 40 --timestep 5 --species LP --site-index 70
+  # Generate yield table
+  fvs-python yield-table --species LP SP --site-indices 60 70 80 --densities 300 500 700
 
-  # Convert YAML configs to TOML
-  fvs-simulate convert-config --output-dir ./cfg/toml
+  # Compare scenarios
+  fvs-python compare scenarios.json
+
+  # List available species
+  fvs-python list-species
 
   # Validate configuration files
-  fvs-simulate validate-config
-
-  # Show configuration for a species
-  fvs-simulate show-config --species LP
+  fvs-python validate-config
         """
     )
     
     subparsers = parser.add_subparsers(dest="command", help="Available commands")
     
-    # Run simulation command
+    # Add global options
+    parser.add_argument(
+        '--log-level',
+        choices=['DEBUG', 'INFO', 'WARNING', 'ERROR'],
+        default='INFO',
+        help='Logging level (default: INFO)'
+    )
+    parser.add_argument(
+        '--structured-logs',
+        action='store_true',
+        help='Use structured JSON logging format'
+    )
+    parser.add_argument(
+        '--version', '-v',
+        action='version',
+        version='FVS-Python 1.0.0'
+    )
+    
+    # Simulate command (replaces 'run')
     run_parser = subparsers.add_parser(
-        "run", 
-        help="Run forest growth simulation"
+        "simulate", 
+        help="Run a single stand simulation",
+        formatter_class=argparse.ArgumentDefaultsHelpFormatter
     )
     run_parser.add_argument(
         "--years", 
@@ -70,7 +90,7 @@ Examples:
         help="Site index (base age 25) in feet (default: 70)"
     )
     run_parser.add_argument(
-        "--trees-per-acre", 
+        "--trees-per-acre", "--tpa",
         type=int, 
         default=500,
         help="Initial trees per acre (default: 500)"
@@ -82,10 +102,64 @@ Examples:
         help="Output directory for results (default: ./output)"
     )
     run_parser.add_argument(
-        "--config-dir", 
+        "--no-plots",
+        action='store_true',
+        help="Skip generating plots"
+    )
+    run_parser.add_argument(
+        "--no-save",
+        action='store_true',
+        help="Skip saving output files"
+    )
+    
+    # Yield table command
+    yield_parser = subparsers.add_parser(
+        "yield-table",
+        help="Generate yield tables for multiple scenarios",
+        formatter_class=argparse.ArgumentDefaultsHelpFormatter
+    )
+    yield_parser.add_argument(
+        "--species",
+        nargs='+',
+        default=['LP'],
+        help="Species codes to include"
+    )
+    yield_parser.add_argument(
+        "--site-indices",
+        nargs='+',
+        type=float,
+        default=[60, 70, 80],
+        help="Site indices to test"
+    )
+    yield_parser.add_argument(
+        "--densities",
+        nargs='+',
+        type=int,
+        default=[300, 500, 700],
+        help="Planting densities to test (trees per acre)"
+    )
+    yield_parser.add_argument(
+        "--years", "-y",
+        type=int, 
+        default=50,
+        help="Simulation length in years"
+    )
+    yield_parser.add_argument(
+        "--output-dir", 
         type=Path, 
         default=None,
-        help="Configuration directory (default: ./cfg)"
+        help="Output directory for results"
+    )
+    
+    # List species command
+    list_parser = subparsers.add_parser(
+        "list-species",
+        help="List available species and their parameters"
+    )
+    list_parser.add_argument(
+        "--detailed",
+        action='store_true',
+        help="Show detailed species parameters"
     )
     
     # Convert configuration command
@@ -141,30 +215,99 @@ Examples:
     return parser
 
 
-def cmd_run(args) -> int:
-    """Run forest growth simulation."""
+def cmd_simulate(args) -> int:
+    """Run a single stand simulation."""
+    logger = get_logger(__name__)
+    
     try:
-        print(f"Running FVS simulation for {args.species} species...")
-        print(f"Parameters: {args.years} years, {args.timestep}-year timesteps")
-        print(f"Site index: {args.site_index}, Trees/acre: {args.trees_per_acre}")
+        output_dir = args.output_dir or Path('./output')
+        output_dir.mkdir(exist_ok=True, parents=True)
         
-        # Set up output directory
-        if args.output_dir:
-            output_dir = args.output_dir
-        else:
-            output_dir = Path.cwd() / "output"
+        engine = SimulationEngine(output_dir)
         
-        output_dir.mkdir(exist_ok=True)
-        print(f"Output directory: {output_dir}")
+        results = engine.simulate_stand(
+            species=args.species,
+            trees_per_acre=args.trees_per_acre,
+            site_index=args.site_index,
+            years=args.years,
+            time_step=args.timestep,
+            save_outputs=not args.no_save,
+            plot_results=not args.no_plots
+        )
         
-        # Run the simulation
-        run_simulation()
+        logger.info("Simulation completed. Final metrics:")
+        final_row = results.iloc[-1]
+        logger.info(f"  Age: {final_row['age']} years")
+        logger.info(f"  Trees per acre: {final_row['tpa']:.0f}")
+        logger.info(f"  Mean DBH: {final_row['mean_dbh']:.1f} inches")
+        logger.info(f"  Mean height: {final_row['mean_height']:.1f} feet")
+        logger.info(f"  Volume: {final_row['volume']:.0f} cubic feet per acre")
         
-        print("Simulation completed successfully!")
         return 0
         
     except Exception as e:
-        print(f"Error running simulation: {e}", file=sys.stderr)
+        logger.error(f"Simulation failed: {e}")
+        return 1
+
+
+def cmd_yield_table(args) -> int:
+    """Generate yield tables."""
+    logger = get_logger(__name__)
+    
+    try:
+        output_dir = args.output_dir or Path('./output')
+        output_dir.mkdir(exist_ok=True, parents=True)
+        
+        engine = SimulationEngine(output_dir)
+        
+        yield_table = engine.simulate_yield_table(
+            species=args.species,
+            site_indices=args.site_indices,
+            planting_densities=args.densities,
+            years=args.years
+        )
+        
+        logger.info(f"Yield table generated with {len(yield_table)} rows")
+        logger.info(f"Species: {', '.join(args.species)}")
+        logger.info(f"Site indices: {args.site_indices}")
+        logger.info(f"Densities: {args.densities}")
+        
+        return 0
+        
+    except Exception as e:
+        logger.error(f"Yield table generation failed: {e}")
+        return 1
+
+
+def cmd_list_species(args) -> int:
+    """List available species."""
+    logger = get_logger(__name__)
+    
+    try:
+        loader = get_config_loader()
+        species_config = loader.species_config['species']
+        
+        print(f"Available species ({len(species_config)} total):")
+        print("=" * 50)
+        
+        for code, info in species_config.items():
+            name = info.get('name', 'Unknown')
+            print(f"{code:4s} - {name}")
+            
+            if args.detailed:
+                try:
+                    config = loader.load_species_config(code)
+                    print(f"      Growth model: {config.get('diameter_growth', {}).get('model', 'Unknown')}")
+                    print(f"      Height-diameter: {list(config.get('height_diameter', {}).keys())}")
+                    print()
+                except Exception as e:
+                    print(f"      Error loading config: {e}")
+                    print()
+        
+        return 0
+        
+    except Exception as e:
+        logger.error(f"Failed to list species: {e}")
         return 1
 
 
@@ -249,9 +392,23 @@ def main() -> int:
         parser.print_help()
         return 1
     
+    # Set up logging
+    output_dir = getattr(args, 'output_dir', None) or Path('./output')
+    output_dir.mkdir(exist_ok=True, parents=True)
+    
+    setup_logging(
+        log_level=args.log_level,
+        log_file=output_dir / 'fvs-python.log',
+        structured=args.structured_logs
+    )
+    
     # Route to appropriate command handler
-    if args.command == "run":
-        return cmd_run(args)
+    if args.command == "simulate":
+        return cmd_simulate(args)
+    elif args.command == "yield-table":
+        return cmd_yield_table(args)
+    elif args.command == "list-species":
+        return cmd_list_species(args)
     elif args.command == "convert-config":
         return cmd_convert_config(args)
     elif args.command == "validate-config":

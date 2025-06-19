@@ -1,0 +1,98 @@
+# Growth Model Parameters for FVS-Python
+# Contains hardcoded values that should be configurable
+
+metadata:
+  description: "Growth model parameters and thresholds"
+  source: "FVS Southern Variant documentation"
+  created: "2025-01-19"
+
+# Tree growth model transition parameters
+growth_transitions:
+  small_to_large_tree:
+    description: "DBH thresholds for transitioning between small and large tree models"
+    xmin: 1.0  # Minimum DBH for transition start (inches)
+    xmax: 3.0  # Maximum DBH for transition complete (inches)
+    
+# Small tree growth parameters (Chapman-Richards)
+small_tree_growth:
+  description: "Chapman-Richards parameters for small tree height growth"
+  # Default parameters for species without specific values
+  default:
+    c1: 1.1421
+    c2: 1.0042
+    c3: -0.0374
+    c4: 0.7632
+    c5: 0.0358
+  # Species-specific parameters can be added here
+  LP:  # Loblolly Pine
+    c1: 1.1421
+    c2: 1.0042
+    c3: -0.0374
+    c4: 0.7632
+    c5: 0.0358
+  SP:  # Shortleaf Pine
+    c1: 1.1421
+    c2: 1.0042
+    c3: -0.0374
+    c4: 0.7632
+    c5: 0.0358
+
+# Large tree growth modifiers
+large_tree_modifiers:
+  description: "Modifiers for large tree diameter growth"
+  planting_effect:
+    description: "Effect of plantation origin on diameter growth"
+    default: 0.245669
+    # Species-specific planting effects
+    LP: 0.245669
+    SP: 0.220000
+    SA: 0.250000
+    LL: 0.200000
+    
+# Competition effect parameters
+competition_effects:
+  description: "Parameters controlling competition effects on growth"
+  small_tree_competition:
+    max_reduction: 0.2  # Maximum 20% reduction for small trees
+  large_tree_competition:
+    # Competition effects handled through BA and PBAL in large tree model
+    
+# Crown ratio parameters
+crown_ratio:
+  description: "Crown ratio model parameters"
+  bounds:
+    min: 0.05
+    max: 0.95
+  age_reduction:
+    rate: 0.003  # 0.3% reduction per year
+    max_reduction: 0.5  # Cap at 50% reduction
+    
+# Mortality parameters
+mortality:
+  description: "Stand mortality parameters"
+  early_mortality:
+    age_threshold: 5
+    base_rate: 0.25  # 25% mortality in first 5 years
+  background_mortality:
+    base_rate: 0.05  # 5% per 5-year period
+    competition_threshold: 0.55
+    competition_multiplier: 0.1
+  size_effect:
+    multiplier: 0.2  # Smaller trees have 20% higher mortality per size ratio
+    
+# Initial tree parameters
+initial_tree:
+  description: "Parameters for newly planted trees"
+  dbh:
+    mean: 0.5
+    std_dev: 0.1
+    minimum: 0.1
+  height:
+    planted: 1.0  # Initial height at planting (feet)
+    
+# Validation thresholds
+validation:
+  height_dbh_ratio:
+    min: 2.0
+    max: 20.0
+    warn_seedlings: false  # Don't warn for trees under 4.5 feet
