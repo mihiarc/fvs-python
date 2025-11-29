@@ -63,7 +63,8 @@ def test_small_tree_growth(small_tree):
     # Run assertions
     assert small_tree.height > initial_metrics[0]['height']
     assert small_tree.dbh > initial_metrics[0]['dbh']
-    assert 0.2 <= small_tree.crown_ratio <= 0.9
+    # Crown ratio bounds - FVS allows minimum of 5% (0.05)
+    assert 0.05 <= small_tree.crown_ratio <= 0.95
     assert small_tree.age == 7  # 2 + 5 years
 
 def test_large_tree_growth(large_tree):
@@ -103,7 +104,8 @@ def test_large_tree_growth(large_tree):
     # Run assertions
     assert large_tree.dbh > metrics[0]['dbh']
     assert large_tree.height > metrics[0]['height']
-    assert 0.2 <= large_tree.crown_ratio <= 0.9
+    # Crown ratio bounds - FVS allows minimum of 5% (0.05)
+    assert 0.05 <= large_tree.crown_ratio <= 0.95
     assert large_tree.age == 20  # 15 + 5 years
 
 def test_transition_zone_growth(transition_tree):
@@ -117,8 +119,8 @@ def test_transition_zone_growth(transition_tree):
     # Both diameter and height should increase
     assert transition_tree.dbh > initial_dbh
     assert transition_tree.height > initial_height
-    # Growth should be between small and large tree models
-    assert 0.2 <= transition_tree.crown_ratio <= 0.9
+    # Crown ratio bounds - FVS allows minimum of 5% (0.05)
+    assert 0.05 <= transition_tree.crown_ratio <= 0.95
     # Age should increment by 5
     assert transition_tree.age == 13  # 8 + 5 years
 

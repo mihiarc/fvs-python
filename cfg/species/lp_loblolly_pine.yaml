@@ -37,16 +37,30 @@ crown_ratio:
 diameter_growth:
   model: ln_dds
   coefficients:
+    # Official FVS-SN coefficients from dgf.f (92,313 observations)
+    # Variable names match official FVS source code
+    INTERC: 0.222214     # Intercept
+    LDBH: 1.163040       # ln(DBH) coefficient
+    DBH2: -0.000863      # DBH^2 coefficient
+    LCRWN: 0.028483      # ln(Crown Ratio %) coefficient
+    HREL: 0.006935       # Relative height coefficient
+    ISIO: 0.005018       # Site index coefficient
+    PLTB: -0.003408      # Basal area coefficient
+    PNTBL: -0.004184     # Point basal area in larger trees coefficient
+    TANS: -0.759347      # Slope (tangent) coefficient
+    FCOS: 0.185360       # Slope*cos(aspect) coefficient
+    FSIN: -0.072842      # Slope*sin(aspect) coefficient
+    # Legacy b1-b11 mapping for backward compatibility
     b1: 0.222214
-    b2: 1.16304
+    b2: 1.163040
     b3: -0.000863
     b4: 0.028483
     b5: 0.006935
     b6: 0.005018
-    b7: -0.004184
-    b8: -0.759347
-    b9: 0.18536
-    b10: 0.0
+    b7: -0.003408
+    b8: -0.004184
+    b9: -0.759347
+    b10: 0.185360
     b11: -0.072842
   dbh_bounds:
     lower_limit: null

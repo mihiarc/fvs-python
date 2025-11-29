@@ -1,0 +1,300 @@
+{
+  "metadata": {
+    "title": "Large Tree Diameter Growth Coefficients for FVS Southern Variant",
+    "description": "Diameter growth model (DDS - change in squared diameter inside bark) coefficients extracted from official USDA FVS source code",
+    "source": "https://github.com/USDAForestService/ForestVegetationSimulator/blob/master/sn/dgf.f",
+    "extracted_date": "2025-11-29",
+    "equation_reference": "FVS-SN Variant Overview Section 4.7",
+    "threshold_diameter": 3.0,
+    "threshold_description": "Trees >= 3.0 inches DBH use large tree diameter growth model"
+  },
+  "equation": {
+    "main_equation": "ln(DDS) = CONSPP + INTERC + LDBH*ln(D) + DBH2*D^2 + LCRWN*ln(CR) + HREL*RELHT + PLTB*BA + PNTBL*PBAL + [forest_type_terms] + [eco_unit_terms]",
+    "conspp_equation": "CONSPP = DGCON + COR, where DGCON = ISIO*SI + TANS*SLOPE + FCOS*SLOPE*cos(ASPECT) + FSIN*SLOPE*sin(ASPECT) + [eco_unit_terms]",
+    "variable_definitions": {
+      "DDS": "Change in squared diameter (inside bark), inches^2",
+      "D": "DBH (diameter at breast height), inches",
+      "CR": "Crown ratio as integer percentage (e.g., 50 for 50%)",
+      "RELHT": "Relative height = HT/AVH, capped at 1.5",
+      "BA": "Stand basal area, sq ft/acre",
+      "PBAL": "Point basal area in larger trees = PBA * (1 - PCT/100)",
+      "SI": "Site index, feet (base age 50)",
+      "SLOPE": "Slope as tangent (rise/run)",
+      "ASPECT": "Aspect in radians"
+    },
+    "bounds": {
+      "DDS_minimum": -9.21,
+      "RELHT_maximum": 1.5,
+      "BA_minimum": 25.0,
+      "CR_minimum": 25
+    }
+  },
+  "species_order": {
+    "description": "FVS species index order (1-based Fortran arrays)",
+    "indices": {
+      "1": "FR", "2": "JU", "3": "PI", "4": "PU", "5": "SP", "6": "SA",
+      "7": "SR", "8": "LL", "9": "TM", "10": "PP", "11": "PD", "12": "WP",
+      "13": "LP", "14": "VP", "15": "BY", "16": "PC", "17": "HM", "18": "FM",
+      "19": "BE", "20": "RM", "21": "SV", "22": "SM", "23": "BU", "24": "BB",
+      "25": "SB", "26": "AH", "27": "HI", "28": "CA", "29": "HB", "30": "RD"
+    }
+  },
+  "core_coefficients": {
+    "SP": {
+      "species_index": 5,
+      "common_name": "Shortleaf Pine",
+      "INTERC": -0.008942,
+      "LDBH": 1.238170,
+      "DBH2": -0.001170,
+      "LCRWN": 0.053076,
+      "HREL": 0.040334,
+      "ISIO": 0.004723,
+      "PLTB": -0.004394,
+      "PNTBL": -0.003271,
+      "TANS": -0.704687,
+      "FCOS": 0.127667,
+      "FSIN": 0.028391,
+      "observations": 26008
+    },
+    "SA": {
+      "species_index": 6,
+      "common_name": "Slash Pine",
+      "INTERC": -1.641698,
+      "LDBH": 1.461093,
+      "DBH2": -0.002530,
+      "LCRWN": 0.265872,
+      "HREL": 0.069104,
+      "ISIO": 0.006851,
+      "PLTB": -0.002939,
+      "PNTBL": -0.004873,
+      "TANS": -0.018479,
+      "FCOS": -0.193157,
+      "FSIN": -0.251016,
+      "observations": 18736
+    },
+    "LL": {
+      "species_index": 8,
+      "common_name": "Longleaf Pine",
+      "INTERC": -1.331052,
+      "LDBH": 1.098112,
+      "DBH2": -0.001834,
+      "LCRWN": 0.184512,
+      "HREL": 0.388018,
+      "ISIO": 0.008774,
+      "PLTB": -0.002182,
+      "PNTBL": -0.002898,
+      "TANS": 0.225213,
+      "FCOS": 0.086883,
+      "FSIN": 0.107445,
+      "observations": 9190
+    },
+    "LP": {
+      "species_index": 13,
+      "common_name": "Loblolly Pine",
+      "INTERC": 0.222214,
+      "LDBH": 1.163040,
+      "DBH2": -0.000863,
+      "LCRWN": 0.028483,
+      "HREL": 0.006935,
+      "ISIO": 0.005018,
+      "PLTB": -0.003408,
+      "PNTBL": -0.004184,
+      "TANS": -0.759347,
+      "FCOS": 0.185360,
+      "FSIN": -0.072842,
+      "observations": 92313
+    }
+  },
+  "forest_type_coefficients": {
+    "description": "Categorical variables applied based on forest type classification (IFORTP)",
+    "forest_type_groups": {
+      "LOHD": {
+        "name": "Lowland Hardwood",
+        "forest_types": [168, 508, 601, 602, 605, 606, 607, 608, 702, 703, 704, 705, 706, 708],
+        "coefficients": {
+          "SP": 0.106418,
+          "SA": 0.325861,
+          "LL": 0.048216,
+          "LP": 0.126441
+        }
+      },
+      "NOHD": {
+        "name": "No Hardwood (Pure Softwood)",
+        "forest_types": [701, 801, 805],
+        "coefficients": {
+          "SP": 0.455020,
+          "SA": 0.000000,
+          "LL": 0.000000,
+          "LP": -0.122163
+        }
+      },
+      "OKPN": {
+        "name": "Oak-Pine",
+        "forest_types": [165, 403, 404, 405, 406, 407, 409],
+        "coefficients": {
+          "SP": 0.017518,
+          "SA": 0.116235,
+          "LL": 0.088872,
+          "LP": 0.050835
+        }
+      },
+      "SFHP": {
+        "name": "Spruce-Fir/Hemlock-Pine",
+        "forest_types": [104, 105, 121, 124],
+        "coefficients": {
+          "SP": 0.000000,
+          "SA": 0.000000,
+          "LL": 0.000000,
+          "LP": 0.000000
+        }
+      },
+      "UPHD": {
+        "name": "Upland Hardwood",
+        "forest_types": [103, 167, 181, 401, 402, 506, 507, 511, 512, 513, 519, 520, 802, 803, 807, 809],
+        "coefficients": {
+          "SP": 0.066811,
+          "SA": 0.162020,
+          "LL": 0.086720,
+          "LP": 0.063669
+        }
+      },
+      "UPOK": {
+        "name": "Upland Oak",
+        "forest_types": [501, 502, 503, 504, 505, 510, 514, 515],
+        "coefficients": {
+          "SP": -0.040181,
+          "SA": 0.410684,
+          "LL": 0.106061,
+          "LP": -0.016885
+        }
+      },
+      "YLPN": {
+        "name": "Yellow Pine",
+        "forest_types": [141, 142, 161, 162, 163, 164, 166],
+        "coefficients": {
+          "SP": 0.000000,
+          "SA": 0.000000,
+          "LL": 0.000000,
+          "LP": 0.000000
+        }
+      }
+    },
+    "plant_effect": {
+      "description": "Applied when MANAGD keyword is set (plantation effect)",
+      "coefficients": {
+        "SP": 0.000000,
+        "SA": 0.227572,
+        "LL": 0.110751,
+        "LP": 0.245669
+      }
+    }
+  },
+  "ecological_unit_coefficients": {
+    "description": "Categorical variables based on ecological unit classification (Bailey's ecoregion codes)",
+    "provinces": {
+      "PM221": {
+        "name": "Mountain Province 221",
+        "description": "Mountainous terrain in province 221",
+        "coefficients": {"SP": -0.569409, "SA": 0.000000, "LL": 0.000000, "LP": -0.069716}
+      },
+      "PM222": {
+        "name": "Mountain Province 222/223",
+        "description": "Mountainous terrain in provinces 222 or 223",
+        "coefficients": {"SP": -0.252741, "SA": 0.000000, "LL": 0.000000, "LP": 0.581967}
+      },
+      "PM231": {
+        "name": "Mountain Province 231",
+        "description": "Mountainous terrain in province 231",
+        "coefficients": {"SP": -0.265699, "SA": 0.000000, "LL": 0.000000, "LP": 0.790149}
+      },
+      "P221": {
+        "name": "Province 221 (non-mountain)",
+        "description": "Coastal plains/piedmont in province 221",
+        "coefficients": {"SP": -0.694484, "SA": 0.000000, "LL": 0.000000, "LP": -0.584818}
+      },
+      "P222": {
+        "name": "Province 222/223",
+        "description": "Province 222 or 223",
+        "coefficients": {"SP": -0.285112, "SA": 0.000000, "LL": -0.034553, "LP": -0.364073}
+      },
+      "S231T": {
+        "name": "Section 231 (Transition)",
+        "description": "Province 231 transition sections (A,C,D,I)",
+        "coefficients": {"SP": -0.504565, "SA": -0.025549, "LL": -0.175073, "LP": -0.183317}
+      },
+      "S231L": {
+        "name": "Section 231 (Lowland)",
+        "description": "Province 231 lowland sections (B,E,F,G)",
+        "coefficients": {"SP": 0.000000, "SA": 0.324111, "LL": -0.067793, "LP": 0.256273}
+      },
+      "P232": {
+        "name": "Province 232",
+        "description": "Outer Coastal Plain Mixed Forest Province",
+        "coefficients": {"SP": -0.113258, "SA": 0.000000, "LL": 0.000000, "LP": 0.000000}
+      },
+      "P234": {
+        "name": "Province 234",
+        "description": "Lower Mississippi Riverine Forest Province",
+        "coefficients": {"SP": 0.114097, "SA": 0.306793, "LL": 0.123262, "LP": 0.281790}
+      },
+      "P255": {
+        "name": "Province 255",
+        "description": "Prairie Parkland Province",
+        "coefficients": {"SP": 0.092458, "SA": 0.000000, "LL": 0.000000, "LP": 0.274618}
+      },
+      "P411": {
+        "name": "Province 411",
+        "description": "Everglades Province",
+        "coefficients": {"SP": 0.000000, "SA": -0.342293, "LL": 0.000000, "LP": 0.000000}
+      }
+    }
+  },
+  "fort_bragg_equations": {
+    "description": "Special diameter growth equations for Fort Bragg forest (IFOR=20)",
+    "applies_to_species": ["LL", "LP"],
+    "LL": {
+      "species_index": 8,
+      "equation": "DG5 = (D*BARK) * ((-0.4553*(0.09737-exp(-0.2428*D))) + 0.05574*(CR/100) - 0.0002965*BA - 0.00002481*PBA - 0.001192*((PCT/100)^(-0.9663)) + 0.0010110*SI - 0.007711*RELHT)",
+      "coefficients": {
+        "dbh_exp_a": -0.4553,
+        "dbh_exp_b": 0.09737,
+        "dbh_exp_c": -0.2428,
+        "crown_ratio": 0.05574,
+        "basal_area": -0.0002965,
+        "point_basal_area": -0.00002481,
+        "percentile_a": -0.001192,
+        "percentile_b": -0.9663,
+        "site_index": 0.0010110,
+        "relative_height": -0.007711
+      },
+      "observations": 2056
+    },
+    "LP": {
+      "species_index": 13,
+      "equation": "DG5 = (D*BARK) * ((-0.3428*(-0.1741-exp(-0.1328*D))) + 0.1145*(CR/100) - 0.0001682*BA - 0.00003978*PBA - 0.159400*((PCT/100)^(-0.1299)) + 0.0006204*SI + 0.02474*RELHT)",
+      "coefficients": {
+        "dbh_exp_a": -0.3428,
+        "dbh_exp_b": -0.1741,
+        "dbh_exp_c": -0.1328,
+        "crown_ratio": 0.1145,
+        "basal_area": -0.0001682,
+        "point_basal_area": -0.00003978,
+        "percentile_a": -0.159400,
+        "percentile_b": -0.1299,
+        "site_index": 0.0006204,
+        "relative_height": 0.02474
+      },
+      "observations": 689
+    },
+    "conversion_note": "DDS = ln((DG5*(2.0*D*BARK+DG5))) where DG5 >= 0.01"
+  },
+  "implementation_notes": {
+    "array_indexing": "FVS uses 1-based Fortran arrays. Subtract 1 for Python 0-based indexing.",
+    "crown_ratio_units": "Crown ratio (ICR) is stored as integer percentage (0-100), not proportion",
+    "aspect_units": "Aspect is in radians for cos/sin calculations",
+    "slope_units": "Slope is tangent (rise/run), not percent or degrees",
+    "dds_to_diameter_growth": "After calculating DDS, convert back: DG = sqrt(D^2 + exp(DDS)) - D",
+    "bark_ratio": "All diameter growth is inside bark. Apply bark ratio to convert to outside bark.",
+    "calibration": "DGCON includes site-specific calibration factor COR from DGDRIV"
+  }
+}

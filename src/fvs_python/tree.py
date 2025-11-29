@@ -223,55 +223,124 @@ class Tree:
         self._update_dbh_from_height()
     
     def _grow_large_tree(self, site_index, competition_factor, ba, pbal, slope, aspect, time_step=5):
-        """Implement large tree diameter growth model.
-        
+        """Implement large tree diameter growth model using official FVS-SN equations.
+
+        Based on USDA Forest Service FVS Southern Variant (SN) from dgf.f:
+        ln(DDS) = CONSPP + INTERC + LDBH*ln(D) + DBH2*D^2 + LCRWN*ln(CR)
+                  + HREL*RELHT + PLTB*BA + PNTBL*PBAL
+                  + [forest_type_terms] + [eco_unit_terms] + [plant_effect]
+
+        Where CONSPP = ISIO*SI + TANS*SLOPE + FCOS*SLOPE*cos(ASPECT) + FSIN*SLOPE*sin(ASPECT)
+
         Args:
-            site_index: Site index (base age 25) in feet
+            site_index: Site index (base age 50) in feet
             competition_factor: Competition factor (0-1)
-            ba: Stand basal area (sq ft/acre)
+            ba: Stand basal area (sq ft/acre), minimum 25.0
             pbal: Plot basal area in larger trees (sq ft/acre)
-            slope: Ground slope (proportion)
+            slope: Ground slope as tangent (rise/run)
             aspect: Aspect in radians
             time_step: Number of years to grow (default: 5)
         """
-        # Get large tree diameter growth parameters from config
-        p = self.species_params['diameter_growth']['coefficients']
-            
-        # Forest type and ecological unit effects (not currently implemented)
-        fortype_effect = 0.0
-        ecounit_effect = 0.0
-        
-        # Planting effect from config
+        # Get diameter growth coefficients from species config
+        dg_config = self.species_params.get('diameter_growth', {})
+        p = dg_config.get('coefficients', {})
+
+        # Apply FVS bounds
+        # BA minimum is 25.0 in FVS
+        ba_bounded = max(25.0, ba)
+
+        # Crown ratio for FVS must be integer percentage (0-100), minimum 25
+        # Our crown_ratio is stored as proportion (0-1), convert to percentage
+        cr_pct = max(25.0, self.crown_ratio * 100.0)
+
+        # Relative height (RELHT) = HT/AVH, capped at 1.5 in FVS
+        # Using site index as proxy for average height
+        relht = min(1.5, self.height / site_index) if site_index > 0 else 1.0
+
+        # Get forest type effect from config (defaults to 0.0 if not specified)
+        fortype_config = self.species_params.get('fortype', {})
+        fortype_effect = fortype_config.get('coefficients', {}).get(
+            fortype_config.get('base_fortype', 'FTYLPN'), 0.0
+        )
+
+        # Get ecological unit effect from config (defaults to 0.0 if not specified)
+        ecounit_config = self.species_params.get('ecounit', {}).get('table_4_7_1_5', {})
+        ecounit_effect = ecounit_config.get('coefficients', {}).get(
+            ecounit_config.get('base_ecounit', '232'), 0.0
+        )
+
+        # Get plant effect from species config
+        plant_config = self.species_params.get('plant', {})
+        plant_effect = plant_config.get('value', 0.0)
+
+        # Also check growth_params for managed plantation setting
         planting_effects = self.growth_params.get('large_tree_modifiers', {}).get('planting_effect', {})
         if self.species in planting_effects:
             plant_effect = planting_effects[self.species]
-        else:
-            plant_effect = planting_effects.get('default', 0.245669)
-        
-        # Calculate ln(DDS) - 5-year growth using the full model
+
+        # Build the diameter growth equation following official FVS structure
+        # Coefficient mapping from config (b1-b11) to FVS variables:
+        # b1 = INTERC (intercept)
+        # b2 = LDBH (ln(DBH) coefficient)
+        # b3 = DBH2 (DBH^2 coefficient)
+        # b4 = LCRWN (ln(CR) coefficient)
+        # b5 = HREL (relative height coefficient)
+        # b6 = ISIO (site index coefficient)
+        # b7 = PLTB (basal area coefficient) - NOTE: config may have wrong value
+        # b8 = PNTBL (point basal area larger coefficient)
+        # b9 = TANS (slope tangent coefficient)
+        # b10 = FCOS (slope*cos(aspect) coefficient)
+        # b11 = FSIN (slope*sin(aspect) coefficient)
+
+        # Check for new-style coefficient names first, fall back to b1-b11
+        interc = p.get('INTERC', p.get('b1', 0.0))
+        ldbh = p.get('LDBH', p.get('b2', 0.0))
+        dbh2 = p.get('DBH2', p.get('b3', 0.0))
+        lcrwn = p.get('LCRWN', p.get('b4', 0.0))
+        hrel = p.get('HREL', p.get('b5', 0.0))
+        isio = p.get('ISIO', p.get('b6', 0.0))
+        pltb = p.get('PLTB', p.get('b7', 0.0))
+        pntbl = p.get('PNTBL', p.get('b8', 0.0))
+        tans = p.get('TANS', p.get('b9', 0.0))
+        fcos = p.get('FCOS', p.get('b10', 0.0))
+        fsin = p.get('FSIN', p.get('b11', 0.0))
+
+        # Calculate CONSPP (site and topographic terms)
+        # CONSPP = ISIO*SI + TANS*SLOPE + FCOS*SLOPE*cos(ASPECT) + FSIN*SLOPE*sin(ASPECT)
+        conspp = (
+            isio * site_index +
+            tans * slope +
+            fcos * slope * math.cos(aspect) +
+            fsin * slope * math.sin(aspect)
+        )
+
+        # Calculate ln(DDS) - change in squared diameter (inside bark)
+        # Main equation: ln(DDS) = CONSPP + INTERC + LDBH*ln(D) + DBH2*D^2
+        #                         + LCRWN*ln(CR) + HREL*RELHT + PLTB*BA + PNTBL*PBAL
+        #                         + [forest_type] + [eco_unit] + [plant_effect]
         ln_dds = (
-            p['b1'] +
-            p['b2'] * math.log(self.dbh) +
-            p['b3'] * self.dbh**2 +
-            p['b4'] * math.log(self.crown_ratio) +
-            p['b5'] * (self.height / site_index) +  # RELHT
-            p['b6'] * site_index +
-            p['b7'] * ba +
-            p['b8'] * pbal +
-            p['b9'] * slope +
-            p['b10'] * math.cos(aspect) * slope +
-            p['b11'] * math.sin(aspect) * slope +
-            fortype_effect + 
+            conspp +
+            interc +
+            ldbh * math.log(self.dbh) +
+            dbh2 * self.dbh**2 +
+            lcrwn * math.log(cr_pct) +
+            hrel * relht +
+            pltb * ba_bounded +
+            pntbl * pbal +
+            fortype_effect +
             ecounit_effect +
             plant_effect
         )
-        
-        # Competition is already accounted for through ba and pbal
-        # No need to further modify growth based on competition_factor
-        
-        # Convert to diameter growth and update DBH
+
+        # Apply FVS minimum bound for ln(DDS)
+        ln_dds = max(-9.21, ln_dds)
+
+        # Convert ln(DDS) to diameter growth
+        # DDS is change in squared diameter (inside bark) over growth period
         # Scale growth based on time_step (model is calibrated for 5-year growth)
         dds = math.exp(ln_dds) * (time_step / 5.0)
+
+        # Update DBH: D_new = sqrt(D_old^2 + DDS)
         self.dbh = math.sqrt(self.dbh**2 + dds)
         
         # Update height using height-diameter relationship
