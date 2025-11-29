@@ -49,3 +49,9 @@ outputs/data/sqlite_databases/*.db
 docs/EconUserGuide_chunks.json
 docs/EssentialFVS_chunks.json
 docs/FVSsn_Overview_chunks.json
+
+# Claude Code local settings
+.claude/
+
+# External source code
+fvs-source/
